@@ -10,21 +10,30 @@
 </style></head>
 <body>
 <div class="row" id="row">
-  <div class="frame"><iframe src="../index.html" title="index mobile"></iframe></div>
-  <div class="frame"><iframe src="../projects.html" title="projects mobile"></iframe></div>
-  <div class="frame"><iframe src="../films.html" title="films mobile"></iframe></div>
+  <div class="frame"><iframe aria-hidden="true" title="index mobile"></iframe></div>
+  <div class="frame"><iframe aria-hidden="true" title="projects mobile"></iframe></div>
+  <div class="frame"><iframe aria-hidden="true" title="films mobile"></iframe></div>
 </div>
 <script>
   var q = new URLSearchParams(location.search);
+  var v = q.get('v') || Date.now();
+  var names = ['index', 'projects', 'films'];
   if (q.get('p')) {
-    var url = '../' + q.get('p') + '.html';
     var y = parseInt(q.get('y') || '0', 10);
     var h = parseInt(q.get('h') || '844', 10);
-    document.body.innerHTML = '<div class="frame one"><iframe id="f" src="' + url + '" style="width:390px;height:' + h + 'px"></iframe></div>';
+    document.getElementById('row').innerHTML =
+      '<div class="frame one"><iframe id="f" aria-hidden="true" style="width:390px;height:' + h + 'px"></iframe></div>';
     var f = document.getElementById('f');
+    f.src = '../' + q.get('p') + '.html?v=' + v;
     f.addEventListener('load', function () {
-      try { f.contentWindow.scrollTo(0, y); } catch (e) {}
+      try {
+        f.contentDocument.documentElement.style.scrollBehavior = 'auto';
+        f.contentWindow.scrollTo({top: y, behavior: 'instant'});
+      } catch (e) {}
     });
+  } else {
+    var fs = document.querySelectorAll('#row iframe');
+    names.forEach(function (n, i) { fs[i].src = '../' + n + '.html?v=' + v; });
   }
 </script>
 </body></html>
