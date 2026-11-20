@@ -257,7 +257,7 @@
 
   var SUGGEST_DEFAULT = ['대표 성과가 뭔가요?', 'AI 마케팅은 어떻게 하나요?', '넷마블·나이키 프로젝트 알려줘', '협업·연락은 어떻게 하나요?'];
   var FOLLOW_PERF = ['AI 마케팅 방식이 궁금해요', '넷마블 프로젝트 보기', '영상 필름 18편 보기'];
-  var FOLLOW_AI = ['심의·리젝트는 어떻게 관리하나요?', '무료 툴도 있나요?', '연락처 알려주세요'];
+  var FOLLOW_AI = ['캐릭터 IP 사례 보여줘', '무료 툴도 있나요?', '연락처 알려주세요'];
   var FOLLOW_CONTACT = ['경력이 궁금해요', '캠페인 43건 보기', '네이버 블로그 보기'];
 
   /* ---------------- answers ---------------- */
@@ -314,7 +314,7 @@
         '<li><strong>요청을 표준화</strong> — 월 600건이 넘는 기획·제작 요청을 유형과 난이도로 분류하고, 단계별 표준 시간·담당 역할·산출물을 정의합니다.</li>' +
         '<li><strong>흐름을 데이터로</strong> — 요청부터 납품까지 구간별 소요를 기록해 SLA를 세우고, 지연이 반복되는 병목을 화면 위에 드러냅니다.</li>' +
         '<li><strong>반려를 학습</strong> — 심의에서 걸린 사유를 코드로 구조화해 지식베이스로 만들고, 기획 초안 단계에서 같은 실수를 먼저 걸러냅니다.</li>' +
-        '<li><strong>도구로 고정</strong> — 이 흐름을 기획팀 업무 포털<em>(NEXUS OS)</em>, SLA 트래킹, 리젝트 학습형 AI 기획 어시스턴트, 의사결정 시뮬레이터로 직접 만들어 운영합니다.</li>' +
+        '<li><strong>도구로 고정</strong> — 이 흐름을 기획팀 업무 포털<em>(NEXUS OS)</em>과 SLA 트래킹, 리젝트 학습형 AI 기획 어시스턴트, 의사결정 시뮬레이터로 직접 만들어 운영합니다.</li>' +
         '</ul>' +
         '<p>핵심은 개인의 감이 아니라 <strong>기준과 데이터가 남는 구조</strong>입니다. 같은 이유로 누구나 쓸 수 있는 ' +
         '<a href="./index.html#tool" style="color:#9FC3FF;text-decoration:underline;text-underline-offset:3px">광고 카피·심의 주의어 체크기</a>도 무료로 공개했습니다.</p>',
@@ -467,20 +467,19 @@
       };
     }
 
-    var lead = '';
+    var lead;
     if (ctx.families.length) {
       lead = ctx.families.slice(0, 3).map(function (f) {
         var pc = projects.filter(function (p) { return f.clients.indexOf(p.client) !== -1; }).length;
         var fc = films.filter(function (x) { return f.clients.indexOf(x.client) !== -1; }).length;
-        var parts = [];
-        if (pc) parts.push('캠페인 ' + pc + '건');
-        if (fc) parts.push('영상 ' + fc + '편');
-        return '<strong>' + esc(f.label) + '</strong> ' + (parts.join(' · ') || '0건');
-      }).join(', ');
+        var inner = [];
+        if (pc) inner.push('캠페인 ' + pc + '건');
+        if (fc) inner.push('영상 ' + fc + '편');
+        return '<strong>' + esc(f.label) + '</strong>(' + (inner.join(', ') || '공개된 작업 없음') + ')';
+      }).join(' · ');
       lead = lead + '이 아카이브에 정리되어 있습니다.';
     } else {
-      var catNames = ctx.cats.concat(ctx.filmCats);
-      var catLabel = catNames.map(function (k) {
+      var catLabel = ctx.cats.concat(ctx.filmCats).map(function (k) {
         var found = CATEGORIES.concat(FILM_CATS).filter(function (c) { return c.key === k; })[0];
         return found ? found.label : k;
       }).join(' · ');
@@ -488,29 +487,34 @@
         (films.length ? ', 영상 ' + films.length + '편' : '') + '을 찾았습니다.';
     }
 
-    var lis = '';
-    projects.slice(0, 4).forEach(function (p) {
-      var r = (p.result || [])[0] || '';
-      lis += '<li><strong>' + esc(p.title) + '</strong> — ' + esc([p.client, p.categoryLabel || p.category, p.period].filter(Boolean).join(' · ')) +
-        (r ? '<br>' + esc(r) : '') + '</li>';
-    });
-    films.slice(0, 3).forEach(function (f) {
-      lis += '<li><strong>' + esc(f.shortTitle || f.title) + '</strong> — ' + esc([f.client, f.category].filter(Boolean).join(' · ')) + ' 영상</li>';
-    });
+    /* 카드: 캠페인 3건 + 영상 2편(최대 4장) */
+    var cardP = projects.slice(0, 3);
+    var cardF = films.slice(0, Math.max(0, 4 - cardP.length));
+    var pickCards = cardP.concat(cardF);
 
-    var pickCards = projects.slice(0, 3);
-    if (pickCards.length < 4) pickCards = pickCards.concat(films.slice(0, 4 - pickCards.length));
-    var restP = Math.max(0, projects.length - 3);
-    var restF = Math.max(0, films.length - Math.max(0, 4 - Math.min(projects.length, 3)));
+    /* 본문 목록: 카드와 겹치지 않게 성과 수치만 짧게 */
+    var lis = projects.filter(function (p) { return (p.result || []).length; })
+      .slice(0, 3)
+      .map(function (p) { return '<li><strong>' + esc(p.title) + '</strong> — ' + esc(p.result[0]) + '</li>'; })
+      .join('');
+    if (!lis) {
+      lis = pickCards.slice(0, 2).map(function (it) {
+        return '<li><strong>' + esc(it.title || it.shortTitle) + '</strong> — ' +
+          esc([it.client, it.categoryLabel || it.category].filter(Boolean).join(' · ')) + '</li>';
+      }).join('');
+    }
+
+    var restP = Math.max(0, projects.length - cardP.length);
+    var restF = Math.max(0, films.length - cardF.length);
     var more = '';
     if (restP > 0) more += '<a class="slc-more" href="./projects.html">캠페인 ' + restP + '건 더 보기 ↗</a> ';
-    if (films.length && projects.length >= 3) more += '<a class="slc-more" href="./films.html">영상 ' + films.length + '편 보기 ↗</a> ';
+    if (restF > 0) more += '<a class="slc-more" href="./films.html">영상 ' + restF + '편 더 보기 ↗</a> ';
 
     return {
       html: '<p>' + lead + '</p>' + (lis ? '<ul>' + lis + '</ul>' : '') +
-        '<p>카드를 누르면 상세 페이지가 바로 열립니다.</p>',
+        (pickCards.length ? '<p>카드를 누르면 해당 작업의 상세 페이지가 열립니다.</p>' : ''),
       cards: cardsHtml(pickCards) + more,
-      follow: ['비슷한 다른 작업도 보여줘', '대표 성과가 뭔가요?', '연락처 알려주세요']
+      follow: ['캐릭터 IP 사례 보여줘', '대표 성과가 뭔가요?', '연락처 알려주세요']
     };
   }
 
