@@ -91,6 +91,8 @@
 /* ---------------- panel ---------------- */
 .slc-panel{
   position:fixed;
+  margin:0;
+  padding:0;
   right:24px;
   bottom:24px;
   width:392px;

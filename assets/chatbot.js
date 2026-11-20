@@ -582,7 +582,7 @@
         '<span class="slc-launch-text"><b>AI 이석연에게 묻기</b>' +
         '<span><i class="slc-live-dot" aria-hidden="true"></i>디지털 명함 · 포트폴리오 Q&amp;A</span></span>' +
       '</button>' +
-      '<section class="slc-panel" id="slcPanel" role="dialog" aria-modal="false" aria-label="미니 AI 이석연 챗봇" aria-hidden="true">' +
+      '<div class="slc-panel" id="slcPanel" role="dialog" aria-modal="false" aria-label="미니 AI 이석연 챗봇" aria-hidden="true">' +
         '<header class="slc-head">' +
           '<span class="slc-head-avatar" aria-hidden="true">SL</span>' +
           '<span class="slc-head-txt"><b>미니 AI 이석연</b><span>이석연 팀장 디지털 명함 · 캠페인 43건 · 영상 18편</span></span>' +
@@ -603,7 +603,7 @@
           '</form>' +
           '<p class="slc-note">외부 AI 연결 없이 포트폴리오 데이터로만 답합니다.</p>' +
         '</div>' +
-      '</section>';
+      '</div>';
     document.body.appendChild(root);
 
     launcher = root.querySelector('#slcLauncher');
