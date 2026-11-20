@@ -135,7 +135,7 @@
 }
 .slc-head-txt{ display:flex; flex-direction:column; gap:1px; min-width:0; flex:1 1 auto; }
 .slc-head-txt b{ font-size:14px; font-weight:750; letter-spacing:-.01em; color:#F3F7FF; }
-.slc-head-txt span{ font-size:11px; color:var(--slc-muted); letter-spacing:-.01em; }
+.slc-head-txt span{ font-size:11px; color:var(--slc-muted); letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .slc-head-actions{ display:flex; align-items:center; gap:2px; flex:0 0 auto; }
 .slc-icon-btn{
   width:30px; height:30px;
