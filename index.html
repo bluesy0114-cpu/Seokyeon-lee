@@ -92,6 +92,7 @@
     --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
   }
   *,*::before,*::after{box-sizing:border-box;}
+  *{word-break:keep-all;overflow-wrap:break-word;hyphens:none;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
@@ -132,11 +133,11 @@
        background:rgba(11,18,32,.72);border-bottom:1px solid transparent;transition:border-color .3s ease,background .3s ease;}
   .nav.scrolled{border-bottom-color:var(--line);background:rgba(9,14,24,.985);}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px;}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:15px;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;font-size:15px;white-space:nowrap;}
   .brand .mark{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
     background:linear-gradient(145deg,rgba(37,99,235,.9),rgba(37,99,235,.45));
     border:1px solid rgba(148,163,184,.3);font-size:11.5px;font-weight:800;letter-spacing:.02em;color:#fff;}
-  .brand span.en{color:var(--muted);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-left:5px;}
+  .brand span.en{color:var(--muted);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-left:5px;white-space:nowrap;}
   .nav-links{display:flex;align-items:center;gap:26px;font-size:13.5px;color:var(--text-2);}
   .nav-links a{position:relative;transition:color .2s;}
   .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--accent-soft);transition:width .25s;}
@@ -441,14 +442,20 @@
     .nav-cta{padding:8px 13px;font-size:12.5px;}
     .hero-actions .btn{flex:1 1 auto;justify-content:center;}
   }
-  @media (max-width:700px){
-    .brand span.en{display:none;}
+  @media (max-width:760px){
+    .nav-cta{display:none;}
     .nav .wrap{gap:10px;}
+    .brand span.en{font-size:11px;letter-spacing:.07em;}
   }
   @media (max-width:520px){
     .hero-tool{font-size:12px;}
     .statband .s{padding:18px 16px 16px;}
     .work__title{font-size:13px;}
+  }
+  @media (max-width:430px){
+    .brand{font-size:14.5px;gap:8px;}
+    .brand span.en{font-size:10.5px;letter-spacing:.04em;margin-left:3px;}
+    .nav-toggle{height:32px;padding:0 11px;}
   }
 </style>
 </head>
