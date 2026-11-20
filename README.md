@@ -18,7 +18,7 @@ AI 마케팅 워크플로우 아키텍트 · 주식회사 케어랩스 DM사업�
 2. Core Focus — 프로세스 표준화 / SLA·병목 가시화 / 리젝트 학습형 AI 워크플로우
 3. Architecture — 업무 시스템 개념 아키텍처 3개 (대외비 제외)
 4. Free Tool — 광고 카피 · 심의 주의어 체크기 (순수 프론트엔드)
-5. Career — 케어랩스(현) / 넷마블MNB / CJ PowerCast
+5. Career — 케어랩스(현) / 넷마블MNB / CJ 올리브네트웍스
 6. Contact — 이메일
 
 ## 배포 (GitHub Pages)
