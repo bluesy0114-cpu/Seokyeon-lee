@@ -421,6 +421,31 @@
     *{transition-duration:.01ms !important;}
   }
   :focus-visible{outline:2px solid #3B82F6;outline-offset:3px;border-radius:6px;}
+
+  /* ---------- typography & rhythm hardening ---------- */
+  p{text-wrap:pretty;}
+  h1,h2,h3,h4{text-wrap:balance;}
+  .nav-links a{white-space:nowrap;}
+  .btn{max-width:100%;line-height:1.35;text-align:center;}
+  .btn svg{flex:none;}
+  .card h3{text-wrap:balance;}
+  .work__title{text-wrap:balance;}
+  .work__meta,.work__metric{line-height:1.5;}
+  .hero-tool{max-width:100%;line-height:1.5;}
+  .statband .k{line-height:1.45;}
+  .cta-count{white-space:nowrap;}
+  @media (max-width:700px){
+    .cta-count{display:none;}
+    .works-cta{gap:9px;}
+    .works-cta .btn{width:100%;justify-content:space-between;}
+    .nav-cta{padding:8px 13px;font-size:12.5px;}
+    .hero-actions .btn{flex:1 1 auto;justify-content:center;}
+  }
+  @media (max-width:520px){
+    .hero-tool{font-size:12px;}
+    .statband .s{padding:18px 16px 16px;}
+    .work__title{font-size:13px;}
+  }
 </style>
 </head>
 <body>

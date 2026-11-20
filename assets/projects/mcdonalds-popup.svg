@@ -1,25 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="맥도날드 팝업스토어">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="맥도날드 팝업스토어 — 맥도날드">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#131F36"/>
-      <stop offset="0.55" stop-color="#0E1A2E"/>
+      <stop offset="0" stop-color="#16233C"/>
+      <stop offset="0.6" stop-color="#101C31"/>
       <stop offset="1" stop-color="#0A1220"/>
     </linearGradient>
-    <radialGradient id="a" cx="0.82" cy="0.12" r="0.7">
-      <stop offset="0" stop-color="#2563EB" stop-opacity="0.30"/>
+    <radialGradient id="a" cx="0.78" cy="0.14" r="0.75">
+      <stop offset="0" stop-color="#2563EB" stop-opacity="0.28"/>
       <stop offset="1" stop-color="#2563EB" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
-      <path d="M64 0H0V64" fill="none" stroke="#94A3B8" stroke-opacity="0.07" stroke-width="1"/>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#94A3B8" stroke-opacity="0.07" stroke-width="1"/>
     </pattern>
   </defs>
-  <rect width="1600" height="1000" fill="url(#g)"/>
-  <rect width="1600" height="1000" fill="url(#grid)"/>
-  <rect width="1600" height="1000" fill="url(#a)"/>
-  <rect x="72" y="72" width="1456" height="856" fill="none" stroke="#94A3B8" stroke-opacity="0.18" stroke-width="2"/>
-  <text x="112" y="176" font-family="Helvetica,Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="30" letter-spacing="10" fill="#7E93B4">BTL 캠페인</text>
-  <text x="112" y="286" font-family="Helvetica,Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="58" font-weight="700" letter-spacing="3" fill="#BFD4FF">맥도날드</text>
-  <line x1="112" y1="352" x2="248" y2="352" stroke="#3B82F6" stroke-width="4"/>
-  <text x="112" y="520" font-family="'Apple SD Gothic Neo','Noto Sans KR',Malgun,sans-serif" font-size="86" font-weight="800" fill="#E8EEF9">맥도날드 팝업스토어</text>
-  <text x="112" y="856" font-family="Helvetica,Arial,'Apple SD Gothic Neo',sans-serif" font-size="26" letter-spacing="8" fill="#5F7595">CAMPAIGN ARCHIVE</text>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+  <rect width="1200" height="900" fill="url(#a)"/>
+  <rect x="44" y="44" width="1112" height="812" fill="none" stroke="#94A3B8" stroke-opacity="0.16" stroke-width="1.5"/>
+  <text x="600" y="272" text-anchor="middle" font-family="Helvetica,Arial,'Apple SD Gothic Neo',sans-serif" font-size="26" letter-spacing="9" fill="#7E93B4">BTL 캠페인</text>
+  <text x="600" y="326" text-anchor="middle" font-family="Helvetica,Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="44" font-weight="600" letter-spacing="4" fill="#9CC0FF">맥도날드</text>
+  <line x1="540" y1="368" x2="660" y2="368" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>
+  <text x="600" y="480" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Pretendard,sans-serif" font-size="64" font-weight="700" fill="#E8EEF9">맥도날드 팝업스토어</text>
+  <text x="600" y="806" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="20" letter-spacing="8" fill="#5F7595">CAMPAIGN ARCHIVE</text>
 </svg>
