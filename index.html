@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>이석연 (Seokyeon Lee) | AI 마케팅 워크플로우 아키텍트 · 케어랩스 기획팀장</title>
-<meta name="description" content="이석연(Seokyeon Lee) — 주식회사 케어랩스 DM사업부 기획팀 팀장. 월 600건이 넘는 마케팅 기획·제작 프로세스를 표준화하고, 데이터 기반 SLA와 심의·리젝트 이력으로 AI 마케팅 워크플로우를 설계합니다. 광고 카피·심의 주의어 체크기 무료 제공.">
+<meta name="description" content="이석연(Seokyeon Lee) — 주식회사 케어랩스 DM사업부 기획팀 팀장. 월 600건이 넘는 마케팅 기획·제작 프로세스를 표준화하고, 데이터 기반 SLA와 심의·리젝트 이력으로 AI 마케팅 워크플로우를 설계합니다. 캠페인 아카이브 43건과 영상 필름 18편을 함께 공개합니다.">
 <meta name="keywords" content="이석연, AI 마케팅, 케어랩스, AI 마케팅 워크플로우, 마케팅 기획, 광고 카피 체크기, 심의 주의어">
 <meta name="author" content="이석연">
 <meta name="robots" content="index, follow">
@@ -355,6 +355,62 @@
   .byline{display:inline-flex;align-items:center;gap:6px;margin:14px 0 0;font-size:11.5px;color:#A9C2E4;
     border:1px solid rgba(59,130,246,.32);background:rgba(37,99,235,.1);border-radius:999px;padding:4px 11px;letter-spacing:.02em;}
 
+  /* ---------- archive nav ---------- */
+  .nav-toggle{display:none;align-items:center;gap:8px;height:34px;padding:0 13px;border-radius:10px;
+    border:1px solid var(--line-strong);background:rgba(148,163,184,.06);color:var(--text);
+    font-family:inherit;font-size:12.5px;cursor:pointer;transition:.2s;}
+  .nav-toggle:hover{border-color:rgba(148,163,184,.5);color:#fff;}
+  .nav-toggle svg{width:14px;height:14px;}
+  .nav-panel{display:none;position:absolute;top:60px;right:16px;left:16px;border:1px solid var(--line-strong);
+    border-radius:16px;padding:10px;background:rgba(13,21,36,.98);box-shadow:0 30px 60px -30px #000;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:60;}
+  .nav-panel.open{display:block;}
+  .nav-panel a{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border-radius:10px;
+    font-size:14px;color:var(--text-2);}
+  .nav-panel a:hover{background:rgba(37,99,235,.14);color:#fff;}
+  .nav-panel a span{color:var(--muted);font-size:11px;letter-spacing:.08em;}
+  @media (max-width:900px){ .nav-links{display:none;} .nav-toggle{display:inline-flex;} }
+
+  /* ---------- selected works ---------- */
+  .statband{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:0 0 clamp(26px,3.4vw,38px);
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(10,19,34,.55);}
+  .statband .s{padding:22px 22px 20px;border-right:1px solid rgba(148,163,184,.1);}
+  .statband .s:last-child{border-right:0;}
+  .statband .v{display:block;font-size:clamp(26px,3.6vw,38px);font-weight:800;letter-spacing:-.035em;line-height:1.1;
+    color:#F1F6FD;font-variant-numeric:tabular-nums;}
+  .statband .v em{font-style:normal;font-size:.52em;font-weight:700;color:#9FB3D1;margin-left:2px;}
+  .statband .k{display:block;margin-top:8px;font-size:12px;color:#94A6C0;letter-spacing:-.01em;}
+  .stat-note{margin:-16px 0 clamp(26px,3.4vw,36px);font-size:11px;color:#6E86A8;line-height:1.6;}
+  @media (max-width:820px){ .statband{grid-template-columns:1fr 1fr;} .statband .s:nth-child(2){border-right:0;}
+    .statband .s:nth-child(1),.statband .s:nth-child(2){border-bottom:1px solid rgba(148,163,184,.1);} }
+
+  .works{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+  @media (max-width:1000px){ .works{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:520px){ .works{grid-template-columns:1fr;} }
+  .work{position:relative;display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;background:linear-gradient(168deg,rgba(19,31,54,.8),rgba(11,19,32,.7));
+    cursor:pointer;transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .25s,box-shadow .3s;}
+  .work:hover,.work:focus-visible{transform:translateY(-4px);border-color:rgba(37,99,235,.5);
+    box-shadow:0 26px 56px -40px #000;}
+  .work__media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0A1322;}
+  .work__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+  .work:hover .work__media img{transform:scale(1.05);}
+  .work__veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,15,0) 45%,rgba(5,8,15,.7));}
+  .work__type{position:absolute;top:10px;left:10px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;color:#DCE6F5;background:rgba(7,12,21,.66);border:1px solid rgba(148,163,184,.3);
+    border-radius:5px;padding:2px 7px;backdrop-filter:blur(6px);}
+  .work__type.film{color:#CFE0FF;border-color:rgba(59,130,246,.5);background:rgba(37,99,235,.3);}
+  .work__body{padding:12px 13px 14px;display:flex;flex-direction:column;gap:5px;}
+  .work__title{font-size:13.5px;font-weight:700;color:#E7EEF9;letter-spacing:-.015em;line-height:1.42;}
+  .work__meta{font-size:11px;color:#8A99B0;line-height:1.5;}
+  .work__metric{margin-top:4px;font-size:10.5px;font-weight:600;color:#FFD9A3;}
+  .works-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(22px,3vw,30px);}
+  .cta-count{font-size:11.5px;color:#7E93B4;margin-left:2px;}
+
+  /* ---------- footer nav ---------- */
+  footer .fnav{display:flex;flex-wrap:wrap;gap:14px;}
+  footer .fnav a:hover{color:#CFDCEE;}
+
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
@@ -378,12 +434,28 @@
       <span>이석연 <span class="en">Seokyeon Lee</span></span>
     </a>
     <nav class="nav-links" aria-label="주요 섹션">
+      <a href="#works">Selected Works</a>
       <a href="#focus">Core Focus</a>
-      <a href="#architecture">Architecture</a>
+      <a href="./projects.html">캠페인 아카이브</a>
+      <a href="./films.html">영상 필름</a>
       <a href="#tool">Free Tool</a>
       <a href="#career">Career</a>
     </nav>
     <a class="nav-cta" href="#contact">Contact</a>
+    <button class="nav-toggle" type="button" id="navToggle" aria-expanded="false" aria-controls="navPanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      MENU
+    </button>
+    <div class="nav-panel" id="navPanel">
+      <a href="#works">Selected Works <span>01</span></a>
+      <a href="#focus">Core Focus <span>02</span></a>
+      <a href="#architecture">Architecture <span>03</span></a>
+      <a href="./projects.html">캠페인 아카이브 <span>43</span></a>
+      <a href="./films.html">영상 필름 <span>18</span></a>
+      <a href="#tool">Free Tool <span>04</span></a>
+      <a href="#career">Career <span>05</span></a>
+      <a href="#contact">Contact <span>06</span></a>
+    </div>
   </div>
 </header>
 
@@ -403,19 +475,25 @@
             사람이 바뀌어도 같은 품질이 나오는 <strong>마케팅 운영 체계</strong>를 만듭니다.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:seokyeon.lee@carelabs.co.kr">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
-              이메일로 연락하기
+            <a class="btn btn-primary" href="./projects.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M8 4.5v15M16 4.5v15"/></svg>
+              캠페인 아카이브 43건
             </a>
-            <a class="btn btn-ghost" href="#focus">
-              핵심 역량 보기
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+            <a class="btn btn-ghost" href="./films.html">
+              영상 필름 18편
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
             </a>
           </div>
-          <a class="hero-tool" href="#tool">
-            <span class="ht-dot"></span>무료 툴 — 광고 카피 · 심의 주의어 체크기
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </a>
+          <div style="display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center">
+            <a class="hero-tool" href="#tool">
+              <span class="ht-dot"></span>무료 툴 — 광고 카피 · 심의 주의어 체크기
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="hero-tool" href="mailto:seokyeon.lee@carelabs.co.kr">
+              <span class="ht-dot"></span>이메일로 연락하기
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
         </div>
 
         <div style="display:grid;gap:18px">
@@ -457,11 +535,164 @@
     </div>
   </div>
 
+  <!-- ================= SELECTED WORKS ================= -->
+  <section id="works">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-num">01 — SELECTED WORKS</span>
+        <h2>숫자로 남은 캠페인,<br>화면으로 확인하는 작업</h2>
+        <p class="sec-sub">
+          캐릭터 IP부터 글로벌 브랜드 필름까지, 기획과 운영의 결과를 성과 숫자와 함께 모았습니다.
+          카드를 누르면 해당 캠페인의 상세나 영상이 아카이브에서 바로 열립니다.
+        </p>
+      </div>
+
+      <div class="statband reveal" role="list" aria-label="핵심 성과">
+        <div class="s" role="listitem">
+          <span class="v">193<em>억</em></span>
+          <span class="k">3년 누적 매출 · 넷마블 사업1실</span>
+        </div>
+        <div class="s" role="listitem">
+          <span class="v">26<em>건</em></span>
+          <span class="k">1년간 완료 프로젝트 (2024)</span>
+        </div>
+        <div class="s" role="listitem">
+          <span class="v">21<em>명</em></span>
+          <span class="k">담당 구성원 · 팀 리드</span>
+        </div>
+        <div class="s" role="listitem">
+          <span class="v">0<em>명</em></span>
+          <span class="k">3년간 퇴사자</span>
+        </div>
+      </div>
+      <p class="stat-note reveal">* 넷마블 사업1실 리드 기간(2021.10—2025.05) 기준 수치입니다.</p>
+
+      <div class="works">
+        <a class="work reveal" href="./projects.html#kungya-restaurants">
+          <span class="work__media">
+            <img src="./assets/projects/kungya-restaurants.jpg" alt="쿵야 레스토랑즈 캠페인 이미지" loading="lazy" decoding="async" width="800" height="600">
+            <span class="work__veil"></span>
+            <span class="work__type">Campaign</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">쿵야 레스토랑즈</span>
+            <span class="work__meta">넷마블 · 캐릭터 IP · 인스타그램</span>
+            <span class="work__metric">Zero → 16.9만 팔로워 · 10일 연속 오픈런</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./projects.html#nike-snkrs">
+          <span class="work__media">
+            <img src="./assets/projects/nike-snkrs.jpg" alt="NIKE SNKRS 캠페인 이미지" loading="lazy" decoding="async" width="800" height="600">
+            <span class="work__veil"></span>
+            <span class="work__type">Campaign</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">NIKE SNKRS 캠페인</span>
+            <span class="work__meta">NIKE KOREA · IMC · 웹 게임</span>
+            <span class="work__metric">KPI 400% 초과 · 앱스토어 무료 1위</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./projects.html#mcdonalds-jindo">
+          <span class="work__media">
+            <img src="./assets/projects/mcdonalds-jindo.jpg" alt="맥도날드 진도 대파 캠페인 이미지" loading="lazy" decoding="async" width="800" height="600">
+            <span class="work__veil"></span>
+            <span class="work__type">Campaign</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">맥도날드 진도 대파 캠페인</span>
+            <span class="work__meta">맥도날드 · 온·오프라인 통합</span>
+            <span class="work__metric">참여 44만 · 플레이 140만 회</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./projects.html#innisfree-sns">
+          <span class="work__media">
+            <img src="./assets/projects/innisfree-sns.jpg" alt="이니스프리 페이스북 이미지" loading="lazy" decoding="async" width="800" height="600">
+            <span class="work__veil"></span>
+            <span class="work__type">Campaign</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">이니스프리 페이스북</span>
+            <span class="work__meta">아모레퍼시픽 · 소셜 미디어</span>
+            <span class="work__metric">9개월 16.8만 팬 · 웹어워드 대상</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./films.html#samsung-exynos-2100">
+          <span class="work__media">
+            <img src="./assets/films/02-samsung-exynos-2100.jpg" alt="Exynos 2100 영상 스틸" loading="lazy" decoding="async" width="1280" height="720">
+            <span class="work__veil"></span>
+            <span class="work__type film">Film</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">Exynos 2100: Mobile redefined</span>
+            <span class="work__meta">Samsung · eMforce · Palomino</span>
+            <span class="work__metric">글로벌 브랜드 필름 · TECH</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./films.html#nike-air-force-1">
+          <span class="work__media">
+            <img src="./assets/films/05-nike-air-force-1.jpg" alt="Nike Air Force 1 Rap Cypher 영상 스틸" loading="lazy" decoding="async" width="1280" height="720">
+            <span class="work__veil"></span>
+            <span class="work__type film">Film</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">Nike Air Force 1 Rap Cypher</span>
+            <span class="work__meta">Nike KOREA · Emotion</span>
+            <span class="work__metric">12명 힙합 아티스트 컬래버 · FASHION</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./films.html#hera-secret-party">
+          <span class="work__media">
+            <img src="./assets/films/16-hera-secret-party.jpg" alt="HERA X EDITH CARRON Secret Party 영상 스틸" loading="lazy" decoding="async" width="1280" height="720">
+            <span class="work__veil"></span>
+            <span class="work__type film">Film</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">HERA X EDITH CARRON</span>
+            <span class="work__meta">아모레퍼시픽 · eMforce · Directors Company</span>
+            <span class="work__metric">뷰티 아트 컬래버레이션 · BEAUTY</span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="./films.html#ebslang-back-view-syndrome">
+          <span class="work__media">
+            <img src="./assets/films/09-ebslang-back-view-syndrome.jpg" alt="초목달 뒷모습증후군 영상 스틸" loading="lazy" decoding="async" width="1280" height="720">
+            <span class="work__veil"></span>
+            <span class="work__type film">Film</span>
+          </span>
+          <span class="work__body">
+            <span class="work__title">초목달 뒷모습증후군</span>
+            <span class="work__meta">EBS · eMforce</span>
+            <span class="work__metric">바이럴 300만 뷰 · BRAND</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="works-cta reveal">
+        <a class="btn btn-primary" href="./projects.html">
+          전체 캠페인 43건 보기
+          <span class="cta-count">Campaign Archive</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="./films.html">
+          전체 영상 필름 18편 보기
+          <span class="cta-count">Film Archive</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= FOCUS ================= -->
   <section id="focus">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-num">01 — CORE FOCUS</span>
+        <span class="sec-num">02 — CORE FOCUS</span>
         <h2>일이 굴러가는 구조를<br>설계합니다</h2>
         <p class="sec-sub">
           개인의 역량에 기대는 운영은 사람이 바뀌는 순간 무너집니다. 기준과 데이터, 그리고 그 위에 얹은 자동화로
@@ -513,7 +744,7 @@
   <section id="architecture">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-num">02 — ARCHITECTURE</span>
+        <span class="sec-num">03 — ARCHITECTURE</span>
         <h2>직접 만든 업무 시스템,<br>개념 수준 공개</h2>
         <p class="sec-sub">
           기획팀 운영을 위해 직접 설계하고 구축한 업무 시스템의 개념 아키텍처입니다.
@@ -579,7 +810,7 @@
   <section id="tool">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-num">03 — FREE TOOL</span>
+        <span class="sec-num">04 — FREE TOOL</span>
         <h2>광고 카피 · 심의 주의어 체크기</h2>
         <p class="sec-sub">
           AI 마케팅 기획 현장에서 매일 쓰는 1차 점검 도구입니다. 카피를 붙여넣으면 글자 수·바이트와
@@ -647,14 +878,14 @@
   <section id="career">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-num">04 — CAREER</span>
+        <span class="sec-num">05 — CAREER</span>
         <h2>기획의 현장에서<br>운영의 구조까지</h2>
       </div>
 
       <div class="career-grid">
         <div class="timeline">
           <div class="titem now reveal">
-            <div class="tmeta"><span class="tperiod">현재</span></div>
+            <div class="tmeta"><span class="tperiod">2026.10 — 현재</span><span class="badge">재직 중</span></div>
             <h3 class="tcompany">주식회사 케어랩스</h3>
             <p class="trole">DM사업부 기획팀 팀장</p>
             <p class="tdesc">
@@ -664,9 +895,33 @@
           </div>
 
           <div class="titem reveal">
-            <div class="tmeta"><span class="tperiod">이전</span></div>
+            <div class="tmeta"><span class="tperiod">2021.10 — 2025.05</span></div>
             <h3 class="tcompany">넷마블MNB</h3>
-            <p class="trole">사업1실장</p>
+            <p class="trole">사업1실 실장</p>
+            <p class="tdesc">
+              21명 규모 조직을 리드하며 3년 누적 193억, 2024년 한 해 26건의 프로젝트를 완료했습니다.
+              캐릭터 IP 개발·소셜 미디어·IMC·유튜브·라이브 커머스까지 마케팅 전 영역을 총괄했습니다.
+            </p>
+          </div>
+
+          <div class="titem reveal">
+            <div class="tmeta"><span class="tperiod">2019.09 — 2021.08</span></div>
+            <h3 class="tcompany">가야미디어</h3>
+            <p class="trole">디지털콘텐츠팀 차장 · 팀장</p>
+            <p class="tdesc">
+              브랜드 필름과 디지털 콘텐츠 제작을 기획·총괄했습니다.
+              아모레퍼시픽·도이치모터스·GOAL STUDIO 등의 브랜드 작업을 이끌었습니다.
+            </p>
+          </div>
+
+          <div class="titem reveal">
+            <div class="tmeta"><span class="tperiod">2016.11 — 2019.05</span></div>
+            <h3 class="tcompany">엠포스</h3>
+            <p class="trole">영상기획팀 과장 · 팀장</p>
+            <p class="tdesc">
+              삼성전자 Exynos·ISOCELL 글로벌 캠페인, 우리카드, EBS 등 브랜드 영상과
+              디지털 캠페인의 영상 기획을 담당했습니다.
+            </p>
           </div>
 
           <div class="titem reveal">
@@ -686,6 +941,8 @@
             <div class="kv"><span>주요 영역</span><span>마케팅 기획 · 운영 설계</span></div>
             <div class="kv"><span>관심 분야</span><span>AI 워크플로우 · 자동화</span></div>
             <div class="kv"><span>협업 방식</span><span>기준 정의 → 도구화 → 검증</span></div>
+            <div class="kv"><span>캠페인 아카이브</span><span><a href="./projects.html" style="color:#BFD4FF;text-decoration:underline;text-underline-offset:3px">43건 보기 ↗</a></span></div>
+            <div class="kv"><span>영상 필름</span><span><a href="./films.html" style="color:#BFD4FF;text-decoration:underline;text-underline-offset:3px">18편 보기 ↗</a></span></div>
             <div class="kv"><span>블로그 연재</span><span><a href="https://blog.naver.com/bluesy0114" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-underline-offset:3px">네이버 블로그 ↗</a></span></div>
           </div>
         </aside>
@@ -697,7 +954,7 @@
   <section id="contact" class="contact">
     <div class="wrap">
       <div class="contact-card reveal">
-        <span class="sec-num">05 — CONTACT</span>
+        <span class="sec-num">06 — CONTACT</span>
         <h2>마케팅 운영을 구조로 바꾸는 일,<br>같이 이야기해요</h2>
         <a class="contact-mail" href="mailto:seokyeon.lee@carelabs.co.kr">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
@@ -707,7 +964,13 @@
           기고 · 강연 · 협업 제안은 위 이메일로 보내주세요. 업무 시스템 설계나 마케팅 프로세스 개선에 관한
           이야기라면 언제든 환영합니다.
         </p>
-        <div style="margin-top:26px;padding-top:22px;border-top:1px solid rgba(15,23,42,.10);display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+        <div style="margin-top:26px;padding-top:22px;border-top:1px solid rgba(148,163,184,.14);display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+          <a href="./projects.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;background:rgba(37,99,235,.18);border:1px solid rgba(59,130,246,.45);color:#DCE6F5;font-size:13.5px;font-weight:600;text-decoration:none">
+            캠페인 아카이브 43건 ↗
+          </a>
+          <a href="./films.html" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;background:rgba(37,99,235,.18);border:1px solid rgba(59,130,246,.45);color:#DCE6F5;font-size:13.5px;font-weight:600;text-decoration:none">
+            영상 필름 18편 ↗
+          </a>
           <a href="https://blog.naver.com/bluesy0114" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.14);color:#0f172a;font-size:13.5px;font-weight:600;text-decoration:none">
             네이버 블로그 (AI 마케팅 실전 제작기) ↗
           </a>
@@ -723,6 +986,13 @@
 <footer>
   <div class="wrap">
     <span>© 2026 이석연 (Seokyeon Lee)</span>
+    <span class="fnav">
+      <a href="./index.html">홈</a>
+      <a href="./projects.html">캠페인 아카이브</a>
+      <a href="./films.html">영상 필름</a>
+      <a href="#tool">무료 툴</a>
+      <a href="#contact">연락</a>
+    </span>
     <span class="fnote">이 페이지는 개인의 공개 포트폴리오이며, 재직 회사의 공식 입장을 대표하지 않습니다.</span>
   </div>
 </footer>
@@ -878,6 +1148,34 @@
       input.focus();
     });
     update();
+  })();
+</script>
+<script>
+  /* ---------- mobile nav ---------- */
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var panel = document.getElementById('navPanel');
+    if (!toggle || !panel) return;
+    function close() {
+      panel.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target) || toggle.contains(e.target)) return;
+      close();
+    });
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) { close(); toggle.focus(); }
+    });
   })();
 </script>
 </body>

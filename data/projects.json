@@ -1,0 +1,1236 @@
+{
+ "count": 43,
+ "projects": [
+  {
+   "id": "kungya-restaurants",
+   "title": "쿵야 레스토랑즈",
+   "titleEn": "Koongya Restaurantz",
+   "client": "넷마블",
+   "clientEn": "Netmarble",
+   "category": "character-ip",
+   "period": "2022.03 ~ 2025.05",
+   "periodEn": "2022.03 ~ 2025.05",
+   "image": "./assets/projects/kungya-restaurants.jpg",
+   "role": [
+    "넷마블 IP '양파쿵야' 활용 인스타그램 채널 기획 및 운영 총괄",
+    "세계관 구축 및 캐릭터 개발, 이모티콘 개발 및 배포",
+    "팝업스토어 기획 및 브랜드 컬래버레이션 총괄"
+   ],
+   "roleEn": [
+    "Instagram channel planning and operations using Netmarble IP 'Onion Koongya'",
+    "Worldbuilding, character development, emoticon development and distribution",
+    "Pop-up store planning and brand collaboration management"
+   ],
+   "result": [
+    "Zero → 169,000명 팔로워 달성",
+    "팝업스토어 10일 연속 오픈런 성료",
+    "MZ세대 타깃 일상 공감 콘텐츠로 높은 인게이지먼트 확보"
+   ],
+   "resultEn": [
+    "Zero → 169K followers achieved",
+    "Pop-up store: 10 consecutive days of sold-out openings",
+    "High engagement through relatable content targeting Gen MZ"
+   ],
+   "description": "넷마블의 캐릭터 IP '양파쿵야'를 활용하여 MZ세대를 타깃으로 한 인스타그램 채널을 제로베이스에서 16만 팔로워까지 성장시킨 프로젝트입니다.",
+   "descriptionEn": "Grew Netmarble's character IP 'Onion Koongya' Instagram channel from zero to 160K followers, targeting Gen MZ with relatable daily content.",
+   "no": 1,
+   "categoryLabel": "캐릭터 IP",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_005_d89f8931.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "pulmuone-wonderland",
+   "title": "풀무원더랜드 시즌2",
+   "titleEn": "Pulmuone Wonderland S2",
+   "client": "풀무원",
+   "clientEn": "Pulmuone",
+   "category": "character-ip",
+   "period": "2023 ~ 2024.12",
+   "periodEn": "2023 ~ 2024.12",
+   "image": "./assets/projects/pulmuone-wonderland.jpg",
+   "role": [
+    "풀무원더랜드 시즌2 세계관 설정 및 캐릭터 개발",
+    "캐릭터를 활용한 캠페인 전개",
+    "온라인 인터랙티브 캠페인 기획 및 운영"
+   ],
+   "roleEn": [
+    "Pulmuone Wonderland S2 worldbuilding and character development",
+    "Campaign execution leveraging character IP",
+    "Online interactive campaign planning and operations"
+   ],
+   "result": [
+    "총 버즈량 약 15,000건 이상",
+    "평균 KPI 123.5% 초과 달성"
+   ],
+   "resultEn": [
+    "Total buzz volume: 15,000+",
+    "Average KPI exceeded by 123.5%"
+   ],
+   "description": "풀무원의 캐릭터 IP를 활용한 시즌2 세계관 설정 및 캐릭터 개발 프로젝트입니다.",
+   "descriptionEn": "Season 2 worldbuilding and character development project leveraging Pulmuone's character IP with gamification-driven brand experiences.",
+   "no": 2,
+   "categoryLabel": "캐릭터 IP",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_008_b853406e.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "imvita-character",
+   "title": "아임비타 캐릭터 개발",
+   "titleEn": "I'm Vita Character Dev",
+   "client": "종근당건강",
+   "clientEn": "Chong Kun Dang Health",
+   "category": "character-ip",
+   "period": "2024 ~ 2025.05",
+   "periodEn": "2024 ~ 2025.05",
+   "image": "./assets/projects/imvita-character.jpg",
+   "role": [
+    "아임비타 구미 캐릭터 개발",
+    "꾸미컴퍼니 세계관 구축",
+    "SNS 채널 운영 및 오프라인 프로모션 기획"
+   ],
+   "roleEn": [
+    "I'm Vita gummy character development",
+    "Kkumi Company worldbuilding",
+    "SNS channel operations and offline promotion planning"
+   ],
+   "description": "종근당건강 아임비타의 캐릭터 IP를 개발하고 세계관을 구축하여 SNS 채널 운영과 오프라인 프로모션까지 연계한 통합 마케팅 프로젝트입니다.",
+   "descriptionEn": "Integrated marketing project developing character IP for Chong Kun Dang Health's I'm Vita, including worldbuilding, SNS operations, and offline promotions.",
+   "no": 3,
+   "categoryLabel": "캐릭터 IP",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_009_9f70d952.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "kia-people",
+   "title": "기아 사람들 캐릭터",
+   "titleEn": "Kia People Character",
+   "client": "기아",
+   "clientEn": "Kia",
+   "category": "character-ip",
+   "period": "2024.10 ~ 2025.05",
+   "periodEn": "2024.10 ~ 2025.05",
+   "image": "./assets/projects/kia-people.jpg",
+   "role": [
+    "기아 새로운 캐릭터 '퍼펭' 개발",
+    "퍼펭이의 성장 스토리를 담은 SNS 채널 운영 전개"
+   ],
+   "roleEn": [
+    "Development of Kia's new character 'Perpeng'",
+    "SNS channel operations featuring Perpeng's growth story"
+   ],
+   "description": "기아자동차의 새로운 캐릭터 '퍼펭'을 개발하고, 캐릭터의 성장 스토리를 담은 SNS 채널을 운영하는 프로젝트입니다.",
+   "descriptionEn": "Developed Kia's new character 'Perpeng' and operated SNS channels featuring the character's growth narrative.",
+   "no": 4,
+   "categoryLabel": "캐릭터 IP",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_010_fb551ac7.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "kungya-sns",
+   "title": "쿵야 레스토랑즈 SNS",
+   "titleEn": "Koongya Restaurantz SNS",
+   "client": "넷마블",
+   "clientEn": "Netmarble",
+   "category": "social-media",
+   "period": "2022.03 ~ 2025.05",
+   "periodEn": "2022.03 ~ 2025.05",
+   "image": "./assets/projects/kungya-sns.jpg",
+   "role": [
+    "MZ세대 타깃 일상 공감 콘텐츠 기획 및 제작",
+    "인스타그램 채널 운영 총괄"
+   ],
+   "roleEn": [
+    "Relatable daily content planning and production targeting Gen MZ",
+    "Overall Instagram channel operations management"
+   ],
+   "result": [
+    "Zero → 163,000명 팔로워 달성"
+   ],
+   "resultEn": [
+    "Zero → 163K followers achieved"
+   ],
+   "description": "넷마블 MNB의 IP 양파쿵야를 활용한 인스타그램 채널을 제로베이스에서 약 16만 팔로워까지 성장시킨 소셜 미디어 운영 프로젝트입니다.",
+   "descriptionEn": "Social media operations project growing Netmarble's Onion Koongya Instagram from zero to 160K followers.",
+   "no": 5,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_012_5a21d3ce.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "baccus-sns",
+   "title": "박카스 제리&뚜껑이",
+   "titleEn": "Bacchus Jerry & Ttukkeongi",
+   "client": "동아제약",
+   "clientEn": "Dong-A Pharmaceutical",
+   "category": "social-media",
+   "period": "2021 ~ 2023",
+   "periodEn": "2021 ~ 2023",
+   "image": "./assets/projects/baccus-sns.jpg",
+   "role": [
+    "박카스 캐릭터 IP 공식 서브 인스타그램 운영",
+    "실사, 릴스, 스토리툰 등 다양한 콘텐츠 제작"
+   ],
+   "roleEn": [
+    "Official sub-Instagram operations for Bacchus character IP",
+    "Diverse content production including reels, story-toons, and live-action"
+   ],
+   "result": [
+    "300명 → 54,000명 팔로워 달성 (약 180배 성장)"
+   ],
+   "resultEn": [
+    "300 → 54K followers (approx. 180x growth)"
+   ],
+   "description": "동아제약 박카스의 캐릭터 IP '제리&뚜껑이'를 활용한 인스타그램 채널을 300명에서 54,000명까지 성장시킨 프로젝트입니다.",
+   "descriptionEn": "Grew Dong-A Pharmaceutical's Bacchus character IP Instagram from 300 to 54K followers.",
+   "no": 6,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_013_a88878f0.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "emart24-sns",
+   "title": "이마트24 인스타그램",
+   "titleEn": "Emart24 Instagram",
+   "client": "이마트24",
+   "clientEn": "Emart24",
+   "category": "social-media",
+   "period": "2023 ~ 2025.05",
+   "periodEn": "2023 ~ 2025.05",
+   "image": "./assets/projects/emart24-sns.jpg",
+   "role": [
+    "이마트24 공식 인스타그램 운영",
+    "셀럽 협업 바이럴 영상 기획 및 제작",
+    "인지도 및 세일즈 위주 콘텐츠 기획"
+   ],
+   "roleEn": [
+    "Official Emart24 Instagram operations",
+    "Celebrity collaboration viral video planning and production",
+    "Awareness and sales-focused content planning"
+   ],
+   "result": [
+    "19만명 → 30.4만명 (약 60% 증가)"
+   ],
+   "resultEn": [
+    "190K → 304K followers (approx. 60% growth)"
+   ],
+   "description": "이마트24 공식 인스타그램 채널을 운영하며 셀럽 및 연기자와 협업한 바이럴 영상을 기획하여 팔로워를 60% 이상 성장시킨 프로젝트입니다.",
+   "descriptionEn": "Operated Emart24's official Instagram, growing followers by 60%+ through celebrity collaboration viral videos.",
+   "no": 7,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_016_6628bf7d.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "macao-sns",
+   "title": "마카오정부관광청 디지털 채널",
+   "titleEn": "Macao Tourism Digital Channels",
+   "client": "마카오정부관광청",
+   "clientEn": "Macao Gov. Tourism Office",
+   "category": "social-media",
+   "period": "2023.04 ~ 12",
+   "periodEn": "2023.04 ~ 12",
+   "image": "./assets/projects/macao-sns.jpg",
+   "role": [
+    "마카오정부관광청 통합 디지털 채널 운영",
+    "IG/FB/KA/BO/YT 멀티 채널 세팅 및 운영"
+   ],
+   "roleEn": [
+    "Integrated digital channel operations for Macao Gov. Tourism Office",
+    "Multi-channel setup and operations across IG/FB/KA/BO/YT"
+   ],
+   "result": [
+    "8,274명 → 15,419명 (약 86.4% 증가)"
+   ],
+   "resultEn": [
+    "8,274 → 15,419 followers (approx. 86.4% growth)"
+   ],
+   "description": "마카오정부관광청의 국내 디지털 채널을 통합 운영하며 관광 유치 목적의 콘텐츠를 기획하여 팔로워를 86% 이상 성장시킨 프로젝트입니다.",
+   "descriptionEn": "Operated Macao Tourism's domestic digital channels, growing followers by 86%+ with tourism-focused content.",
+   "no": 8,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_017_22682e43.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "innisfree-sns",
+   "title": "이니스프리 페이스북",
+   "titleEn": "Innisfree Facebook",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "social-media",
+   "period": "2017.01 ~ 12",
+   "periodEn": "2017.01 ~ 12",
+   "image": "./assets/projects/innisfree-sns.jpg",
+   "role": [
+    "이니스프리 팬 페이지 운영 및 콘텐츠 기획",
+    "이벤트/카드우대 등 콘텐츠 기획"
+   ],
+   "roleEn": [
+    "Innisfree fan page operations and content planning",
+    "Event/card promotion content planning"
+   ],
+   "result": [
+    "9개월 만에 팬 수 168,000명 증가 (누적 758,000명)",
+    "제14회 웹어워드 코리아 브랜드/SNS부문 '대상' 수상"
+   ],
+   "resultEn": [
+    "168K new fans in 9 months (cumulative 758K)",
+    "14th Web Award Korea Brand/SNS Grand Prize"
+   ],
+   "description": "이니스프리 페이스북 팬 페이지를 운영하며 차별화된 레이아웃과 크리에이티브로 9개월 만에 16.8만 팬을 증가시키고 웹어워드 대상을 수상한 프로젝트입니다.",
+   "descriptionEn": "Operated Innisfree's Facebook fan page, gaining 168K fans in 9 months with differentiated creatives and winning the Web Award Korea Grand Prize.",
+   "no": 9,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_061_d4ed789c.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "sulwhasoo-sns",
+   "title": "설화수 인스타그램",
+   "titleEn": "Sulwhasoo Instagram",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "social-media",
+   "period": "2019.09 ~ 2020",
+   "periodEn": "2019.09 ~ 2020",
+   "image": "./assets/projects/sulwhasoo-sns.jpg",
+   "role": [
+    "설화수 공식 인스타그램 기획 운영",
+    "월별 콘텐츠 필러 기획 및 제품 속성 정의",
+    "설화문화전, 설화수 컬쳐 계정 추가 기획 운영"
+   ],
+   "roleEn": [
+    "Official Sulwhasoo Instagram planning and operations",
+    "Monthly content pillar planning and product attribute definition",
+    "Sulwha Cultural Exhibition and Sulwhasoo Culture account planning"
+   ],
+   "description": "설화수의 타깃을 젊은 연령대로 확장하며 한국적 아름다움과 혁신적 한방과학을 담은 인스타그램 채널을 운영한 프로젝트입니다.",
+   "descriptionEn": "Operated Sulwhasoo's Instagram expanding the target to younger demographics with Korean beauty and innovative herbal science content.",
+   "no": 10,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_062_2a3ce150.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "hera-sns",
+   "title": "HERA 유튜브/SNS",
+   "titleEn": "HERA YouTube/SNS",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "social-media",
+   "period": "2016.01 ~ 2020",
+   "periodEn": "2016.01 ~ 2020",
+   "image": "./assets/projects/hera-sns.jpg",
+   "role": [
+    "HERA SNS 연간 계약 운영",
+    "아티스트 토크 및 시즌별 주력 제품 튜토리얼 영상 기획",
+    "글로벌 콘텐츠 제작 (중국, 싱가폴)"
+   ],
+   "roleEn": [
+    "Annual HERA SNS contract operations",
+    "Artist talk and seasonal product tutorial video planning",
+    "Global content production (China, Singapore)"
+   ],
+   "description": "HERA의 SNS 채널을 연간 운영하며 시즌별 주력 제품 튜토리얼, 아티스트 토크 등 다양한 콘텐츠를 기획하고 글로벌 시장까지 확장한 프로젝트입니다.",
+   "descriptionEn": "Operated HERA's SNS channels annually with seasonal product tutorials, artist talks, and global market expansion.",
+   "no": 11,
+   "categoryLabel": "소셜 미디어",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_065_8d198e71.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "mcdonalds-jindo",
+   "title": "맥도날드 진도 대파 캠페인",
+   "titleEn": "McDonald's Jindo Green Onion Campaign",
+   "client": "맥도날드",
+   "clientEn": "McDonald's",
+   "category": "imc-campaign",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/mcdonalds-jindo.jpg",
+   "role": [
+    "한국 입점 35주년 & 추석 시즌 맞이 웹게임 및 팝업스토어 기획",
+    "웹 게임형 마이크로 사이트 기획/구축/운영",
+    "캠페인 특별 굿즈 기획/제작/판매",
+    "쿵야 IP 개발 및 인터랙티브 캠페인 진행"
+   ],
+   "roleEn": [
+    "Web game and pop-up store planning for Korea 35th anniversary & Chuseok season",
+    "Microsite planning, development, and operations",
+    "Campaign special merchandise planning, production, and sales",
+    "Koongya IP development and interactive campaign execution"
+   ],
+   "result": [
+    "참여유저 44만, 플레이 횟수 140만 회",
+    "앱 다운로드 평균 10.2% 증가",
+    "일주일 만에 50만개 판매",
+    "진도 대파 3년간 132톤 수매로 지역 경제 활성화"
+   ],
+   "resultEn": [
+    "440K participants, 1.4M plays",
+    "App downloads increased by 10.2%",
+    "500K units sold in one week",
+    "132 tons of Jindo green onions purchased over 3 years, boosting local economy"
+   ],
+   "description": "맥도날드 진도 대파 버거 재출시 기념 온/오프라인 통합 캠페인입니다.",
+   "descriptionEn": "Integrated on/offline campaign for McDonald's Jindo Green Onion Burger relaunch, achieving 440K participants and 1.4M plays.",
+   "no": 12,
+   "categoryLabel": "IMC 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_019_a1ccd71f.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "nike-snkrs",
+   "title": "NIKE SNKRS 캠페인",
+   "titleEn": "NIKE SNKRS Campaign",
+   "client": "NIKE KOREA",
+   "clientEn": "NIKE KOREA",
+   "category": "imc-campaign",
+   "period": "2022 ~ 2024",
+   "periodEn": "2022 ~ 2024",
+   "image": "./assets/projects/nike-snkrs.jpg",
+   "role": [
+    "SNKRS KR앱 출시기념 웹 게임 개발",
+    "온/오프라인 프로모션 연계 팝업스토어 기획/제작/운영",
+    "카시나 X 나이키 팝업스토어 기획"
+   ],
+   "roleEn": [
+    "Web game development for SNKRS KR app launch",
+    "Pop-up store planning and operations linked to on/offline promotions",
+    "Kasina X Nike pop-up store planning"
+   ],
+   "result": [
+    "KPI 400% 초과 달성",
+    "앱스토어 무료 다운로드 1위",
+    "8일간 누적 참여자 523,456명",
+    "스니커즈 출시 제품 조기 소진"
+   ],
+   "resultEn": [
+    "KPI exceeded by 400%",
+    "App Store #1 free download",
+    "523,456 cumulative participants in 8 days",
+    "Sneaker launch products sold out early"
+   ],
+   "description": "NIKE KOREA SNKRS팀과 장기 파트너십을 체결하고 온/오프라인 통합 캠페인 및 웹 게임을 개발한 프로젝트입니다.",
+   "descriptionEn": "Long-term partnership with NIKE KOREA SNKRS team, developing integrated on/offline campaigns and web games with record-breaking KPI 400% achievement.",
+   "no": 13,
+   "categoryLabel": "IMC 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_022_700ba214.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "emart24-kimbap",
+   "title": "이마트24 별별김밥 캠페인",
+   "titleEn": "Emart24 Kimbap Campaign",
+   "client": "이마트24",
+   "clientEn": "Emart24",
+   "category": "imc-campaign",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/emart24-kimbap.jpg",
+   "role": [
+    "'이마트24=김밥맛집' 인지 각인을 위한 캠페인 기획",
+    "크리에이터 협업 및 굿즈 제작을 통한 바이럴 극대화",
+    "SNS 채널 연계 참여 버즈량 증대"
+   ],
+   "roleEn": [
+    "Campaign planning to establish 'Emart24 = Kimbap destination' awareness",
+    "Viral maximization through creator collaboration and merchandise production",
+    "Buzz amplification through SNS channel engagement"
+   ],
+   "description": "이마트24의 김밥 브랜드 인지도를 높이기 위한 온라인 캠페인입니다.",
+   "descriptionEn": "Online campaign to boost Emart24's kimbap brand awareness through creator collaborations and character IP merchandise.",
+   "no": 14,
+   "categoryLabel": "IMC 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_025_b85cf604.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "pulmuone-interactive",
+   "title": "풀무원더랜드 인터랙티브",
+   "titleEn": "Pulmuone Wonderland Interactive",
+   "client": "풀무원",
+   "clientEn": "Pulmuone",
+   "category": "imc-campaign",
+   "period": "2023 ~ 2024",
+   "periodEn": "2023 ~ 2024",
+   "image": "./assets/projects/pulmuone-interactive.jpg",
+   "role": [
+    "브랜드 캐릭터 IP 활용 온라인 캠페인 기획",
+    "미니 게임 캠페인 설계 및 웹게임형 마이크로사이트 구축"
+   ],
+   "roleEn": [
+    "Online campaign planning leveraging brand character IP",
+    "Mini-game campaign design and web-game microsite development"
+   ],
+   "result": [
+    "총 버즈량 약 15,000건 이상",
+    "평균 KPI 123.5% 초과 달성"
+   ],
+   "resultEn": [
+    "Total buzz volume: 15,000+",
+    "Average KPI exceeded by 123.5%"
+   ],
+   "description": "풀무원 캐릭터 IP를 활용한 인터랙티브 온라인 캠페인입니다.",
+   "descriptionEn": "Interactive online campaign leveraging Pulmuone's character IP with gamification, exceeding KPI by 123.5%.",
+   "no": 15,
+   "categoryLabel": "IMC 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_024_8973db5c.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "emart24-youtube",
+   "title": "이마트24 유튜브",
+   "titleEn": "Emart24 YouTube",
+   "client": "이마트24",
+   "clientEn": "Emart24",
+   "category": "youtube",
+   "period": "2023 ~ 2025.05",
+   "periodEn": "2023 ~ 2025.05",
+   "image": "./assets/projects/emart24-youtube.jpg",
+   "role": [
+    "이마트24 연간 유튜브 콘텐츠 기획 및 제작",
+    "SSG QUIZ, Delicious Song 등 다양한 포맷 개발"
+   ],
+   "roleEn": [
+    "Annual Emart24 YouTube content planning and production",
+    "Development of various formats including SSG QUIZ, Delicious Song"
+   ],
+   "description": "이마트24의 유튜브 채널을 연간 운영하며 다양한 콘텐츠 포맷을 개발하고 제작한 프로젝트입니다.",
+   "descriptionEn": "Annual YouTube channel operations for Emart24, developing diverse content formats.",
+   "no": 16,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_027_2552b5d1.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "porsche-video",
+   "title": "포르쉐 미디어 데이",
+   "titleEn": "Porsche Media Day",
+   "client": "포르쉐",
+   "clientEn": "Porsche",
+   "category": "youtube",
+   "period": "2023",
+   "periodEn": "2023",
+   "image": "./assets/projects/porsche-video.jpg",
+   "role": [
+    "포르쉐 존 더 분쉬 미디어 데이 스케치 영상 제작",
+    "718 & 911 모델 인스타그램 릴스 제작"
+   ],
+   "roleEn": [
+    "Porsche Zone the Bunshi Media Day sketch video production",
+    "718 & 911 model Instagram Reels production"
+   ],
+   "description": "포르쉐 미디어 데이 스케치 영상과 인스타그램 릴스를 제작한 프로젝트입니다.",
+   "descriptionEn": "Produced Porsche Media Day sketch videos and Instagram Reels for 718 & 911 models.",
+   "no": 17,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_029_f1b80ba1.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "coway-youtube",
+   "title": "코웨이 유튜브",
+   "titleEn": "Coway YouTube",
+   "client": "코웨이",
+   "clientEn": "Coway",
+   "category": "youtube",
+   "period": "2024 ~ 2025.05",
+   "periodEn": "2024 ~ 2025.05",
+   "image": "./assets/projects/coway-youtube.svg",
+   "role": [
+    "코웨이 유튜브 채널 콘텐츠 기획 및 제작",
+    "브랜드 인지도 향상을 위한 영상 콘텐츠 전략"
+   ],
+   "roleEn": [
+    "Coway YouTube channel content planning and production",
+    "Video content strategy for brand awareness enhancement"
+   ],
+   "description": "코웨이 유튜브 채널의 콘텐츠를 기획하고 제작하여 브랜드 인지도를 향상시킨 프로젝트입니다.",
+   "descriptionEn": "Content planning and production for Coway's YouTube channel to enhance brand awareness.",
+   "no": 18,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_030_3e2f8e9c.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "ske-youtube",
+   "title": "SK E&S 유튜브",
+   "titleEn": "SK E&S YouTube",
+   "client": "SK E&S",
+   "clientEn": "SK E&S",
+   "category": "youtube",
+   "period": "2024 ~ 2025.05",
+   "periodEn": "2024 ~ 2025.05",
+   "image": "./assets/projects/ske-youtube.svg",
+   "role": [
+    "SK E&S 유튜브 콘텐츠 기획 및 제작 관리",
+    "에너지 기업 브랜드 커뮤니케이션 전략"
+   ],
+   "roleEn": [
+    "SK E&S YouTube content planning and production management",
+    "Energy company brand communication strategy"
+   ],
+   "description": "SK E&S의 유튜브 채널 콘텐츠를 기획하고 제작하여 에너지 기업의 브랜드 커뮤니케이션을 강화한 프로젝트입니다.",
+   "descriptionEn": "YouTube content planning and production for SK E&S, strengthening energy company brand communication.",
+   "no": 19,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_031_9c2e8d7b.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "baccus-youtube",
+   "title": "박카스 유튜브",
+   "titleEn": "Bacchus YouTube",
+   "client": "동아제약",
+   "clientEn": "Dong-A Pharmaceutical",
+   "category": "youtube",
+   "period": "2024 ~ 2025.05",
+   "periodEn": "2024 ~ 2025.05",
+   "image": "./assets/projects/baccus-youtube.svg",
+   "role": [
+    "박카스 유튜브 채널 콘텐츠 기획 및 제작",
+    "브랜드 헤리티지 활용 콘텐츠 전략"
+   ],
+   "roleEn": [
+    "Bacchus YouTube channel content planning and production",
+    "Content strategy leveraging brand heritage"
+   ],
+   "description": "동아제약 박카스의 유튜브 채널 콘텐츠를 기획하고 제작한 프로젝트입니다.",
+   "descriptionEn": "YouTube content planning and production for Dong-A Pharmaceutical's Bacchus brand.",
+   "no": 20,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_032_b5e3c8a1.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "nike-running-max",
+   "title": "NIKE Running Max",
+   "titleEn": "NIKE Running Max",
+   "client": "NIKE KOREA",
+   "clientEn": "NIKE KOREA",
+   "category": "influencer",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/nike-running-max.svg",
+   "role": [
+    "NIKE Running Max 캠페인 기획 및 운영",
+    "러닝 인플루언서 제휴 및 관리",
+    "웹 게임 개발 및 오프라인 이벤트 연계"
+   ],
+   "roleEn": [
+    "NIKE Running Max campaign planning and operations",
+    "Running influencer partnerships and management",
+    "Web game development and offline event integration"
+   ],
+   "description": "NIKE KOREA의 러닝 캠페인 'Running Max'를 기획하고 인플루언서 제휴, 웹 게임, 오프라인 이벤트를 연계한 프로젝트입니다.",
+   "descriptionEn": "Planned and operated NIKE KOREA's 'Running Max' campaign with influencer partnerships, web games, and offline events.",
+   "no": 21,
+   "categoryLabel": "인플루언서",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_035_a7d2c1e9.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "hyundai-livart",
+   "title": "현대리바트 캠페인",
+   "titleEn": "Hyundai Livart Campaign",
+   "client": "현대리바트",
+   "clientEn": "Hyundai Livart",
+   "category": "influencer",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/hyundai-livart.svg",
+   "role": [
+    "현대리바트 온/오프라인 캠페인 기획 및 제작 관리",
+    "인플루언서 제휴 및 콘텐츠 제작"
+   ],
+   "roleEn": [
+    "Hyundai Livart on/offline campaign planning and production management",
+    "Influencer partnerships and content production"
+   ],
+   "description": "현대리바트의 온/오프라인 통합 캠페인을 기획하고 인플루언서 제휴를 통해 브랜드 인지도를 높인 프로젝트입니다.",
+   "descriptionEn": "Integrated on/offline campaign for Hyundai Livart with influencer partnerships to boost brand awareness.",
+   "no": 22,
+   "categoryLabel": "인플루언서",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_038_c4b8e2d7.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "macao-influencer",
+   "title": "마카오관광청 인플루언서",
+   "titleEn": "Macao Tourism Influencer",
+   "client": "마카오정부관광청",
+   "clientEn": "Macao Gov. Tourism Office",
+   "category": "influencer",
+   "period": "2023",
+   "periodEn": "2023",
+   "image": "./assets/projects/macao-influencer.svg",
+   "role": [
+    "마카오관광청 인플루언서 마케팅 기획 및 운영",
+    "여행 인플루언서 제휴 및 콘텐츠 제작"
+   ],
+   "roleEn": [
+    "Macao Tourism influencer marketing planning and operations",
+    "Travel influencer partnerships and content production"
+   ],
+   "description": "마카오정부관광청의 인플루언서 마케팅을 기획하고 운영한 프로젝트입니다.",
+   "descriptionEn": "Influencer marketing planning and operations for Macao Government Tourism Office.",
+   "no": 23,
+   "categoryLabel": "인플루언서",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_040_e8c5d3a2.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "inspire-resort",
+   "title": "인스파이어 리조트",
+   "titleEn": "Inspire Resort",
+   "client": "인스파이어 리조트",
+   "clientEn": "Inspire Resort",
+   "category": "influencer",
+   "period": "2023",
+   "periodEn": "2023",
+   "image": "./assets/projects/inspire-resort.svg",
+   "role": [
+    "영종도 인스파이어 리조트 전시관 홍보 대행 총괄",
+    "인플루언서 및 미디어 초청 이벤트 기획"
+   ],
+   "roleEn": [
+    "Overall PR agency management for Inspire Resort exhibition hall",
+    "Influencer and media invitation event planning"
+   ],
+   "description": "영종도 인스파이어 리조트의 전시관 홍보를 대행하고 인플루언서 마케팅을 기획한 프로젝트입니다.",
+   "descriptionEn": "PR agency management and influencer marketing for Inspire Resort's exhibition hall in Yeongjong-do.",
+   "no": 24,
+   "categoryLabel": "인플루언서",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_042_f7a9b1c5.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "kungya-popup",
+   "title": "쿵야 레스토랑즈 팝업",
+   "titleEn": "Koongya Restaurantz Pop-up",
+   "client": "넷마블",
+   "clientEn": "Netmarble",
+   "category": "btl-campaign",
+   "period": "2023 ~ 2025.05",
+   "periodEn": "2023 ~ 2025.05",
+   "image": "./assets/projects/kungya-popup.svg",
+   "role": [
+    "쿵야 레스토랑즈 팝업스토어 기획 및 운영",
+    "캐릭터 IP 기반 오프라인 경험 설계"
+   ],
+   "roleEn": [
+    "Koongya Restaurantz pop-up store planning and operations",
+    "Offline experience design based on character IP"
+   ],
+   "result": [
+    "10일 연속 오픈런 성료"
+   ],
+   "resultEn": [
+    "10 consecutive days of sold-out openings"
+   ],
+   "description": "넷마블 쿵야 레스토랑즈의 팝업스토어를 기획하고 운영하여 10일 연속 오픈런을 성공시킨 프로젝트입니다.",
+   "descriptionEn": "Planned and operated Netmarble's Koongya Restaurantz pop-up store, achieving 10 consecutive days of sold-out openings.",
+   "no": 25,
+   "categoryLabel": "BTL 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_045_d2c7e8a4.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "mcdonalds-popup",
+   "title": "맥도날드 팝업스토어",
+   "titleEn": "McDonald's Pop-up Store",
+   "client": "맥도날드",
+   "clientEn": "McDonald's",
+   "category": "btl-campaign",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/mcdonalds-popup.svg",
+   "role": [
+    "맥도날드 진도 대파 버거 팝업스토어 기획 및 운영",
+    "오프라인 체험 공간 설계 및 굿즈 판매"
+   ],
+   "roleEn": [
+    "McDonald's Jindo Green Onion Burger pop-up store planning and operations",
+    "Offline experience space design and merchandise sales"
+   ],
+   "result": [
+    "팝업스토어 4만여명 방문",
+    "100만 개 판매"
+   ],
+   "resultEn": [
+    "40K+ pop-up store visitors",
+    "1M+ units sold"
+   ],
+   "description": "맥도날드 진도 대파 버거 팝업스토어를 기획하여 4만여 명이 방문하고 100만 개 판매를 달성한 프로젝트입니다.",
+   "descriptionEn": "Planned McDonald's Jindo Green Onion Burger pop-up store, attracting 40K+ visitors and achieving 1M+ unit sales.",
+   "no": 26,
+   "categoryLabel": "BTL 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_047_a8b3c5d9.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "healerby-btl",
+   "title": "넷마블 힐러비 V&A",
+   "titleEn": "Netmarble Healerby V&A",
+   "client": "넷마블",
+   "clientEn": "Netmarble",
+   "category": "btl-campaign",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/healerby-btl.svg",
+   "role": [
+    "넷마블 힐러비 V&A 플레이스마케팅 및 제휴사업 관리",
+    "뷰티 브랜드 오프라인 경험 설계"
+   ],
+   "roleEn": [
+    "Netmarble Healerby V&A place marketing and partnership management",
+    "Beauty brand offline experience design"
+   ],
+   "description": "넷마블 힐러비의 V&A 플레이스마케팅과 제휴사업을 관리한 BTL 프로젝트입니다.",
+   "descriptionEn": "BTL project managing Netmarble Healerby's V&A place marketing and partnership business.",
+   "no": 27,
+   "categoryLabel": "BTL 캠페인",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_050_c9d4e7a3.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "samsung-exynos",
+   "title": "삼성 Exynos 9 글로벌",
+   "titleEn": "Samsung Exynos 9 Global",
+   "client": "삼성전자",
+   "clientEn": "Samsung Electronics",
+   "category": "visual-project",
+   "period": "2018",
+   "periodEn": "2018",
+   "image": "./assets/projects/samsung-exynos.svg",
+   "role": [
+    "삼성전자 S.LSI 엑시노스9 글로벌 홍보영상 기획 및 제작",
+    "미주 페이스북 및 유튜브 접속위치 기반 타깃광고 집행"
+   ],
+   "roleEn": [
+    "Samsung S.LSI Exynos 9 global promotional video planning and production",
+    "Americas Facebook and YouTube geo-targeted advertising execution"
+   ],
+   "result": [
+    "470만 view 달성"
+   ],
+   "resultEn": [
+    "4.7M views achieved"
+   ],
+   "description": "삼성전자 S.LSI 엑시노스9 글로벌 홍보영상을 기획하고 제작하여 470만 뷰를 달성한 프로젝트입니다.",
+   "descriptionEn": "Planned and produced Samsung S.LSI Exynos 9 global promotional video, achieving 4.7M views.",
+   "no": 28,
+   "categoryLabel": "비주얼 프로젝트",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_055_b7c2d9e1.jpg",
+   "imageStatus": "placeholder-typographic"
+  },
+  {
+   "id": "luna-lookbook",
+   "title": "LUNA 컴피라이트 룩북",
+   "titleEn": "LUNA ComfiLight Lookbook",
+   "client": "애경",
+   "clientEn": "Aekyung",
+   "category": "visual-project",
+   "period": "2024",
+   "periodEn": "2024",
+   "image": "./assets/projects/luna-lookbook.jpg",
+   "role": [
+    "컴피라이트 룩북 촬영 (3가지 컨셉)",
+    "광고 캠페인 운영 및 데이터 분석 기반 최적화"
+   ],
+   "roleEn": [
+    "ComfiLight lookbook photography (3 concepts)",
+    "Ad campaign operations and data-driven optimization"
+   ],
+   "result": [
+    "올리브영 랭킹 1위 달성",
+    "ROAS 95% 향상"
+   ],
+   "resultEn": [
+    "Olive Young Ranking #1",
+    "ROAS improved by 95%"
+   ],
+   "description": "애경 LUNA의 컴피라이트 제품 룩북 촬영과 광고 캠페인을 운영한 프로젝트입니다.",
+   "descriptionEn": "Lookbook photography and ad campaign operations for Aekyung LUNA's ComfiLight, achieving Olive Young #1 ranking and 95% ROAS improvement.",
+   "no": 29,
+   "categoryLabel": "비주얼 프로젝트",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_058_91e4ef47.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "fillvoid-visual",
+   "title": "FILLVOID 영상 콘텐츠",
+   "titleEn": "FILLVOID Video Content",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "visual-project",
+   "period": "2019 ~ 2020",
+   "periodEn": "2019 ~ 2020",
+   "image": "./assets/projects/fillvoid-visual.jpg",
+   "role": [
+    "ASMR 컨셉 영상, 브랜드 필름, 쇼룸 스케치 영상 기획 및 제작",
+    "제품 연출 영상 기획"
+   ],
+   "roleEn": [
+    "ASMR concept video, brand film, showroom sketch video planning and production",
+    "Product styling video planning"
+   ],
+   "description": "아모레퍼시픽 FILLVOID의 ASMR 컨셉 영상, 브랜드 필름, 쇼룸 스케치 등 다양한 비주얼 콘텐츠를 기획하고 제작한 프로젝트입니다.",
+   "descriptionEn": "Planned and produced diverse visual content for AmorePacific FILLVOID including ASMR concept videos, brand films, and showroom sketches.",
+   "no": 30,
+   "categoryLabel": "비주얼 프로젝트",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_059_0dfd1699.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "sulwhasoo-visual",
+   "title": "설화수 비주얼 콘텐츠",
+   "titleEn": "Sulwhasoo Visual Content",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "visual-project",
+   "period": "2019 ~ 2020",
+   "periodEn": "2019 ~ 2020",
+   "image": "./assets/projects/sulwhasoo-visual.jpg",
+   "role": [
+    "설화수 제품 연출 이미지 및 영상 콘텐츠 제작",
+    "제품 기능성이 돋보이는 컨셉 기획"
+   ],
+   "roleEn": [
+    "Sulwhasoo product styling image and video content production",
+    "Concept planning highlighting product functionality"
+   ],
+   "description": "설화수의 제품 연출 이미지와 영상 콘텐츠를 제작한 비주얼 프로젝트입니다.",
+   "descriptionEn": "Visual project producing Sulwhasoo's product styling images and video content with modern reinterpretation of Korean beauty.",
+   "no": 31,
+   "categoryLabel": "비주얼 프로젝트",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_060_9442b867.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "nike-women",
+   "title": "NIKE WOMEN Victory Tour",
+   "titleEn": "NIKE WOMEN Victory Tour",
+   "client": "NIKE KOREA",
+   "clientEn": "NIKE KOREA",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/nike-women.jpg",
+   "role": [
+    "나이키 위민 빅토리 투어 온라인 마케팅 기획 운영"
+   ],
+   "roleEn": [
+    "Nike Women Victory Tour online marketing planning and operations"
+   ],
+   "description": "나이키 코리아 FY16 디지털마케팅 공식 대행으로서 나이키 위민 빅토리 투어의 온라인 마케팅을 기획하고 운영한 프로젝트입니다.",
+   "descriptionEn": "Planned and operated online marketing for Nike Women Victory Tour as Nike Korea's official FY16 digital marketing agency.",
+   "no": 32,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_005_a2b99ad2.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "nike-presto",
+   "title": "NIKE Presto Truck",
+   "titleEn": "NIKE Presto Truck",
+   "client": "NIKE KOREA",
+   "clientEn": "NIKE KOREA",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/nike-presto.jpg",
+   "role": [
+    "나이키 스포츠웨어 프레스토 트럭 온/오프라인 마케팅 기획 운영"
+   ],
+   "roleEn": [
+    "Nike Sportswear Presto Truck on/offline marketing planning and operations"
+   ],
+   "result": [
+    "매출 35% 성장",
+    "17분 매진 기록",
+    "Total Impression 100만 달성"
+   ],
+   "resultEn": [
+    "35% revenue growth",
+    "Sold out in 17 minutes",
+    "Total Impression: 1M achieved"
+   ],
+   "description": "나이키 프레스토 트럭 캠페인의 온/오프라인 마케팅을 기획하여 매출 35% 성장, 17분 매진이라는 기록적 성과를 달성한 프로젝트입니다.",
+   "descriptionEn": "Planned on/offline marketing for Nike Presto Truck campaign, achieving 35% revenue growth and sold-out in 17 minutes.",
+   "no": 33,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_009_bca1d021.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "nike-af1",
+   "title": "NIKE Air Force 1 Project",
+   "titleEn": "NIKE Air Force 1 Project",
+   "client": "NIKE KOREA",
+   "clientEn": "NIKE KOREA",
+   "category": "brand-viral",
+   "period": "2017",
+   "periodEn": "2017",
+   "image": "./assets/projects/nike-af1.jpg",
+   "role": [
+    "12명의 힙합 아티스트 X Air Force 1 캠페인 기획, 제작 및 운영",
+    "인스타그램 #pairplay 채널 운영"
+   ],
+   "roleEn": [
+    "Campaign planning, production and operations with 12 hip-hop artists X Air Force 1",
+    "Instagram #pairplay channel operations"
+   ],
+   "description": "나이키의 전설적인 스니커즈 에어 포스 1 캠페인 'AF1 Project'를 12명의 힙합 아티스트와 함께 기획하고 제작한 프로젝트입니다.",
+   "descriptionEn": "Planned and produced Nike's legendary Air Force 1 'AF1 Project' campaign with 12 hip-hop artists.",
+   "no": 34,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_015_07b6efb0.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "dorco-barbershop",
+   "title": "도루코 바버샵 캠페인",
+   "titleEn": "Dorco Barbershop Campaign",
+   "client": "도루코",
+   "clientEn": "Dorco",
+   "category": "brand-viral",
+   "period": "2016 ~ 2017",
+   "periodEn": "2016 ~ 2017",
+   "image": "./assets/projects/dorco-barbershop.jpg",
+   "role": [
+    "도루코 PACE7 출시 맞이 바버샵 캠페인 총괄 기획",
+    "캠페인 영상, 마이크로사이트, 페이스북 홍보 기획",
+    "바버샵 버스 캠페인, 크래프트맨 시리즈, 연말 콘서트 기획"
+   ],
+   "roleEn": [
+    "Overall planning for Dorco PACE7 launch barbershop campaign",
+    "Campaign video, microsite, and Facebook promotion planning",
+    "Barbershop bus campaign, Craftsman series, year-end concert planning"
+   ],
+   "result": [
+    "3개월간 2만여 건의 사연 접수"
+   ],
+   "resultEn": [
+    "20K+ story submissions in 3 months"
+   ],
+   "description": "도루코 PACE7 출시를 맞아 바버샵 캠페인을 기획한 프로젝트입니다.",
+   "descriptionEn": "Planned Dorco PACE7 launch barbershop campaign with viral videos, microsites, and offline events, receiving 20K+ submissions.",
+   "no": 35,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_023_c205310d.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "skt-pixcam",
+   "title": "SK Telecom PIXCAM",
+   "titleEn": "SK Telecom PIXCAM",
+   "client": "SK Telecom",
+   "clientEn": "SK Telecom",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/skt-pixcam.jpg",
+   "role": [
+    "SKT X GoPro 컬래버레이션 PIXCAM App 바이럴 영상 제작"
+   ],
+   "roleEn": [
+    "SKT X GoPro collaboration PIXCAM App viral video production"
+   ],
+   "description": "SKT가 국내 통신 3사 최초로 GoPro와 협업하여 출시한 PIXCAM App의 바이럴 영상을 기획하고 제작한 프로젝트입니다.",
+   "descriptionEn": "Produced viral video for SKT's PIXCAM App, the first GoPro collaboration among Korea's top 3 telecom carriers.",
+   "no": 36,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_040_db6e07bd.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "lgu-family",
+   "title": "LG U+ 가족친구할인",
+   "titleEn": "LG U+ Family & Friends Discount",
+   "client": "LG U+",
+   "clientEn": "LG U+",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/lgu-family.jpg",
+   "role": [
+    "LG U+ 가족친구할인 요금제 바이럴 영상 기획 및 제작"
+   ],
+   "roleEn": [
+    "LG U+ Family & Friends discount plan viral video planning and production"
+   ],
+   "description": "장수원의 어색한 로봇 연기를 활용하여 LG U+ 가족친구할인 요금제를 재미있게 알린 바이럴 영상 프로젝트입니다.",
+   "descriptionEn": "Viral video project promoting LG U+ Family & Friends discount plan with humorous celebrity content.",
+   "no": 37,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_043_a314beff.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "lgu-music",
+   "title": "LG U+ 김필 X 곽진언 MV",
+   "titleEn": "LG U+ Kim Pil X Kwak Jin-eon MV",
+   "client": "LG U+",
+   "clientEn": "LG U+",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/lgu-music.jpg",
+   "role": [
+    "듀스 '우리는' 곽진언, 김필 뮤직비디오 기획 및 제작",
+    "TV G 우퍼 제품 자연스러운 노출"
+   ],
+   "roleEn": [
+    "Deux 'We Are' music video planning and production with Kwak Jin-eon and Kim Pil",
+    "Natural product placement for TV G Woofer"
+   ],
+   "description": "슈퍼스타K 시즌6의 곽진언과 김필이 듀스의 '우리는'을 재해석한 뮤직비디오를 제작하여 LG U+ TV G 우퍼를 홍보한 프로젝트입니다.",
+   "descriptionEn": "Produced music video with Superstar K Season 6 artists reinterpreting Deux's 'We Are' to promote LG U+ TV G Woofer.",
+   "no": 38,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_048_f0200aef.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "kurly-brand",
+   "title": "마켓 컬리 브랜드 영상",
+   "titleEn": "Market Kurly Brand Video",
+   "client": "마켓 컬리",
+   "clientEn": "Market Kurly",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/kurly-brand.jpg",
+   "role": [
+    "마켓 컬리 연간 브랜드 영상 기획 및 온라인 마케팅",
+    "18m 길이 세트 실제 제작하여 롱테이크 기법 영상 촬영"
+   ],
+   "roleEn": [
+    "Market Kurly annual brand video planning and online marketing",
+    "Long-take technique video shot on actual 18m set"
+   ],
+   "description": "마켓 컬리의 '가장 건강한 것을 가장 신선하게' 컨셉으로 18m 세트를 실제 제작하여 롱테이크 기법의 브랜드 영상을 기획한 프로젝트입니다.",
+   "descriptionEn": "Planned Market Kurly's brand video with 'The healthiest, the freshest' concept using long-take technique on an actual 18m set.",
+   "no": 39,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_051_f3297388.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "odyssey-blue",
+   "title": "오딧세이 블루에너지",
+   "titleEn": "Odyssey Blue Energy",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "brand-viral",
+   "period": "2016",
+   "periodEn": "2016",
+   "image": "./assets/projects/odyssey-blue.jpg",
+   "role": [
+    "오딧세이 블루에너지 온라인 마케팅 및 인터랙션 튜토리얼 영상 제작"
+   ],
+   "roleEn": [
+    "Odyssey Blue Energy online marketing and interactive tutorial video production"
+   ],
+   "description": "아모레퍼시픽 오딧세이 블루에너지의 인터랙티브 튜토리얼 영상을 기획한 프로젝트입니다.",
+   "descriptionEn": "Planned interactive tutorial video for AmorePacific Odyssey Blue Energy with keyboard-triggered product differentiation experience.",
+   "no": 40,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_054_4f3904c4.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "ebs-lang",
+   "title": "EBS lang 초목달 캠페인",
+   "titleEn": "EBS lang Chomokdal Campaign",
+   "client": "EBS",
+   "clientEn": "EBS",
+   "category": "brand-viral",
+   "period": "2018",
+   "periodEn": "2018",
+   "image": "./assets/projects/ebs-lang.jpg",
+   "role": [
+    "EBS lang 초목달 캠페인 '뒷모습증후군' 기획 및 제작"
+   ],
+   "roleEn": [
+    "EBS lang Chomokdal 'Back View Syndrome' campaign planning and production"
+   ],
+   "result": [
+    "300만 뷰 달성"
+   ],
+   "resultEn": [
+    "3M views achieved"
+   ],
+   "description": "EBS lang 초목달 캠페인 '뒷모습증후군'을 기획하여 300만 뷰를 달성한 바이럴 영상 프로젝트입니다.",
+   "descriptionEn": "Viral video project for EBS lang Chomokdal 'Back View Syndrome' campaign, achieving 3M views.",
+   "no": 41,
+   "categoryLabel": "브랜드 바이럴",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_058_8da4f4af.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "amore-live",
+   "title": "아모레퍼시픽 라이브 커머스",
+   "titleEn": "AmorePacific Live Commerce",
+   "client": "아모레퍼시픽",
+   "clientEn": "AmorePacific",
+   "category": "live-commerce",
+   "period": "2020 ~ 2021",
+   "periodEn": "2020 ~ 2021",
+   "image": "./assets/projects/amore-live.jpg",
+   "role": [
+    "아모레퍼시픽 5개 브랜드(일리윤, 헤라, 설화수, 라네즈, 한율) 라이브 커머스 총괄",
+    "네이버 셀렉티브 라이브 콘텐츠 기획, 리허설, 쿠폰 발행 전략"
+   ],
+   "roleEn": [
+    "Overall live commerce management for 5 AmorePacific brands (Illiyoon, HERA, Sulwhasoo, Laneige, Hanyul)",
+    "Naver Selective live content planning, rehearsal, and coupon strategy"
+   ],
+   "result": [
+    "회당 평균 2억 원 매출 달성",
+    "회당 평균 2만 명 시청자 확보",
+    "6개 브랜드 연간 계약 진행"
+   ],
+   "resultEn": [
+    "Average KRW 200M revenue per session",
+    "Average 20K viewers per session",
+    "Annual contracts with 6 brands"
+   ],
+   "description": "아모레퍼시픽 5개 브랜드의 라이브 커머스를 총괄 기획하여 회당 2억 원의 매출을 달성한 프로젝트입니다.",
+   "descriptionEn": "Managed live commerce for 5 AmorePacific brands, achieving KRW 200M average revenue per session.",
+   "no": 42,
+   "categoryLabel": "라이브 커머스",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_069_c9d8460b.jpg",
+   "imageStatus": "local"
+  },
+  {
+   "id": "woori-youtube",
+   "title": "우리은행 유튜브 '웃튜브'",
+   "titleEn": "Woori Bank YouTube 'Wootube'",
+   "client": "우리은행",
+   "clientEn": "Woori Bank",
+   "category": "youtube",
+   "period": "2019 ~ 2020",
+   "periodEn": "2019 ~ 2020",
+   "image": "./assets/projects/woori-youtube.jpg",
+   "role": [
+    "우리은행 유튜브 연간 계약 운영",
+    "금융 예능 채널 포지셔닝 기획",
+    "콘텐츠 필러 기획 및 영상 디렉팅"
+   ],
+   "roleEn": [
+    "Woori Bank YouTube annual contract operations",
+    "Financial entertainment channel positioning planning",
+    "Content pillar planning and video directing"
+   ],
+   "description": "어려운 금융 상품과 용어를 쉽고 재미있게 전달하는 우리은행 유튜브 채널 '웃튜브'를 기획하고 운영한 프로젝트입니다.",
+   "descriptionEn": "Planned and operated Woori Bank's YouTube channel 'Wootube', making complex financial products accessible and entertaining.",
+   "no": 43,
+   "categoryLabel": "유튜브",
+   "imageSource": "https://d2xsxph8kpxj0f.cloudfront.net/310519663506244465/mRM6DwPyDxNKnoZefxLXBH/page_058_8da4f4af.jpg",
+   "imageStatus": "local"
+  }
+ ]
+}

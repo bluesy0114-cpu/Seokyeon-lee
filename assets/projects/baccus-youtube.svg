@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="박카스 유튜브">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#131F36"/>
+      <stop offset="0.55" stop-color="#0E1A2E"/>
+      <stop offset="1" stop-color="#0A1220"/>
+    </linearGradient>
+    <radialGradient id="a" cx="0.82" cy="0.12" r="0.7">
+      <stop offset="0" stop-color="#2563EB" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#2563EB" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#94A3B8" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect width="1600" height="1000" fill="url(#a)"/>
+  <rect x="72" y="72" width="1456" height="856" fill="none" stroke="#94A3B8" stroke-opacity="0.18" stroke-width="2"/>
+  <text x="112" y="176" font-family="Helvetica,Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="30" letter-spacing="10" fill="#7E93B4">유튜브</text>
+  <text x="112" y="286" font-family="Helvetica,Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="58" font-weight="700" letter-spacing="3" fill="#BFD4FF">동아제약</text>
+  <line x1="112" y1="352" x2="248" y2="352" stroke="#3B82F6" stroke-width="4"/>
+  <text x="112" y="520" font-family="'Apple SD Gothic Neo','Noto Sans KR',Malgun,sans-serif" font-size="86" font-weight="800" fill="#E8EEF9">박카스 유튜브</text>
+  <text x="112" y="856" font-family="Helvetica,Arial,'Apple SD Gothic Neo',sans-serif" font-size="26" letter-spacing="8" fill="#5F7595">CAMPAIGN ARCHIVE</text>
+</svg>
