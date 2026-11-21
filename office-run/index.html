@@ -83,7 +83,7 @@
     position:relative;border-radius:16px;border:2px solid #ecdfc8;background:#fffdf7;padding:6px 4px 8px;
     display:flex;flex-direction:column;align-items:center;gap:2px;transition:.16s;overflow:hidden;
   }
-  .charCard canvas{width:100%;height:74px;display:block;}
+  .charCard canvas{width:100%;height:88px;display:block;}
   .charCard b{font-size:11.5px;font-weight:900;letter-spacing:-.3px;color:#3a2d22;}
   .charCard i{font-style:normal;font-size:9.5px;font-weight:800;color:#b09b83;letter-spacing:-.2px;}
   .charCard:hover{border-color:#ffc79b;transform:translateY(-1px);}
@@ -356,7 +356,7 @@
     .brandRow .logoBox{width:46px;height:46px;font-size:22px;border-radius:15px;}
     .loginGrid{grid-template-columns:1fr;gap:14px;}
     .sideCol{display:none;}
-    .charCard canvas{height:62px;}
+    .charCard canvas{height:70px;}
     #hudTL{left:8px;top:8px;width:168px;padding:7px 9px;gap:5px;border-radius:14px;}
     .whoRow .nm b{font-size:12px;}
     .whoRow .nm span{font-size:9.5px;}
@@ -2232,6 +2232,10 @@ function drawKong(c,x,y,dir,t,walking,phase,step,bob,opts){
   c.fillStyle = P.fur2;
   rr(c, x-16+step*2.4, by-8, 12, 8, 4); c.fill();
   rr(c, x+4-step*2.4, by-8, 12, 8, 4); c.fill();
+  // 어깨 (묵직한 실루엣)
+  c.fillStyle = P.fur;
+  c.beginPath(); c.arc(x-19, by-42, 12, 0, TAU); c.fill();
+  c.beginPath(); c.arc(x+19, by-42, 12, 0, TAU); c.fill();
   // 몸통
   c.fillStyle = P.fur;
   c.beginPath(); c.ellipse(x, by-30, 26, 25, 0, 0, TAU); c.fill();
@@ -2255,16 +2259,18 @@ function drawKong(c,x,y,dir,t,walking,phase,step,bob,opts){
     c.beginPath(); c.arc(x, by-30, 12+pound*6, 0, TAU); c.stroke(); c.restore();
   }
   // 머리
-  const hy = by-58;
+  const hy = by-60;
   c.fillStyle = P.fur;
-  c.beginPath(); c.arc(x, hy, 14, 0, TAU); c.fill();
-  c.fillStyle = P.fur2;
-  c.beginPath(); c.ellipse(x, hy-9, 12, 7, 0, 0, TAU); c.fill();
+  c.beginPath(); c.arc(x, hy, 15, 0, TAU); c.fill();
+  c.fillStyle = shade(P.fur,-.18);
+  c.beginPath(); c.ellipse(x, hy-10, 13, 7.5, 0, 0, TAU); c.fill();
   // 얼굴
   c.fillStyle = P.face;
-  c.beginPath(); c.ellipse(x, hy+2, 9.5, 8.5, 0, 0, TAU); c.fill();
+  c.beginPath(); c.ellipse(x, hy+2.5, 11, 9.5, 0, 0, TAU); c.fill();
+  c.fillStyle = shade(P.face,-.12);
+  c.beginPath(); c.ellipse(x, hy+6, 5.6, 4, 0, 0, TAU); c.fill();
   c.fillStyle='#2b211a';
-  c.beginPath(); c.arc(x-3.6, hy, 1.7, 0, TAU); c.arc(x+3.6, hy, 1.7, 0, TAU); c.fill();
+  c.beginPath(); c.arc(x-4.2, hy, 1.9, 0, TAU); c.arc(x+4.2, hy, 1.9, 0, TAU); c.fill();
   c.fillStyle='#3a2b22';
   c.beginPath(); c.ellipse(x-2.2, hy+4.4, 1.2, 1, 0,0,TAU); c.ellipse(x+2.2, hy+4.4, 1.2, 1, 0,0,TAU); c.fill();
   c.strokeStyle='rgba(60,40,30,.6)'; c.lineWidth=1.2;
@@ -2773,13 +2779,13 @@ function drawLoginPreviews(){
     const id = cv.parentElement.dataset.char;
     const c = cv.getContext('2d');
     const dpr = Math.min(2, window.devicePixelRatio||1);
-    const w = cv.clientWidth||64, h = 74;
+    const w = cv.clientWidth||64, h = cv.clientHeight||88;
     cv.width = w*dpr; cv.height = h*dpr;
     c.setTransform(dpr,0,0,dpr,0,0);
     c.clearRect(0,0,w,h);
     c.save();
-    c.translate(w/2, h-8);
-    const scale = id==='giraffe'? .64 : id==='kong'? .86 : 1.04;
+    c.translate(w/2, h-6);
+    const scale = id==='giraffe'? .72 : id==='kong'? .98 : 1.2;
     c.scale(scale, scale);
     drawCharacterAt(c, id, 0, 0, Math.PI/2, loginT, false, 0, 0, {});
     c.restore();
