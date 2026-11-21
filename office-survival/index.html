@@ -2344,6 +2344,7 @@ function wrapLines(text, maxW, fs){
   return lines.slice(0,3);
 }
 
+let BUBBLE_RECTS = [];
 function drawBubble(cx, cy, text, opts){
   opts = opts || {};
   const isMark = (text==='!' || text==='?');
@@ -2355,7 +2356,13 @@ function drawBubble(cx, cy, text, opts){
   const w = Math.min(opts.maxW || 146, tw) + (isMark? 18 : 17);
   const h = lines.length*lh + (isMark? 6 : 12);
   const bx = clamp(cx - w/2, 6, WORLD_W-w-6);
-  const by = Math.max(6, cy - h - 13);
+  let by = Math.max(6, cy - h - 13);
+  for(let k=0;k<7;k++){
+    const hit = BUBBLE_RECTS.some(r=> !(bx+w < r.x-5 || bx > r.x+r.w+5 || by+h < r.y-5 || by > r.y+r.h+5));
+    if(!hit) break;
+    by -= (h + 7);
+  }
+  BUBBLE_RECTS.push({x:bx, y:by, w, h});
 
   ctx.save();
   ctx.shadowColor = 'rgba(40,28,18,.28)'; ctx.shadowBlur = 7; ctx.shadowOffsetY = 2;
@@ -2585,6 +2592,7 @@ function render(){
   ctx.scale(zoom, zoom);
   ctx.translate(-G.camX, -G.camY);
 
+  BUBBLE_RECTS = [];
   // floor
   if(bgCanvas) ctx.drawImage(bgCanvas, 0, 0);
 
