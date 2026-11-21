@@ -30,13 +30,15 @@ AI 마케팅 워크플로우 아키텍트 · 주식회사 케어랩스 DM사업�
 
 ## 배포 (GitHub Pages)
 
-저장소: `bluesy0114-cpu/seokyeon-lee` → 공개 URL `https://bluesy0114-cpu.github.io/seokyeon-lee/`
+저장소: `bluesy0114-cpu/Seokyeon-lee` → 공개 URL `https://bluesy0114-cpu.github.io/Seokyeon-lee/`
+
+> 저장소 이름과 배포 경로는 **대소문자를 구분**합니다. 주소를 소문자(`seokyeon-lee`)로 적으면 404가 나고 `robots.txt`의 사이트맵도 무효가 됩니다.
 
 ```bash
-cd work/seokyeon-portfolio
+cd work/_deploy/repo
 git init -b main && git add -A && git commit -m "이석연 공개 포트폴리오 v1"
-gh repo create bluesy0114-cpu/seokyeon-lee --public --source=. --remote=origin --push
-gh api -X POST repos/bluesy0114-cpu/seokyeon-lee/pages \
+gh repo create bluesy0114-cpu/Seokyeon-lee --public --source=. --remote=origin --push
+gh api -X POST repos/bluesy0114-cpu/Seokyeon-lee/pages \
   -f 'source[branch]=main' -f 'source[path]=/'
 ```
 
@@ -45,7 +47,7 @@ gh api -X POST repos/bluesy0114-cpu/seokyeon-lee/pages \
 
 ## 수정 시 지켜야 할 것
 
-- **대외비 금지**: 광고주 실명, 내부 매출·수치, 공시 전 사명 변경 관련 내용, 직원 이름, 내부 시스템 URL·계정.
+- **대외비 금지**: 광고주 실명, 내부 매출·수치, 사내 미공표 조직·사명 표기, 직원 이름, 내부 시스템 URL·계정.
 - **경력 표기**: 근무 기간은 쓰지 않고 회사명·부서/직책만 적습니다.
 - 아카이브 데이터를 고칠 때는 `data/*.json`을 원본으로 삼고, 페이지 안의 인라인 JSON도 함께 맞춰 주세요.
 - `<link rel="canonical">`, `og:url`, `og:image`, `sitemap.xml`의 주소는 배포 도메인과 함께 바꿔 주세요.

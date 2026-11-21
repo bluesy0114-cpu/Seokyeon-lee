@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bluesy0114-cpu.github.io/seokyeon-lee/sitemap.xml
+Sitemap: https://bluesy0114-cpu.github.io/Seokyeon-lee/sitemap.xml
