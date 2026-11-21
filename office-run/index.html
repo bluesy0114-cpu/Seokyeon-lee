@@ -530,7 +530,7 @@
    ===================================================================== */
 'use strict';
 
-const BUILD_ID = '2d-2026-11-21-6';
+const BUILD_ID = '2d-2026-11-21-7';
 const TILE = 40;
 const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
 const lerp  = (a,b,t)=> a+(b-a)*t;
@@ -2401,8 +2401,8 @@ function drawVisionFill(f, b, mul, alpha){
 }
 function drawVision(f, b, t){
   const chase = b.state==='chase';
-  drawVisionFill(f, b, 1.18, chase? 0.075 : 0.055);
-  drawVisionFill(f, b, 1.0,  chase? 0.20  : 0.155);
+  drawVisionFill(f, b, 1.16, chase? 0.11 : 0.085);
+  drawVisionFill(f, b, 1.0,  chase? 0.28 : 0.215);
 }
 
 /* ---------------------------------------------------------------- 이펙트 */
