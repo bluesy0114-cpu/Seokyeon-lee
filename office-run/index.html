@@ -2345,12 +2345,13 @@ function drawBoss(c, b, t){
 }
 
 /* ---------------------------------------------------------------- 시야 콘 */
-function visionPoly(f, b){
-  const steps = 44;
+function visionPoly(f, b, mul){
+  const steps = 46;
+  const fov = b.fov * (mul||1);
   const pts = [[b.x, b.y]];
-  const base = b.dir - b.fov/2;
+  const base = b.dir - fov/2;
   for(let i=0;i<=steps;i++){
-    const a = base + b.fov*i/steps;
+    const a = base + fov*i/steps;
     const ca = Math.cos(a), sa = Math.sin(a);
     let r = 14;
     for(let d=14; d<=b.range; d+=9){
@@ -2362,33 +2363,29 @@ function visionPoly(f, b){
   }
   return pts;
 }
-function drawVision(f, b, t){
-  const pts = visionPoly(f, b);
+function drawVisionFill(f, b, mul, alpha){
+  const pts = visionPoly(f, b, mul);
   if(pts.length < 3) return;
+  const g = ctx.createRadialGradient(b.x, b.y, 10, b.x, b.y, b.range);
+  const chase = b.state === 'chase';
+  const col = chase ? '255,86,64' : '255,176,92';
+  g.addColorStop(0, 'rgba('+col+','+(alpha*1.05)+')');
+  g.addColorStop(.45, 'rgba('+col+','+(alpha*0.72)+')');
+  g.addColorStop(.82, 'rgba('+col+','+(alpha*0.30)+')');
+  g.addColorStop(1, 'rgba('+col+',0)');
+  ctx.save();
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+function drawVision(f, b, t){
   const chase = b.state==='chase';
-  c0: {
-    ctx.save();
-    const g = ctx.createRadialGradient(b.x, b.y, 12, b.x, b.y, b.range);
-    if(chase){
-      g.addColorStop(0,'rgba(255,80,60,.30)');
-      g.addColorStop(.5,'rgba(255,80,60,.17)');
-      g.addColorStop(1,'rgba(255,80,60,0)');
-    } else {
-      g.addColorStop(0,'rgba(255,170,80,.26)');
-      g.addColorStop(.55,'rgba(255,170,80,.13)');
-      g.addColorStop(1,'rgba(255,170,80,0)');
-    }
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1]);
-    for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.closePath();
-    ctx.fill();
-    // 부드러운 경계
-    ctx.strokeStyle = chase? 'rgba(255,110,90,.20)' : 'rgba(255,190,120,.14)';
-    ctx.lineWidth = 1.2; ctx.stroke();
-    ctx.restore();
-  }
+  drawVisionFill(f, b, 1.18, chase? 0.075 : 0.055);
+  drawVisionFill(f, b, 1.0,  chase? 0.20  : 0.155);
 }
 
 /* ---------------------------------------------------------------- 이펙트 */
@@ -3163,6 +3160,15 @@ function updateNpcsAndBosses(dt){
     }
   }
 }
+function floorChatBusy(n){
+  if(playerRef.bubble) return true;
+  const f = FLOORS[n.floor];
+  for(const o of f.npcs){
+    if(o === n) continue;
+    if(o.bubble && dist(o.x,o.y,n.x,n.y) < 280) return true;
+  }
+  return false;
+}
 function updateNpc(n, dt, passive){
   if(n.speed <= 0){ n.moving = false; return; }
   if(n.wait > 0){ n.wait -= dt; n.moving = false; return; }
@@ -3175,9 +3181,9 @@ function updateNpc(n, dt, passive){
       const tx = rand(r.x, r.x+r.w), ty = rand(r.y, r.y+r.h);
       if(!collidesAt(FLOORS[n.floor], tx, ty, 11)){ n.tx = tx; n.ty = ty; break; }
     }
-    // 잡담
-    if(Math.random() < .55 && !n.bubble){
-      say(n, pick(n.lines.concat(GENERIC_CHAT)), 3.2);
+    // 잡담 — 한 번에 한 명만, 가끔
+    if(Math.random() < .3 && !n.bubble && !floorChatBusy(n)){
+      say(n, pick(n.lines.concat(GENERIC_CHAT)), 2.8);
     }
     return;
   }
