@@ -222,6 +222,46 @@
   .toast.warn{background:linear-gradient(180deg,#c88a2a,#a9711c);}
   @keyframes tin{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 
+  /* ================= 하단 채팅바 (HUD와 겹치지 않는 도크) ================= */
+  #chatDock{
+    position:absolute;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:24;
+    width:min(470px, calc(100vw - 344px));min-width:210px;
+    display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+    pointer-events:none;
+  }
+  #chatDock > *{pointer-events:auto;}
+  #chatBar{
+    display:flex;align-items:center;gap:6px;width:100%;height:44px;padding:0 5px 0 16px;
+    border-radius:999px;background:rgba(30,24,18,.50);border:1px solid rgba(255,255,255,.17);
+    box-shadow:0 8px 22px rgba(18,12,8,.28), inset 0 1px 0 rgba(255,255,255,.14);
+    backdrop-filter:blur(14px) saturate(1.15);-webkit-backdrop-filter:blur(14px) saturate(1.15);
+    transition:background .18s, box-shadow .18s, border-color .18s;
+  }
+  #chatBar:focus-within{background:rgba(52,40,29,.68);border-color:rgba(255,183,122,.55);box-shadow:0 10px 26px rgba(18,12,8,.34), 0 0 0 3px rgba(255,138,61,.16);}
+  #chatIn{
+    flex:1;min-width:0;background:none;border:0;outline:none;color:#fff6e6;
+    font-size:12.5px;font-weight:800;letter-spacing:-.2px;
+    user-select:text;-webkit-user-select:text;touch-action:auto;
+  }
+  #chatIn::placeholder{color:rgba(255,240,220,.52);font-weight:800;}
+  #chatSend{
+    flex:none;width:33px;height:33px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(180deg,#ff9d55,#f2703c);color:#fff;font-size:13px;font-weight:900;
+    box-shadow:0 4px 10px rgba(226,96,63,.38);transition:transform .12s, filter .15s;
+  }
+  #chatSend:hover{filter:brightness(1.06);}
+  #chatSend:active{transform:scale(.92);}
+  #chatLog{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-height:92px;overflow:hidden;width:100%;}
+  .chatLine{
+    max-width:100%;padding:5px 11px;border-radius:12px;background:rgba(26,20,15,.60);color:#fff3df;
+    font-size:11px;font-weight:800;letter-spacing:-.2px;box-shadow:0 4px 12px rgba(0,0,0,.2);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(8px);animation:tin .18s ease-out;
+  }
+  .chatLine b{color:#ffcf9a;font-weight:900;}
+  .chatLine.me{background:rgba(226,96,63,.56);}
+  .chatLine.egg{background:linear-gradient(180deg,rgba(79,174,116,.62),rgba(56,140,90,.62));}
+  .chatLine.sys{background:rgba(91,147,214,.42);}
+
   /* 엘리베이터 애니메이션 */
   #elevFx{position:absolute;inset:0;z-index:48;pointer-events:none;overflow:hidden;}
   #elevFx .door{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(180deg,#b9bcc2,#8f949c 55%,#7c818a);
@@ -412,6 +452,24 @@
     .charGrid{gap:5px;}
     .charCard b{font-size:10.5px;}
     .charCard i{display:none;}
+    /* 모바일 채팅바 — 스킬 칩(좌)·조이스틱·E 프롬프트와 겹치지 않는 우측 하단 */
+    #chatDock{right:8px;bottom:calc(8px + env(safe-area-inset-bottom) + var(--kb,0px));width:calc(100% - 238px);min-width:0;gap:4px;}
+    #chatBar{height:42px;padding:0 4px 0 12px;gap:4px;}
+    #chatIn{font-size:12px;}
+    #chatIn::placeholder{font-size:11.5px;}
+    #chatSend{width:31px;height:31px;font-size:12px;}
+    #chatLog{display:none;}
+    #chatDock.typing{width:calc(100% - 16px);left:8px;right:8px;}
+    #chatDock.typing #chatLog{display:flex;max-height:64px;}
+    #chatDock.typing #chatIn{font-size:14px;}
+    body.typing #skills,body.typing #joy,body.typing #prompt{opacity:0;pointer-events:none;transition:opacity .16s;}
+    #roomHint{display:none;}
+    #peopleTxt{font-size:8.5px;}
+  }
+  @media (max-width:400px){
+    .skill{width:46px;padding:4px 1px 3px;}
+    .skill .si{font-size:14px;}
+    #chatDock{width:calc(100% - 228px);}
   }
   @media (max-height:520px){
     #skills{bottom:8px;}
@@ -440,7 +498,7 @@
         <div class="charHead"><b>캐릭터 선택</b><span>4종 · 언제든 설정에서 변경</span></div>
         <div class="charGrid" id="charGrid"></div>
         <button id="btnStart" class="btnPrimary">출근하기 →</button>
-        <p class="fine">이메일 1개 = 프로필 1개 · 이 기기(localStorage)에만 저장됩니다</p>
+        <p class="fine">이메일 1개 = 프로필 1개 · 이 기기에 저장 · 하단 채팅바로 같은 층 동료와 실시간 대화</p>
       </div>
       <div class="sideCol">
         <h3>오늘의 사내 생존 루틴</h3>
@@ -483,7 +541,7 @@
         <b class="clk" id="clockTxt">09:00</b>
         <div class="day"><b id="dayTxt">월요일</b><span id="weekTxt">D+1 · 18:00 칼퇴</span></div>
       </div>
-      <div id="floorChip">🏢 <b id="floorTxt">2F 오피스</b> <i>엘리베이터 E</i></div>
+      <div id="floorChip">🏢 <b id="floorTxt">2F 오피스</b> <span id="peopleTxt">· 1명</span> <i id="roomHint">엘리베이터 E</i></div>
     </div>
 
     <div id="hudTR">
@@ -513,6 +571,15 @@
 
   <div id="joy"><div id="joyKnob"></div></div>
   <div id="toasts"></div>
+
+  <!-- 하단 채팅바 : 같은 층 동료에게 한마디 (+실시간 멀티 동기화) -->
+  <div id="chatDock">
+    <div id="chatLog" aria-live="polite"></div>
+    <form id="chatBar" autocomplete="off">
+      <input id="chatIn" type="text" maxlength="80" placeholder="동료에게 한마디..." aria-label="동료에게 말 걸기" enterkeyhint="send" autocomplete="off" spellcheck="false">
+      <button id="chatSend" type="submit" aria-label="전송" title="전송 (Enter)">➤</button>
+    </form>
+  </div>
 </div>
 
 <div id="elevFx" class="hide"><div class="door l"></div><div class="door r"></div><div class="lbl"><b id="elevNo">2</b><span id="elevName">OFFICE</span><div class="ding">DING DONG</div></div></div>
@@ -530,7 +597,7 @@
    ===================================================================== */
 'use strict';
 
-const BUILD_ID = '2d-2026-11-21-7';
+const BUILD_ID = '2d-2026-11-21-8';
 const TILE = 40;
 const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
 const lerp  = (a,b,t)=> a+(b-a)*t;
@@ -2488,8 +2555,8 @@ function updateBubbles(dt){
 }
 function drawBubble(c, e, text, t){
   const isPlayer = e === playerRef;
-  const chId = isPlayer ? G.char : 'male';
-  const h = isPlayer ? (CHARACTERS[G.char].height||56) : (e.def? 60 : 56);
+  const chId = isPlayer ? G.char : (e.charType || 'male');
+  const h = isPlayer ? (CHARACTERS[G.char].height||56) : (e.bubbleH || (e.def? 60 : 56));
   const bx = e.x, by = e.y - h - 16;
   c.save();
   c.font = "800 11px 'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif";
@@ -2593,7 +2660,10 @@ function drawElevator(c, f, t){
 
 /* ---------------------------------------------------------------- 월드 렌더 */
 let playerRef = { x:0, y:0, bubble:'', bubbleT:0, bubbleLife:0 };
+/* 실시간 멀티: 같은 층 다른 접속자 (part 7에서 채워짐) */
+const netRemotes = [];
 function render(t){
+  if(typeof updateRemotes === 'function') updateRemotes(t);
   const f = FLOORS[G.floor];
   if(!f) return;
   ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -2633,6 +2703,7 @@ function render(t){
   }
   for(const n of f.npcs) list.push({ y: n.y, draw: ()=> drawNpc(ctx, n, t) });
   for(const b of f.bosses) list.push({ y: b.y, draw: ()=> drawBoss(ctx, b, t) });
+  for(const r of netRemotes){ if(r.floor === G.floor) list.push({ y: r.y, draw: ()=> drawRemote(ctx, r, t) }); }
   list.push({ y: player.y, draw: ()=> drawPlayer(ctx, t) });
   list.sort((a,b)=> a.y - b.y);
   for(const it of list) it.draw();
@@ -2642,6 +2713,7 @@ function render(t){
   // 말풍선
   for(const n of f.npcs) if(n.bubble) drawBubble(ctx, n, n.bubble, t);
   for(const b of f.bosses) if(b.bubble) drawBubble(ctx, b, b.bubble, t);
+  for(const r of netRemotes) if(r.floor === G.floor && r.bubble) drawBubble(ctx, r, r.bubble, t);
   if(playerRef.bubble) drawBubble(ctx, playerRef, playerRef.bubble, t);
 
   // 상호작용 하이라이트
@@ -2897,6 +2969,8 @@ function saveProfile(){
 /* ---------------------------------------------------------------- 입력 */
 window.addEventListener('keydown', e=>{
   const k = e.key.toLowerCase();
+  // 채팅 입력 중에는 W/A/S/D/E/Space 등 게임 단축키를 완전히 차단
+  if(typeof isChatTyping === 'function' && isChatTyping()) return;
   if(!G.ready) {
     if(k==='enter') { const b=document.getElementById('btnStart'); if(b) b.click(); }
     return;
@@ -2916,6 +2990,7 @@ window.addEventListener('keydown', e=>{
   if(k==='m'){ toggleMute(); }
 });
 window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+window.addEventListener('blur', ()=>{ for(const k in keys) keys[k] = false; });
 
 let pointerDown = null;
 canvas.addEventListener('pointerdown', e=>{
@@ -4570,6 +4645,7 @@ function openSettings(){
     <div class="setRow"><div class="lb">볼륨<span>0 ~ 100</span></div>
       <div class="rangeRow" style="width:170px"><input type="range" id="setVol" min="0" max="100" value="${Math.round(Sound.volume*100)}"></div></div>
     <div class="setRow"><div class="lb">진행도<span>D+${G.day} · ${fmt(G.points)}P · 최고점 ${G.best.bubble}/${G.best.breakout}/${G.best.dodge}</span></div></div>
+    <div class="setRow"><div class="lb">같은 층 접속자<span>${(typeof Net!=='undefined') ? (Net.people()+'명 · '+(Net.adapterName==='broadcast'?'이 브라우저 탭 동기화':Net.adapterName+' 실시간')+' · 방 '+(Net.shard+1)) : '연결 준비 중'}</span></div></div>
     <div class="miniBtns">
       <button class="miniBtn" id="setHelp">게임 방법 보기</button>
       <button class="miniBtn" id="setReset">프로필 초기화</button>
@@ -4597,9 +4673,11 @@ function openHelp(){
       <div class="helpItem"><b>⚡ DH 스킬</b><span>1 방패 10 · 2 의자 20 · 3 화분 30 · 4 가짜통화 무료/5</span></div>
       <div class="helpItem"><b>☕ 카페인 폭주</b><span>2F 탕비실 커피머신 → 8초간 1.7배속 + 잔상</span></div>
       <div class="helpItem"><b>📄 보고서</b><span>2F 내 자리에서 E → +2DH (쿨 22초)</span></div>
+      <div class="helpItem"><b>💬 채팅</b><span>하단 채팅바에 입력하고 Enter. 내 말풍선이 뜨고 근처 동료가 맞장구칩니다. DH·SY 입력은 이스터에그(멘탈 +3).</span></div>
+      <div class="helpItem"><b>👥 실시간 멀티</b><span>같은 층 접속자가 내 화면에 실시간으로 보입니다(닉네임·말풍선·위장 포함). 방은 30명 단위로 자동 분산.</span></div>
       <div class="helpItem"><b>🛒 편의점</b><span>1F OFFICE 24 계산대에서 복지포인트로 간식 구매</span></div>
     </div>
-    <div class="kbdRow">단축키 <kbd>E</kbd> 상호작용 <kbd>1~4</kbd> 스킬 <kbd>ESC</kbd> 닫기 <kbd>M</kbd> 음소거</div>
+    <div class="kbdRow">단축키 <kbd>E</kbd> 상호작용 <kbd>1~4</kbd> 스킬 <kbd>ESC</kbd> 닫기 <kbd>M</kbd> 음소거 · 채팅은 하단 입력창 <kbd>Enter</kbd></div>
     <p class="fine" style="margin-top:10px">등장 인물·상호·브랜드는 모두 가상이며, 실명은 표시되지 않습니다.</p>`;
   openModal('❓ 게임 방법', 'OFFICE RUN 2D', html);
 }
@@ -4639,6 +4717,775 @@ function boot(){
   window.addEventListener('beforeunload', ()=>{ if(G.ready) saveProfile(); });
 }
 boot();
+/* =====================================================================
+   OFFICE RUN 2D — part 7 : 하단 채팅바 · AI 동료 맞장구 · 실시간 멀티(Net)
+   ---------------------------------------------------------------------
+   · 채팅바는 HUD(상단 알약 / 하단 스킬칩 / 조이스틱 / E 프롬프트)와
+     절대 겹치지 않는 우측 하단 도크에 있고, 입력 중에는 게임 단축키를 차단한다.
+   · 멀티: 층(1F/2F/3F) × 방 샤딩(MAX_PLAYERS_PER_ROOM=30, FLOOR_COUNT=1000,
+     ?room=...&floor=...) 구조의 Net 어댑터.
+     1) REALTIME_CONFIG 에 Firebase RTDB URL 또는 Supabase URL+Anon Key 를 넣으면
+        크로스 디바이스 실시간 멀티 (Firebase REST/SSE · Supabase Realtime WS)
+     2) 비어 있으면 BroadcastChannel 폴백 (같은 브라우저 다중 탭 즉시 동시접속)
+   ===================================================================== */
+
+const MAX_PLAYERS_PER_ROOM = 30;
+const FLOOR_COUNT = 1000;
+
+/* ---------------------------------------------------------------------
+   실시간 백엔드 설정 — Firebase Realtime Database 가 기본값으로 연결돼 있습니다.
+   (무료 Spark 플랜 프로젝트 office-run-live · asia-southeast1 · 공개 읽기/쓰기 규칙)
+   다른 프로젝트로 바꾸려면 firebaseUrl 만 교체하면 됩니다.
+   Firebase 를 끄고 브라우저 탭끼리만 쓰려면 backend:'broadcast'.
+   --------------------------------------------------------------------- */
+const REALTIME_CONFIG = {
+  backend: 'auto',            // 'auto' | 'firebase' | 'supabase' | 'broadcast'
+  firebaseUrl: 'https://office-run-live-default-rtdb.asia-southeast1.firebasedatabase.app',
+  firebase: {
+    databaseURL: '',          // (구버전 호환) 비우면 위 firebaseUrl 사용
+    path: '',                 // 루트 바로 아래 rooms/ 사용
+    auth: ''                  // 선택: database secret (?auth=)
+  },
+  supabase: {
+    url: '',                  // 예: 'https://abcd1234.supabase.co'
+    anonKey: ''               // Supabase anon public key
+  },
+  roomTag: '',                // 비우면 ?room= 값을 사용 (없으면 'floor_main')
+  publishHzBroadcast: 10,     // BroadcastChannel/Supabase 초당 전송 수
+  publishHzFirebase: 3,       // Firebase REST 초당 전송 수 (300~330ms 스로틀)
+  heartbeatMs: 4000,          // 유휴 시 하트비트 주기
+  staleMs: 15000              // 이 시간 넘게 갱신 없는 접속자는 숨김 (유령 캐릭터 방지)
+};
+
+const NET_ROOM_QUERY = (()=>{
+  try{
+    const q = new URLSearchParams(location.search || '');
+    return { room:(q.get('room')||'').trim().slice(0,24), floor:parseInt(q.get('floor')||'',10) };
+  }catch(e){ return { room:'', floor:NaN }; }
+})();
+
+const Net = {
+  adapter:'broadcast', adapterName:'broadcast', backend:null, room:'', floor:2, shard:0,
+  myId:'', nick:'', charType:'male', connected:false, peers:new Map(), local:null,
+  chatSeq:0, lastSent:null, lastPub:0, _timer:null, _pruneT:0, _failed:false,
+
+  init(profile){
+    if(this._timer) return;
+    this.myId = (profile && profile.pid) || ('u'+Math.random().toString(36).slice(2,10));
+    this.nick = (profile && profile.nick) || G.nick || '사원';
+    this.charType = (profile && profile.char) || G.char || 'male';
+    this.floor = this.resolveFloor();
+    this.shard = 0;
+    this.backend = this.pickBackend();
+    this.join(this.floor, 0);
+    const hz = this.backend === 'firebase' ? (REALTIME_CONFIG.publishHzFirebase||3) : (REALTIME_CONFIG.publishHzBroadcast||10);
+    this._timer = setInterval(()=> this.tick(), Math.max(60, Math.round(1000/hz)));
+    setInterval(()=> this.prune(), 1400);
+    setInterval(()=> syncUserRecord(), 30000);
+    window.addEventListener('pagehide', ()=> this.leave());
+    window.addEventListener('beforeunload', ()=> this.leave());
+    syncUserRecord();
+  },
+  resolveFloor(){
+    if(Number.isFinite(NET_ROOM_QUERY.floor) && NET_ROOM_QUERY.floor>=1 && NET_ROOM_QUERY.floor<=FLOOR_COUNT) return NET_ROOM_QUERY.floor;
+    return 2;   /* 2F 오피스에서 출근 */
+  },
+  firebaseUrl(){ return String(REALTIME_CONFIG.firebaseUrl || (REALTIME_CONFIG.firebase && REALTIME_CONFIG.firebase.databaseURL) || '').replace(/\/+$/,''); },
+  pickBackend(){
+    const c = REALTIME_CONFIG;
+    if(c.backend === 'broadcast') return 'broadcast';
+    if(c.backend !== 'supabase' && this.firebaseUrl()) return 'firebase';
+    if(c.supabase && c.supabase.url && c.supabase.anonKey) return 'supabase';
+    return 'broadcast';
+  },
+  baseRoom(){
+    return (REALTIME_CONFIG.roomTag || NET_ROOM_QUERY.room || 'floor_main').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,24) || 'floor_main';
+  },
+  /* 방 이름: f{층}_{기본방} — 30명 초과 시 room_2, room_3 ... */
+  roomName(floor, shard){
+    const base = this.baseRoom();
+    let name = base;
+    if(shard > 0) name = (base === 'floor_main') ? ('room_' + (shard+1)) : (base + '_' + (shard+1));
+    return 'f' + floor + '_' + name;
+  },
+
+  join(floor, shard){
+    if(this.adapter){
+      if(this.adapter.kind !== 'firebase') this.post({t:'bye', id:this.myId});   /* 이전 층/방 퇴장 알림 */
+      try{ this.adapter.close(true); }catch(e){}                                   /* firebase → DELETE */
+    }
+    if(this.local){ try{ this.local.postMessage({t:'bye', id:this.myId}); }catch(e){} try{ this.local.close(); }catch(e){} }
+    this.adapter = null; this.local = null;
+    this.peers.clear();
+    netRemotes.length = 0;
+    this.floor = floor; this.shard = shard||0;
+    if(G && G.ready) G.floor = floor;
+    this.room = this.roomName(floor, this.shard);
+    const onMsg = (m)=> this.recv(m);
+    try{
+      if(this.backend === 'firebase') this.adapter = makeFirebaseAdapter(REALTIME_CONFIG, this.room, this.myId, onMsg);
+      else if(this.backend === 'supabase') this.adapter = makeSupabaseAdapter(REALTIME_CONFIG.supabase, this.room, this.myId, onMsg);
+    }catch(e){ this.adapter = null; }
+    if(!this.adapter){
+      this.adapter = makeBroadcastAdapter(this.room, onMsg);
+      this.adapterName = (this.backend === 'broadcast') ? 'broadcast' : this.backend+'→broadcast';
+    } else {
+      this.adapterName = this.backend;
+      /* 온라인 백엔드가 막혀도 같은 기기 탭끼리는 계속 동기화되도록 보조 채널 유지 */
+      this.local = makeBroadcastAdapter(this.room, onMsg);
+    }
+    this.connected = !!this.adapter;
+    this.post({t:'hello', id:this.myId, nick:this.nick, charType:this.charType, floor:this.floor, room:this.room});
+    this.lastSent = null;
+    this._lastPubAt = 0;
+    this.publishNow();
+    syncPeopleBadge();
+  },
+  setFloor(floor){
+    if(!this.adapter || floor === this.floor) return;
+    this.join(floor, 0);
+    addChatLine('', floor+'F 로 이동 · 같은 층 접속자와 연결', 'sys');
+  },
+  post(msg){
+    if(this.adapter && this.adapter.send){ try{ this.adapter.send(msg); }catch(e){} }
+    if(this.local){ try{ this.local.postMessage(msg); }catch(e){} }
+  },
+  myDisguise(){
+    if(G.plantT > 0) return 'plant';
+    if(G.chairT > 0) return 'chair';
+    if(G.shieldT > 0) return 'shield';
+    if(G.callT > 0) return 'call';
+    return 'none';
+  },
+  stateMsg(){
+    const mv = player.walking || player.spd > 4;
+    return {
+      t:'state', id:this.myId, nick:G.nick || this.nick, charType:G.char, floor:G.floor,
+      x:Math.round(player.x*10)/10, y:Math.round(player.y*10)/10,
+      dir:Math.round((player.dir||0)*100)/100, moving:mv?1:0,
+      disguise:this.myDisguise(), chatMsg:G.chatMsg||'', chatTs:G.chatTs||0, chatSeq:G.chatSeq||0,
+      ts:Date.now()
+    };
+  },
+  publishNow(){
+    if(!G.ready || !this.adapter) return;
+    this.lastSent = this.stateMsg();
+    this.lastSent.t = 'state';
+    this._lastPubAt = Date.now();
+    this.post(this.lastSent);
+  },
+  tick(){
+    if(!G.ready) return;
+    if(G.floor !== this.floor) this.setFloor(G.floor);
+    if(document.hidden) return;
+    const m = this.stateMsg();
+    const prev = this.lastSent || {};
+    const changed = !prev || prev.x!==m.x || prev.y!==m.y || prev.dir!==m.dir || prev.disguise!==m.disguise ||
+       prev.chatSeq!==m.chatSeq || prev.moving!==m.moving || prev.nick!==m.nick || prev.charType!==m.charType;
+    if(changed || (Date.now() - (this._lastPubAt||0) > (REALTIME_CONFIG.heartbeatMs||4000))){
+      this.lastSent = m; this._lastPubAt = Date.now(); this.post(m);
+    }
+  },
+  chat(text){
+    G.chatMsg = text; G.chatTs = Date.now(); G.chatSeq = (G.chatSeq||0)+1;
+    this.publishNow();
+  },
+  recv(m){
+    if(!m || m.id === this.myId) return;
+    const now = performance.now();
+    if(m.t === 'bye'){ this.dropPeer(m.id); return; }
+    if(m.t === 'hello'){
+      if(!this.peers.has(m.id)){ this.peers.set(m.id,{nick:m.nick, at:now}); syncPeopleBadge(); }
+      else this.peers.get(m.id).at = now;
+      this.post({t:'state', id:this.myId, nick:G.nick||this.nick, charType:G.char, floor:G.floor,
+        x:Math.round(player.x*10)/10, y:Math.round(player.y*10)/10, dir:player.dir, moving:0,
+        disguise:this.myDisguise(), chatMsg:'', chatTs:0, chatSeq:G.chatSeq||0, ts:Date.now()});
+      return;
+    }
+    if(m.t !== 'state') return;
+    if(m.floor != null && m.floor !== G.floor) return;   /* 다른 층은 그리지 않음 */
+    /* 15초 넘게 갱신 없는 접속자는 유령으로 남기지 않음 */
+    if(m.ts && (Date.now() - m.ts) > (REALTIME_CONFIG.staleMs||15000)){ this.dropPeer(m.id); return; }
+    const r = ensureRemote(m.id, m);
+    r.nick = m.nick || r.nick;
+    r.charType = CHARACTERS[m.charType] ? m.charType : r.charType;
+    r.floor = (m.floor != null) ? m.floor : r.floor;
+    if(Number.isFinite(+m.x)) r.tx = +m.x;
+    if(Number.isFinite(+m.y)) r.ty = +m.y;
+    if(!Number.isFinite(r.x)){ r.x = r.tx; r.y = r.ty; }
+    r.dir = +m.dir || r.dir;
+    r.moving = !!m.moving;
+    r.disguise = m.disguise || 'none';
+    r.bubbleH = remoteBubbleH(r);
+    r.seen = now;
+    if(!this.peers.has(m.id)){ this.peers.set(m.id,{nick:r.nick, at:now}); syncPeopleBadge(); }
+    else this.peers.get(m.id).at = now;
+    /* 말풍선 실시간 동기화 */
+    if(m.chatMsg && m.chatSeq && m.chatSeq !== r.chatSeq && (Date.now() - (m.chatTs||0) < 8000)){
+      r.chatSeq = m.chatSeq;
+      r.bubble = String(m.chatMsg).slice(0,80);
+      r.bubbleT = 0; r.bubbleLife = 4.4;
+      addChatLine(r.nick, r.bubble, '');
+    }
+  },
+  dropPeer(id){
+    this.peers.delete(id);
+    for(let i=netRemotes.length-1;i>=0;i--) if(netRemotes[i].id === id) netRemotes.splice(i,1);
+    syncPeopleBadge();
+  },
+  prune(){
+    if(!G.ready) return;
+    const now = performance.now();
+    const stale = (REALTIME_CONFIG.staleMs||15000) + 1500;
+    let changed = false;
+    for(const [id,p] of this.peers){ if(now - p.at > stale){ this.peers.delete(id); for(let i=netRemotes.length-1;i>=0;i--) if(netRemotes[i].id===id) netRemotes.splice(i,1); changed = true; } }
+    for(let i=netRemotes.length-1;i>=0;i--){ if(now - netRemotes[i].seen > stale){ netRemotes.splice(i,1); changed = true; } }
+    /* 3초 하트비트 */
+    if(now - (this._hb||0) > 3000){
+      this._hb = now;
+      this.post({t:'hello', id:this.myId, nick:G.nick||this.nick, charType:G.char, floor:G.floor, room:this.room});
+    }
+    /* 방 정원(30명) 초과 시 다음 샤드로 자동 분산 */
+    if(this.peers.size + 1 > MAX_PLAYERS_PER_ROOM){
+      this.join(G.floor, this.shard + 1);
+      toast('👥 방이 가득 차 다음 방으로 이동 ('+this.people()+'명 · 방 '+(this.shard+1)+')', 'warn');
+    }
+    if(changed || !this._badgeInit){ syncPeopleBadge(); }
+  },
+  people(){ return this.peers.size + 1; },
+  leave(){
+    const bye = {t:'bye', id:this.myId};
+    if(this.local){ try{ this.local.postMessage(bye); }catch(e){} }
+    if(this.adapter){
+      if(this.adapter.kind !== 'firebase'){ try{ this.adapter.send(bye); }catch(e){} }
+      try{ this.adapter.close(true); }catch(e){}   /* firebase → DELETE 로 즉시 퇴장 */
+    }
+    if(this.local){ try{ this.local.close(); }catch(e){} }
+    this.adapter = null; this.local = null;
+  },
+  info(){
+    const st = (this.adapter && this.adapter.stats) ? this.adapter.stats() : {};
+    return { adapter:this.adapterName, backend:this.backend, url:this.firebaseUrl(), denied:!!st.denied,
+             room:this.room, floor:this.floor, shard:this.shard, people:this.people(),
+             max:MAX_PLAYERS_PER_ROOM, floors:FLOOR_COUNT, remotes:netRemotes.length };
+  }
+};
+
+/* ---------------------------------------------------------------- 어댑터 3종 */
+function makeBroadcastAdapter(room, onMsg){
+  let ch = null;
+  try{
+    if(typeof BroadcastChannel === 'undefined') return null;
+    ch = new BroadcastChannel('office-run2d.' + room);
+    ch.onmessage = (ev)=> onMsg(ev.data);
+  }catch(e){ return null; }
+  return {
+    kind:'broadcast',
+    send(msg){ try{ ch.postMessage(msg); }catch(e){} },
+    close(){ try{ ch.close(); }catch(e){} ch = null; }
+  };
+}
+
+function makeFirebaseAdapter(cfg, room, myId, onMsg){
+  const base = String(cfg.firebaseUrl || (cfg.firebase && cfg.firebase.databaseURL) || '').replace(/\/+$/,'');
+  if(!base) return null;
+  const auth = (cfg.firebase && cfg.firebase.auth) ? ('?auth=' + encodeURIComponent(cfg.firebase.auth)) : '';
+  const rootPath = '/rooms/' + encodeURIComponent(room) + '/players';
+  const playersUrl = base + rootPath + '.json' + auth;
+  const streamUrl  = base + rootPath + '.json' + auth;
+  const playerUrl  = base + rootPath + '/' + encodeURIComponent(myId) + '.json' + auth;
+  let es = null, closed = false, pollT = null, denied = false, lastOk = 0;
+  const raw = new Map();           /* id → 마지막으로 알려진 접속자 상태 (patch 병합용) */
+
+  function emit(id){
+    const d = raw.get(id);
+    if(!d){ onMsg({t:'bye', id}); return; }
+    onMsg(Object.assign({t:'state', id}, d));
+  }
+  function merge(id, data){
+    if(data === null || data === undefined){ raw.delete(id); onMsg({t:'bye', id}); return; }
+    if(typeof data !== 'object') return;
+    const prev = raw.get(id) || {};
+    raw.set(id, Object.assign(prev, data));
+    emit(id);
+  }
+  /* 초기 스냅샷 GET (SSE 가 막힌 환경에서도 현재 접속자를 즉시 확보) */
+  async function snapshot(){
+    try{
+      const r = await fetch(playersUrl, {cache:'no-store'});
+      if(r.status === 401 || r.status === 403){ deny(); return; }
+      if(!r.ok) return;
+      lastOk = Date.now();
+      const data = await r.json();
+      if(data && typeof data === 'object'){
+        for(const id in data){ raw.set(id, Object.assign({}, data[id])); emit(id); }
+      }
+    }catch(e){}
+  }
+  function deny(){
+    if(denied) return;
+    denied = true;
+    onFirebaseDenied();
+  }
+  /* 경로는 players 노드 기준 상대경로: '/' , '/<id>' , '/<id>/<field>' */
+  function handlePacket(ev){
+    let pkt; try{ pkt = JSON.parse(ev.data); }catch(e){ return; }
+    const p = pkt.path || '/';
+    if(p === '/' || p === ''){
+      const d = pkt.data;
+      if(d === null){ raw.clear(); return; }
+      if(d && typeof d === 'object'){
+        const players = (d.players && typeof d.players === 'object') ? d.players : d;
+        for(const id in players){ raw.set(id, Object.assign({}, players[id])); emit(id); }
+      }
+      return;
+    }
+    const seg = String(p).replace(/^\//,'').split('/').filter(Boolean);
+    if(seg[0] === 'players') seg.shift();
+    const id = decodeURIComponent(seg[0] || '');
+    if(!id) return;
+    if(seg.length > 1){
+      /* 필드 단위 patch — 기존 상태에 병합 */
+      const prev = raw.get(id) || {};
+      prev[seg[1]] = pkt.data;
+      raw.set(id, prev);
+      emit(id);
+      return;
+    }
+    merge(id, pkt.data);
+  }
+  function startPoll(){
+    if(pollT || closed) return;
+    pollT = setInterval(snapshot, 2500);
+  }
+  function connect(){
+    if(closed) return;
+    try{
+      es = new EventSource(streamUrl);
+      es.addEventListener('put', handlePacket);
+      es.addEventListener('patch', handlePacket);
+      es.onopen = ()=>{ if(pollT){ clearInterval(pollT); pollT = null; } };
+      es.onerror = ()=>{
+        /* EventSource 는 자동 재연결하지만, 장시간 끊김 시 폴링으로 보완 */
+        if(!closed) startPoll();
+      };
+    }catch(e){ es = null; startPoll(); }
+  }
+  snapshot();
+  connect();
+  return {
+    kind:'firebase',
+    send(msg){
+      if(msg.t !== 'hello' && msg.t !== 'state') return;
+      const body = {};
+      const keys = ['id','nick','charType','floor','x','y','dir','disguise','chatMsg','chatTs','chatSeq','moving','ts'];
+      for(const k of keys) if(msg[k] !== undefined) body[k] = msg[k];
+      try{
+        fetch(playerUrl, {method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body), keepalive:true})
+          .then(r=>{ if(r.status === 401 || r.status === 403) deny(); else lastOk = Date.now(); })
+          .catch(()=>{});
+      }catch(e){}
+    },
+    close(final){
+      closed = true;
+      try{ if(es) es.close(); }catch(e){}
+      if(pollT){ clearInterval(pollT); pollT = null; }
+      if(final){ try{ fetch(playerUrl, {method:'DELETE', keepalive:true}).catch(()=>{}); }catch(e){} }
+    },
+    stats(){ return {denied, lastOk}; }
+  };
+}
+
+function makeSupabaseAdapter(cfg, room, myId, onMsg){
+  const base = String(cfg.url||'').replace(/^http/i,'ws').replace(/\/+$/,'');
+  const key = String(cfg.anonKey||'');
+  if(!base || !key || typeof WebSocket === 'undefined') return null;
+  const topic = 'realtime:office-run2d:' + room;
+  let ws = null, ref = 0, hb = null, closed = false, retry = null;
+  function sendFrame(o){ try{ ws.send(JSON.stringify(o)); }catch(e){} }
+  function join(){
+    if(closed) return;
+    try{ ws = new WebSocket(base + '/realtime/v1/websocket?apikey=' + encodeURIComponent(key) + '&vsn=1.0.0'); }
+    catch(e){ ws = null; return; }
+    ws.onopen = ()=>{
+      sendFrame({topic, event:'phx_join', payload:{config:{broadcast:{self:false, ack:false}, presence:{key:myId}, postgres_changes:[]}}, ref:String(++ref)});
+      if(hb) clearInterval(hb);
+      hb = setInterval(()=> sendFrame({topic:'phoenix', event:'heartbeat', payload:{}, ref:String(++ref)}), 25000);
+    };
+    ws.onmessage = (ev)=>{
+      let m; try{ m = JSON.parse(ev.data); }catch(e){ return; }
+      if(m.event === 'broadcast'){
+        const p = (m.payload && (m.payload.payload || m.payload)) || null;
+        if(p && p.id) onMsg(p);
+      } else if(m.event === 'presence_state' || m.event === 'presence_diff'){
+        const st = (m.payload && (m.payload.joins || m.payload)) || {};
+        for(const k in st){ if(k === myId) continue; onMsg({t:'hello', id:k}); }
+      }
+    };
+    ws.onclose = ()=>{ if(hb) clearInterval(hb); if(!closed) retry = setTimeout(join, 2500); };
+    ws.onerror = ()=>{};
+  }
+  join();
+  return {
+    kind:'supabase',
+    send(msg){
+      if(ws && ws.readyState === 1){
+        sendFrame({topic, event:'broadcast', payload:{type:'broadcast', event:'state', payload:msg}, ref:null});
+      }
+    },
+    close(final){
+      closed = true;
+      if(hb) clearInterval(hb); if(retry) clearTimeout(retry);
+      if(final) sendFrame({topic, event:'phx_leave', payload:{}, ref:String(++ref)});
+      try{ if(ws) ws.close(); }catch(e){}
+    }
+  };
+}
+
+/* ---------------------------------------------------------------- Firebase 보강 */
+let _deniedOnce = false;
+function onFirebaseDenied(){
+  if(_deniedOnce) return;
+  _deniedOnce = true;
+  Net.adapterName = 'firebase(권한없음)→로컬';
+  addChatLine('', 'Firebase 읽기/쓰기 권한이 없습니다. Realtime Database 규칙을 확인해 주세요.', 'sys');
+  toast('⚠️ Firebase 권한 오류 · 이 기기 탭끼리만 동기화됩니다', 'warn');
+  syncPeopleBadge();
+}
+
+/* 1인 1이메일 DB 원격 백업 (이메일은 SHA-256 해시로만 저장) */
+async function emailHash(email){
+  const s = String(email||'').trim().toLowerCase();
+  try{
+    if(window.crypto && crypto.subtle && crypto.subtle.digest){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+      return Array.from(new Uint8Array(buf)).map(b=> b.toString(16).padStart(2,'0')).join('').slice(0,32);
+    }
+  }catch(e){}
+  let h1 = 0x811c9dc5, h2 = 0x1000193;
+  for(let i=0;i<s.length;i++){ h1 = (h1 ^ s.charCodeAt(i)) * 16777619 >>> 0; h2 = (h2 + s.charCodeAt(i)*31) >>> 0; }
+  return ('u' + h1.toString(16) + h2.toString(16)).slice(0,32);
+}
+let _userSyncAt = 0;
+async function syncUserRecord(force){
+  try{
+    const base = Net.firebaseUrl ? Net.firebaseUrl() : '';
+    if(!base || !G.ready || !G.email) return;
+    const now = Date.now();
+    if(!force && now - _userSyncAt < 25000) return;
+    _userSyncAt = now;
+    const key = await emailHash(G.email);
+    const body = { nick:G.nick, char:G.char, day:G.day, points:G.points,
+      dh:Math.round(G.dh), mental:Math.round(G.mental), visits:G.visits||1, lastSeen:now };
+    fetch(base + '/users/' + key + '.json', { method:'PATCH', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body), keepalive:true }).catch(()=>{});
+  }catch(e){}
+}
+
+/* ---------------------------------------------------------------- 원격 접속자 */
+function ensureRemote(id, m){
+  let r = netRemotes.find(o=> o.id === id);
+  if(r) return r;
+  const x = Number.isFinite(+m.x) ? +m.x : (FLOORS[G.floor] ? FLOORS[G.floor].start.x : 0);
+  const y = Number.isFinite(+m.y) ? +m.y : (FLOORS[G.floor] ? FLOORS[G.floor].start.y : 0);
+  r = {
+    id, nick:(m.nick||'동료'), charType:(CHARACTERS[m.charType]? m.charType : 'male'),
+    floor:(m.floor != null? m.floor : G.floor),
+    x, y, tx:x, ty:y, dir:+m.dir||Math.PI/2,
+    moving:false, phase:0, spd:0, disguise:'none', bubble:'', bubbleT:0, bubbleLife:0,
+    chatSeq:0, seen:performance.now(), bubbleH:56
+  };
+  netRemotes.push(r);
+  return r;
+}
+function updateRemotes(t){
+  const now = performance.now();
+  const last = updateRemotes._last || now;
+  updateRemotes._last = now;
+  const dt = Math.min(.12, Math.max(0, (now - last)/1000));
+  for(const r of netRemotes){
+    const k = 1 - Math.pow(.0009, dt);
+    r.x += (r.tx - r.x) * k;
+    r.y += (r.ty - r.y) * k;
+    if(r.moving) r.phase = (r.phase||0) + dt*7.5;
+    r.spd = r.moving ? 110 : 0;
+    if(r.bubbleLife){ r.bubbleT += dt; if(r.bubbleT > r.bubbleLife){ r.bubble=''; r.bubbleLife = 0; } }
+  }
+}
+function remoteBubbleH(r){
+  if(r.disguise === 'chair') return 46;
+  if(r.disguise === 'plant') return 34;
+  return ((CHARACTERS[r.charType] || {}).height || 56) + 22;   /* 닉네임표 위로 말풍선 */
+}
+function drawRemote(c, r, t){
+  const ch = CHARACTERS[r.charType] || CHARACTERS.male;
+  const effH = (r.disguise === 'chair') ? 34 : (r.disguise === 'plant') ? 22 : (ch.height || 56);
+  const opts = {
+    walking: r.moving, phase: r.phase||0, speed: r.spd||0, height: ch.height,
+    chair: r.disguise === 'chair', plant: r.disguise === 'plant',
+    shield: r.disguise === 'shield', female: r.charType === 'female', badge: true, label: ''
+  };
+  if(r.charType === 'kong') opts.beat = Math.max(0, Math.sin(t*0.9 + (r.phase||0)))*0.6;
+  drawCharacter(c, r.charType, r.x, r.y, r.dir, t, opts);
+  if(r.disguise === 'call'){
+    c.save();
+    const a = .45+.28*Math.sin(t*9);
+    c.strokeStyle = 'rgba(140,220,160,'+a+')'; c.lineWidth = 2;
+    c.beginPath(); c.arc(r.x, r.y-30, 28, 0, TAU); c.stroke();
+    txt(c, '📞', r.x+23, r.y-52, 14, '#fff','center',900);
+    c.restore();
+  }
+  /* 닉네임 + 접속 표시 */
+  const ly = r.y - effH - 10;
+  c.save();
+  c.font = "900 9px 'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+  const label = String(r.nick||'동료');
+  const tw = Math.min(120, c.measureText(label).width + 22);
+  c.fillStyle = 'rgba(36,26,18,.80)';
+  rr(c, r.x-tw/2, ly-13, tw, 14, 7); c.fill();
+  c.fillStyle = '#8fe3a8';
+  c.beginPath(); c.arc(r.x-tw/2+7.5, ly-6, 2.4, 0, TAU); c.fill();
+  c.fillStyle = '#ffe4bf'; c.textAlign='center'; c.textBaseline='middle';
+  c.fillText(label, r.x+2.5, ly-5.6, tw-18);
+  c.restore();
+}
+function syncPeopleBadge(){
+  const el = document.getElementById('peopleTxt');
+  if(!el) return;
+  const n = Net.people();
+  const txt = '· ' + n + '명';
+  if(el.textContent !== txt) el.textContent = txt;
+  el.title = '같은 층 접속 ' + n + '명 · 방 ' + (Net.shard+1) + ' · ' + Net.adapterName;
+  Net._badgeInit = true;
+}
+
+/* ---------------------------------------------------------------- 채팅바 */
+const chatDockEl = document.getElementById('chatDock');
+const chatBarEl  = document.getElementById('chatBar');
+const chatInEl   = document.getElementById('chatIn');
+const chatLogEl  = document.getElementById('chatLog');
+
+function isChatTyping(){
+  return !!chatInEl && (document.activeElement === chatInEl || chatInEl.matches(':focus'));
+}
+function clearGameKeys(){
+  for(const k in keys) keys[k] = false;
+  if(input && input.joy){ input.joy.active = false; input.joy.x = 0; input.joy.y = 0; }
+  keys['w']=keys['a']=keys['s']=keys['d']=keys[' ']=keys['e']=false;
+}
+function isTouchLayout(){ return window.matchMedia('(pointer:coarse)').matches || window.innerWidth <= 720; }
+
+/* 모바일 가상 키보드가 올라와도 채팅바가 가려지지 않게 */
+function placeForKeyboard(){
+  const vv = window.visualViewport;
+  let lift = 0;
+  if(vv && isChatTyping()){
+    lift = Math.max(0, Math.round(window.innerHeight - (vv.height + vv.offsetTop)));
+    if(lift < 60) lift = 0;   /* 주소창 접힘 등 미세 변화는 무시 */
+  }
+  if(chatDockEl) chatDockEl.style.setProperty('--kb', lift + 'px');
+}
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', placeForKeyboard);
+  window.visualViewport.addEventListener('scroll', placeForKeyboard);
+}
+window.addEventListener('orientationchange', ()=> setTimeout(placeForKeyboard, 250));
+
+function chatFocus(){
+  if(!G.ready || G.over) return;
+  chatInEl.focus({preventScroll:true});
+}
+function chatBlur(){
+  if(chatInEl) chatInEl.blur();
+}
+if(chatInEl){
+  chatInEl.addEventListener('focus', ()=>{
+    clearGameKeys();
+    if(chatDockEl) chatDockEl.classList.add('typing');
+    document.body.classList.add('typing');
+    setTimeout(placeForKeyboard, 60);
+  });
+  chatInEl.addEventListener('blur', ()=>{
+    clearGameKeys();
+    if(chatDockEl) chatDockEl.classList.remove('typing');
+    document.body.classList.remove('typing');
+    placeForKeyboard();
+  });
+  chatInEl.addEventListener('keydown', (ev)=>{
+    ev.stopPropagation();
+    if(ev.key === 'Enter'){ ev.preventDefault(); submitChat(); }
+    else if(ev.key === 'Escape'){ ev.preventDefault(); chatBlur(); }
+  });
+  chatInEl.addEventListener('keyup', (ev)=> ev.stopPropagation());
+  chatInEl.addEventListener('pointerdown', (ev)=> ev.stopPropagation());
+}
+if(chatBarEl){
+  chatBarEl.addEventListener('submit', (ev)=>{ ev.preventDefault(); submitChat(); });
+  chatBarEl.addEventListener('pointerdown', (ev)=> ev.stopPropagation());
+}
+document.querySelectorAll('#skills .skill').forEach(el=>{
+  el.addEventListener('pointerdown', ()=> { if(chatInEl) chatInEl.blur(); });
+});
+
+function submitChat(){
+  if(!chatInEl) return;
+  const text = chatInEl.value;
+  chatInEl.value = '';
+  if(!text.trim()) return;
+  sendChat(text);
+  if(isTouchLayout()) chatBlur();          /* 모바일: 키보드 내리고 게임 복귀 */
+  else setTimeout(()=>{ if(chatInEl) chatInEl.focus({preventScroll:true}); }, 0);
+}
+
+function sendChat(raw){
+  if(!G.ready || G.over) return;
+  const text = String(raw||'').replace(/\s+/g,' ').trim().slice(0,80);
+  if(!text) return;
+  say(playerRef, text, 4.4);
+  addChatLine(G.nick || '나', text, 'me');
+  if(typeof Sound !== 'undefined' && Sound.pop) Sound.pop();
+  Net.chat(text);
+  aiBanter(text);
+  if(isInitialEgg(text)){
+    G.mental = Math.min(100, G.mental + 3);
+    toast('🔎 사원증 이니셜 감지 — 멘탈 +3', 'good');
+    if(Sound && Sound.notify) Sound.notify();
+    addChatLine('', '사원증 이니셜 인증 · 멘탈 +3', 'egg');
+  }
+  updateHUD();
+}
+
+function isInitialEgg(text){
+  const s = String(text||'').toUpperCase();
+  if(!/(^|[^A-Z])(DH|SY)([^A-Z]|$)/.test(s)) return false;
+  return true;
+}
+
+/* ---------------- AI 동료 맞장구 (맥락 반응) ---------------- */
+const CHAT_BANTER = {
+  lunch:    ['점심 뭐 먹지…','그 메뉴 저도 찬성!','12시에 같이 가요','오늘은 국밥 어때요'],
+  coffee:   ['커피 한 잔 하실래요?','탕비실 라인 짧아요','저도 각성 필요해요','카페인 각성 크루'],
+  overtime: ['야근은 안 돼요…','오늘은 칼퇴각인데','부장님한테 걸리면 끝','집에 가고 싶다'],
+  boss:     ['조용조용… 부장님 순찰 중','방금 복도 지나가셨어요','레이더 보세요!','팀장님 뒷모습 봤어요'],
+  report:   ['이번엔 통과하겠네요','깔끔하게 정리하셨네요','보고서 화이팅','결재 올라갔어요?'],
+  tired:    ['힘내세요… 저도 힘들어요','5분만 쉬었다 오세요','번아웃 조심해요','물 한 모금 하세요'],
+  hype:     ['좋아요!','그 마인드 최고','오늘도 살아남읍시다','가자 가자!'],
+  arcade:   ['저도 한 판만…','3F 오락기 최고예요','부장님 오기 전에 나와요'],
+  egg:      ['어? 사원증 이니셜이네요','DH님 전용 간식 있어요','SY… 처음 보는 이니셜이에요','이니셜 인증됐습니다!'],
+  empty:    ['ㅋㅋㅋ','듣고 있어요','그거 맞아요','저도 같은 생각이에요','점심 얘기인가요?']
+};
+function banterKey(text){
+  const s = String(text||'').toLowerCase();
+  if(isInitialEgg(text)) return 'egg';
+  if(/점심|밥|메뉴|배고|식사|국밥|김밥|라면/.test(s)) return 'lunch';
+  if(/커피|카페인|아메리카노|라떼|각성/.test(s)) return 'coffee';
+  if(/야근|칼퇴|퇴근|집에|연장/.test(s)) return 'overtime';
+  if(/부장|팀장|순찰|레이더|들켜|걸려/.test(s)) return 'boss';
+  if(/보고서|결재|회의|자료|기획|발표/.test(s)) return 'report';
+  if(/힘들|피곤|지쳐|번아웃|졸려|스트레스/.test(s)) return 'tired';
+  if(/오락|게임|버블|벽돌|닷지|한 판/.test(s)) return 'arcade';
+  if(/화이팅|좋아|가자|최고|사랑|고마|축하/.test(s)) return 'hype';
+  return 'empty';
+}
+function aiBanter(text){
+  if(!G.ready) return;
+  const key = banterKey(text);
+  const f = FLOORS[G.floor];
+  if(!f) return;
+  const near = f.npcs.filter(n=> dist(n.x,n.y,player.x,player.y) < 320);
+  const pool = near.length ? near : f.npcs.slice(0,3);
+  if(!pool.length) return;
+  const count = key === 'egg' ? 2 : (Math.random() < .45 ? 2 : 1);
+  const used = new Set();
+  for(let i=0;i<count;i++){
+    let n = pick(pool);
+    let guard = 0;
+    while(used.has(n.id) && guard++ < 8) n = pick(pool);
+    used.add(n.id);
+    const lines = (CHAT_BANTER[key]||CHAT_BANTER.empty).concat(n.lines||[]);
+    setTimeout(()=>{
+      if(!G.ready || !FLOORS[G.floor].npcs.includes(n)) return;
+      say(n, pick(lines), 3.4);
+    }, 520 + i*760 + Math.floor(Math.random()*280));
+  }
+  if(key === 'egg'){
+    setTimeout(()=>{
+      addChatLine('사내 단톡방', pick(['이니셜 인증 완료 · 오늘 간식 1개 지급','DH/SY 인증 기록됨','사원증 스캔 성공']), 'egg');
+    }, 1500);
+  }
+}
+
+/* ---------------- 채팅 로그 (데스크톱) ---------------- */
+const chatLines = [];
+function addChatLine(who, text, kind){
+  if(!chatLogEl) return;
+  const el = document.createElement('div');
+  el.className = 'chatLine' + (kind? ' '+kind : '');
+  if(who){ const b = document.createElement('b'); b.textContent = who + '  '; el.appendChild(b); }
+  el.appendChild(document.createTextNode(String(text).slice(0,80)));
+  chatLogEl.appendChild(el);
+  chatLines.push(el);
+  while(chatLines.length > 4){ const old = chatLines.shift(); if(old && old.parentNode) old.parentNode.removeChild(old); }
+  setTimeout(()=>{ el.style.transition='opacity .35s, transform .35s'; el.style.opacity='0'; el.style.transform='translateY(4px)'; }, 9000);
+  setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); const i = chatLines.indexOf(el); if(i>=0) chatLines.splice(i,1); }, 9600);
+}
+
+/* ---------------- 부팅 : 로그인 후 Net 시작 ---------------- */
+(function bootNetChat(){
+  const t = setInterval(()=>{
+    if(G.ready){
+      clearInterval(t);
+      const prof = { pid:(G.pid || (Store.get(G.email)||{}).pid || ''), nick:G.nick, char:G.char };
+      if(!prof.pid){
+        prof.pid = 'u' + Math.random().toString(36).slice(2,10);
+        G.pid = prof.pid;
+        try{ const prev = Store.get(G.email)||{}; prev.pid = prof.pid; Store.put(prev); }catch(e){}
+      }
+      Net.init(prof);
+      addChatLine('', '같은 층 동료와 연결됨 · ' + (Net.adapterName==='broadcast' ? '이 브라우저 탭끼리 동기화' : Net.adapterName + ' 실시간'), 'sys');
+    }
+  }, 250);
+})();
+
+/* ---------------- QA / 디버그 훅 ---------------- */
+if(window.__OFFICE){
+  Object.assign(window.__OFFICE, {
+    net(){ return Net.info(); },
+    remotes(){ return netRemotes.map(r=>({id:r.id, nick:r.nick, char:r.charType, floor:r.floor,
+      x:Math.round(r.x), y:Math.round(r.y), bubble:r.bubble||'', disguise:r.disguise})); },
+    chat(text){ sendChat(text); },
+    chatValue(text){ if(chatInEl){ chatInEl.value = text; } },
+    typing(){ return isChatTyping(); },
+    room(){ return { room:Net.room, floor:Net.floor, people:Net.people(), adapter:Net.adapterName }; },
+    people(){ return Net.people(); },
+    hudBoxes(sel){
+      const list = sel || ['#hudTL','#hudTC','#hudTR','#skills','#joy','#prompt','#toasts','#chatBar','#alarm'];
+      const out = {};
+      for(const s of list){
+        const el = document.querySelector(s);
+        if(!el) continue;
+        const cs = getComputedStyle(el);
+        if(cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity === 0) continue;
+        const r = el.getBoundingClientRect();
+        if(r.width < 2 || r.height < 2) continue;
+        out[s] = {x:Math.round(r.x), y:Math.round(r.y), w:Math.round(r.width), h:Math.round(r.height)};
+      }
+      return out;
+    },
+    overlaps(){
+      const b = window.__OFFICE.hudBoxes();
+      const keys2 = Object.keys(b);
+      const hits = [];
+      for(let i=0;i<keys2.length;i++) for(let j=i+1;j<keys2.length;j++){
+        const A = b[keys2[i]], B = b[keys2[j]];
+        const w = Math.min(A.x+A.w, B.x+B.w) - Math.max(A.x, B.x);
+        const h = Math.min(A.y+A.h, B.y+B.h) - Math.max(A.y, B.y);
+        if(w > 1 && h > 1) hits.push({a:keys2[i], b:keys2[j], w:Math.round(w), h:Math.round(h)});
+      }
+      return {boxes:b, hits};
+    }
+  });
+}
 
 </script>
 </body>
