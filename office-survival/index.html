@@ -2324,6 +2324,21 @@ function drawChar(c, opt){
   }
 }
 
+function drawNameChip(x,y,text){
+  ctx.save();
+  ctx.font = fontS(9,900);
+  const tw = Math.min(96, ctx.measureText(text).width);
+  const w = tw + 14, h = 15;
+  const bx = clamp(x - w/2, 4, WORLD_W - w - 4), by = y - 60;
+  ctx.fillStyle = 'rgba(43,33,24,.85)';
+  rr(ctx, bx, by, w, h, 7.5); ctx.fill();
+  ctx.strokeStyle = '#7fd8c8'; ctx.lineWidth = 1.4;
+  rr(ctx, bx, by, w, h, 7.5); ctx.stroke();
+  ctx.fillStyle = '#e8fff8'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(text, bx + w/2, by + h/2 + 0.5);
+  ctx.restore();
+}
+
 function wrapLines(text, maxW, fs){
   ctx.font = fontS(fs, 800);
   const words = String(text).split(' ');
@@ -2634,7 +2649,7 @@ function render(){
   list.push({y: 13*TILE+33, fn: drawStoreSign});
 
   for(const c of G.customers) list.push({y: c.y, fn: ()=>drawChar(c)});
-  for(const r of G.remotes) list.push({y: r.y, fn: ()=>drawChar(r,{remote:true})});
+  for(const r of G.remotes) list.push({y: r.y, fn: ()=>{ drawChar(r,{remote:true}); drawNameChip(r.x, r.y, r.nick||'동료'); }});
   for(const b of G.bosses) list.push({y: b.y, fn: ()=>drawChar(b)});
   if(G.player){
     list.push({y: G.player.y, fn: drawPlayerSprite});
