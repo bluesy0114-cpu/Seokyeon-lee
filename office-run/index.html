@@ -4814,7 +4814,7 @@ const Net = {
       if(this.adapter.kind !== 'firebase') this.post({t:'bye', id:this.myId});   /* 이전 층/방 퇴장 알림 */
       try{ this.adapter.close(true); }catch(e){}                                   /* firebase → DELETE */
     }
-    if(this.local){ try{ this.local.postMessage({t:'bye', id:this.myId}); }catch(e){} try{ this.local.close(); }catch(e){} }
+    if(this.local){ try{ this.local.send({t:'bye', id:this.myId}); }catch(e){} try{ this.local.close(); }catch(e){} }
     this.adapter = null; this.local = null;
     this.peers.clear();
     netRemotes.length = 0;
@@ -4848,7 +4848,7 @@ const Net = {
   },
   post(msg){
     if(this.adapter && this.adapter.send){ try{ this.adapter.send(msg); }catch(e){} }
-    if(this.local){ try{ this.local.postMessage(msg); }catch(e){} }
+    if(this.local){ try{ this.local.send(msg); }catch(e){} }
   },
   myDisguise(){
     if(G.plantT > 0) return 'plant';
@@ -4955,7 +4955,7 @@ const Net = {
   people(){ return this.peers.size + 1; },
   leave(){
     const bye = {t:'bye', id:this.myId};
-    if(this.local){ try{ this.local.postMessage(bye); }catch(e){} }
+    if(this.local){ try{ this.local.send(bye); }catch(e){} }
     if(this.adapter){
       if(this.adapter.kind !== 'firebase'){ try{ this.adapter.send(bye); }catch(e){} }
       try{ this.adapter.close(true); }catch(e){}   /* firebase → DELETE 로 즉시 퇴장 */
