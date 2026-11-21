@@ -78,7 +78,7 @@
   .charHead{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px;}
   .charHead b{font-size:12px;font-weight:900;color:#5b4836;}
   .charHead span{font-size:10.5px;font-weight:800;color:#b09b83;}
-  .charGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+  .charGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
   .charCard{
     position:relative;border-radius:16px;border:2px solid #ecdfc8;background:#fffdf7;padding:6px 4px 8px;
     display:flex;flex-direction:column;align-items:center;gap:2px;transition:.16s;overflow:hidden;
@@ -476,6 +476,147 @@
     #skills{bottom:8px;}
     #prompt{bottom:76px;}
   }
+
+  /* ================= v2 : 커리어 · 업무 패널 · 돌발 업무 ================= */
+  #gXP .track i{background:linear-gradient(180deg,#b9a3e3,#8a6bbd);}
+  #gXP .num{width:auto;min-width:26px;color:#6a4f96;}
+  #gXP.max .track i{background:linear-gradient(180deg,#ffe08a,#e9b632);}
+  #hudTL{transition:opacity .25s;}
+  #hudTL.ghost{opacity:.32;}
+  #hudTL.ghost:hover{opacity:1;}
+  #taskPanel{border-top:1px dashed #e6d6bb;padding-top:7px;margin-top:-1px;}
+  #taskHead{display:flex;align-items:center;gap:6px;width:100%;text-align:left;padding:0;}
+  #taskHead b{font-size:11.5px;font-weight:900;color:#4a3828;letter-spacing:-.3px;}
+  #taskHead span{margin-left:auto;font-size:10.5px;font-weight:900;color:#8a6b4b;background:#f6ecd9;border-radius:8px;padding:1px 6px;font-variant-numeric:tabular-nums;}
+  #taskHead span.all{background:#dff3e5;color:#2f7a4b;}
+  #taskHead i{font-style:normal;font-size:10px;color:var(--ink3);transition:transform .18s;}
+  #taskPanel.collapsed #taskHead i{transform:rotate(-90deg);}
+  #taskPanel.collapsed #taskList{display:none;}
+  #taskList{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:5px;}
+  #taskList li{display:grid;grid-template-columns:16px 1fr auto;align-items:center;gap:6px;font-size:10.5px;font-weight:800;color:#5d4732;letter-spacing:-.2px;}
+  #taskList li .qi{font-size:11px;text-align:center;}
+  #taskList li .qn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  #taskList li .qp{font-size:9.5px;font-weight:900;color:#a3907b;font-variant-numeric:tabular-nums;}
+  #taskList li .qb{grid-column:2 / 4;height:4px;border-radius:3px;background:#eadfcb;overflow:hidden;margin-top:-2px;}
+  #taskList li .qb i{display:block;height:100%;background:linear-gradient(90deg,#ffcf6b,#ff8a3d);border-radius:3px;}
+  #taskList li.done .qn{color:#4fae74;text-decoration:line-through;text-decoration-thickness:1.5px;}
+  #taskList li.done .qp{color:#4fae74;}
+  #taskList li.done .qb i{background:#4fae74;}
+  #taskList li.fail .qn{color:#c9a99a;text-decoration:line-through;}
+  #taskList li.fail .qp{color:#e8544a;}
+  #evRow{margin-top:6px;padding:6px 8px 7px;border-radius:11px;background:linear-gradient(180deg,#fff1dc,#ffe4c2);border:1.5px solid #ffc58f;
+    display:flex;flex-direction:column;gap:4px;animation:evIn .35s ease-out;}
+  #evRow .er{display:flex;align-items:center;gap:6px;}
+  #evRow .er b{font-size:11.5px;font-weight:900;color:#7a3d14;letter-spacing:-.3px;}
+  #evRow .er em{font-style:normal;margin-left:auto;font-size:13px;font-weight:900;color:#e2603f;font-variant-numeric:tabular-nums;}
+  #evRow small{font-size:10px;font-weight:800;color:#a06a3c;letter-spacing:-.2px;}
+  #evRow .eb{height:5px;border-radius:4px;background:rgba(226,96,63,.15);overflow:hidden;}
+  #evRow .eb i{display:block;height:100%;background:linear-gradient(90deg,#ff8a3d,#e2603f);border-radius:4px;}
+  #evRow.urgent{border-color:#e8544a;}
+  #evRow.urgent .er em{animation:blinkTxt .5s steps(2) infinite;}
+  @keyframes evIn{from{transform:translateY(-4px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes blinkTxt{50%{opacity:.35}}
+
+  #promo{position:absolute;left:50%;top:22%;transform:translate(-50%,0);z-index:47;pointer-events:none;
+    display:flex;align-items:center;gap:14px;padding:14px 26px 14px 16px;border-radius:22px;
+    background:linear-gradient(160deg,#3b2c1e,#24190f);color:#ffe4bf;box-shadow:0 18px 50px rgba(0,0,0,.45);border:2px solid #e9b632;}
+  #promo.show{animation:promoIn 3.6s cubic-bezier(.2,.9,.25,1) forwards;}
+  #promo .pIco{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:32px;background:linear-gradient(160deg,#ffe08a,#e9b632);}
+  #promo .pTxt{display:flex;flex-direction:column;line-height:1.1;}
+  #promo .pTxt span{font-size:12px;font-weight:800;color:#e3c79d;}
+  #promo .pTxt b{font-size:30px;font-weight:900;letter-spacing:-1px;color:#fff3d6;}
+  @keyframes promoIn{0%{opacity:0;transform:translate(-50%,14px) scale(.9)}10%{opacity:1;transform:translate(-50%,0) scale(1.04)}16%{transform:translate(-50%,0) scale(1)}86%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
+
+  /* 커리어 모달 */
+  .crHead{display:flex;align-items:center;gap:14px;padding:14px;border-radius:16px;background:linear-gradient(160deg,#3b2c1e,#2a1f15);color:#ffe4bf;}
+  .crHead .ic{width:56px;height:56px;border-radius:17px;display:grid;place-items:center;font-size:30px;background:linear-gradient(160deg,#ffe08a,#e9b632);flex:none;}
+  .crHead .tx{flex:1;min-width:0;}
+  .crHead .tx b{display:block;font-size:22px;font-weight:900;letter-spacing:-.6px;color:#fff3d6;}
+  .crHead .tx span{font-size:11px;font-weight:800;color:#d9bd93;}
+  .crBar{margin-top:8px;height:8px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden;}
+  .crBar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#b9a3e3,#ffe08a);}
+  .rankLadder{display:flex;gap:4px;margin:12px 0 4px;}
+  .rankLadder div{flex:1;text-align:center;padding:6px 0 5px;border-radius:10px;background:#f6ecd9;font-size:10px;font-weight:900;color:#b09b83;}
+  .rankLadder div span{display:block;font-size:15px;filter:grayscale(1);opacity:.5;}
+  .rankLadder div.got{background:#fff3d6;color:#7a5a2e;}
+  .rankLadder div.got span{filter:none;opacity:1;}
+  .rankLadder div.cur{background:#ffe0b8;color:#4a3220;box-shadow:inset 0 0 0 2px #ff8a3d;}
+  .secT{margin:14px 0 7px;font-size:12px;font-weight:900;color:#4a3828;}
+  .achGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;}
+  .ach{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:12px;background:#fdf5e7;border:1px solid var(--line);}
+  .ach .ai{font-size:18px;flex:none;}
+  .ach b{display:block;font-size:11px;font-weight:900;color:#3a2d22;}
+  .ach span{font-size:9.5px;font-weight:800;color:#a3907b;line-height:1.25;}
+  .ach.lock{opacity:.5;}
+  .ach.lock .ai{filter:grayscale(1);}
+  .modCard{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:#fff3d6;border:1.5px solid #f4c95d;}
+  .modCard .mi{font-size:30px;flex:none;}
+  .modCard b{display:block;font-size:15px;font-weight:900;color:#4a3220;}
+  .modCard span{font-size:11.5px;font-weight:700;color:#8a6b4b;line-height:1.4;}
+  .qBrief{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .qBrief li{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;background:#fdf5e7;border:1px solid var(--line);font-size:12px;font-weight:800;color:#4a3828;}
+  .qBrief li .qi{font-size:16px;}
+  .qBrief li .rw{margin-left:auto;font-size:10.5px;font-weight:900;color:#8a6bbd;white-space:nowrap;}
+  .qBrief li.done{background:#eef8f1;border-color:#cde9d6;}
+  .qBrief li.done .rw{color:#4fae74;}
+  .qBrief li.fail{opacity:.55;}
+  .tipLine{margin-top:10px;font-size:11px;font-weight:700;color:#8a6b4b;line-height:1.45;}
+
+  @media (max-width:760px){
+    #taskHead b{font-size:10px;}
+    #taskHead span{font-size:9px;padding:1px 5px;}
+    #taskList li{font-size:9.5px;grid-template-columns:13px 1fr auto;gap:4px;}
+    #taskList li .qp{font-size:8.5px;}
+    #evRow{padding:5px 7px 6px;}
+    #evRow .er b{font-size:10px;}
+    #evRow .er em{font-size:11.5px;}
+    #evRow small{font-size:9px;}
+    #gXP .num{font-size:9px;min-width:20px;}
+    #promo{top:30%;padding:10px 18px 10px 12px;gap:10px;}
+    #promo .pIco{width:44px;height:44px;font-size:24px;border-radius:14px;}
+    #promo .pTxt b{font-size:22px;}
+    .charCard b{font-size:9.5px;}
+    .rankLadder div{font-size:8.5px;}
+    .rankLadder div span{font-size:12px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #promo.show{animation-duration:2.6s;}
+    #evRow{animation:none;}
+  }
+
+  /* ================= v3 : 모바일 조작 · 동료 찾기 · 나가기 ================= */
+  #modal.justOpened{pointer-events:none;}
+  #joy.floating{transition:none;opacity:1;}
+  #netDot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#a3907b;margin-right:2px;box-shadow:0 0 0 2px rgba(255,255,255,.18);font-style:normal;}
+  #floorChip{cursor:pointer;}
+  #floorChip #allPeople{font-style:normal;color:#ffc98f;}
+  .netState{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;background:#fdf5e7;border:1px solid var(--line);margin-bottom:10px;}
+  .netState i{width:10px;height:10px;border-radius:50%;flex:none;}
+  .netState b{font-size:12px;font-weight:900;color:#4a3828;}
+  .flRow{padding:9px 11px;border-radius:12px;background:#fffaf1;border:1px solid var(--line);margin-bottom:6px;}
+  .flHead{display:flex;align-items:center;gap:8px;}
+  .flHead b{font-size:14px;font-weight:900;color:#3b2c1e;}
+  .flHead span{font-size:11px;font-weight:800;color:#a3907b;}
+  .flHead .miniBtn,.flHead .here{margin-left:auto;}
+  .flHead .here{font-size:10.5px;font-weight:900;color:#ff8a3d;}
+  .ppList{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+  .pp{font-size:11px;font-weight:800;color:#4a3828;background:#f6ecd9;border-radius:9px;padding:3px 8px;}
+  .pp.me{background:#ffe0b8;}
+  .ppEmpty{font-size:10.5px;font-weight:700;color:#c2b19c;}
+  .roomRow{display:flex;gap:8px;align-items:stretch;}
+  .roomRow .fInput{flex:1;min-width:0;margin:0;}
+  .roomRow .btnGo{flex:none;padding:0 14px;white-space:nowrap;}
+  .howTo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;counter-reset:h;}
+  .howTo li{display:grid;grid-template-columns:22px 52px 1fr;gap:6px;align-items:start;padding:8px 10px;border-radius:12px;background:#fdf5e7;border:1px solid var(--line);font-size:11.5px;line-height:1.45;color:#5d4732;counter-increment:h;}
+  .howTo li::before{content:counter(h);width:20px;height:20px;border-radius:50%;background:#ff8a3d;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center;}
+  .howTo li > b{font-weight:900;color:#3b2c1e;}
+  .howTo kbd{background:#3b2c1e;color:#ffe0b8;border-radius:5px;padding:1px 5px;font-size:10px;font-weight:900;font-family:inherit;}
+  @media (max-width:760px), (pointer:coarse){
+    #btnMute{display:none;}
+    #prompt{left:auto;right:10px;transform:none;bottom:calc(64px + env(safe-area-inset-bottom) + var(--kb,0px));
+      padding:10px 14px;border-radius:16px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.28);}
+    #prompt kbd{min-width:26px;height:26px;font-size:12px;}
+  }
 </style>
 </head>
 <body>
@@ -496,7 +637,7 @@
         <input id="inEmail" class="fInput" type="email" inputmode="email" placeholder="name@company.com" autocomplete="email" spellcheck="false">
         <label class="fLabel" for="inNick">닉네임 <span class="hint">실명 대신 이니셜 추천 · DH / SY</span></label>
         <input id="inNick" class="fInput" maxlength="12" placeholder="예: 석연" autocomplete="off">
-        <div class="charHead"><b>캐릭터 선택</b><span>4종 · 언제든 설정에서 변경</span></div>
+        <div class="charHead"><b>캐릭터 선택</b><span>5종 · 언제든 설정에서 변경</span></div>
         <div class="charGrid" id="charGrid"></div>
         <button id="btnStart" class="btnPrimary">출근하기 →</button>
         <p class="fine">이메일 1개 = 프로필 1개 · 이 기기에 저장 · 하단 채팅바로 같은 층 동료와 실시간 대화</p>
@@ -508,6 +649,7 @@
           <li><span class="ico">🧑‍💻</span><div><b>2F 오피스</b> — 내 자리·탕비실. 부장님과 팀장님이 순찰 중.</div></li>
           <li><span class="ico">🕹️</span><div><b>3F 휴게실 &amp; 오락실</b> — 버블슈터·벽돌깨기·닷지 3종.</div></li>
           <li><span class="ico">🚨</span><div>다른 층에 있을 때 <b>긴급 호출</b>이 뜨면 20초 안에 내 자리로!</div></li>
+          <li><span class="ico">📋</span><div><b>오늘의 업무 3개</b>와 <b>돌발 업무</b>를 처리하고 경험치를 모아 <b>사원 → 이사</b>까지 승진하세요.</div></li>
         </ul>
         <div class="savedChip" id="savedChip" style="display:none">
           <span id="savedTxt"></span>
@@ -534,6 +676,12 @@
       <div class="gauges">
         <div class="g" id="gDH"><span class="ico">⚡</span><div class="track"><i id="barDH"></i></div><b class="num" id="valDH">20</b></div>
         <div class="g" id="gMT"><span class="ico">🧠</span><div class="track"><i id="barMT"></i></div><b class="num" id="valMT">80</b></div>
+        <div class="g" id="gXP" title="승진 경험치"><span class="ico" id="rankIco">🌱</span><div class="track"><i id="barXP"></i></div><b class="num" id="valXP">사원</b></div>
+      </div>
+      <div id="taskPanel">
+        <button id="taskHead" type="button"><b>📋 오늘의 업무</b><span id="taskCount">0/3</span><i id="taskCaret">▾</i></button>
+        <div id="evRow" class="hide"></div>
+        <ul id="taskList"></ul>
       </div>
     </div>
 
@@ -546,9 +694,11 @@
     </div>
 
     <div id="hudTR">
+      <button class="iconBtn" id="btnCareer" title="커리어">🏅</button>
       <button class="iconBtn" id="btnHelp" title="도움말">❓</button>
       <button class="iconBtn" id="btnMute" title="소리">🔊</button>
       <button class="iconBtn" id="btnSettings" title="설정">⚙️</button>
+      <button class="iconBtn" id="btnExit" title="나가기">🚪</button>
     </div>
   </div>
 
@@ -585,6 +735,8 @@
 
 <div id="elevFx" class="hide"><div class="door l"></div><div class="door r"></div><div class="lbl"><b id="elevNo">2</b><span id="elevName">OFFICE</span><div class="ding">DING DONG</div></div></div>
 
+<div id="promo" class="hide"><div class="pIco" id="promoIco">💼</div><div class="pTxt"><span id="promoSub">승진을 축하합니다</span><b id="promoName">주임</b></div></div>
+
 <div id="modalWrap" class="hide">
   <div id="modal" class="modal">
     <div class="mHead"><h2 id="mTitle">제목</h2><div class="sub" id="mSub"></div><button id="mClose">✕</button></div>
@@ -598,7 +750,7 @@
    ===================================================================== */
 'use strict';
 
-const BUILD_ID = '2d-2026-11-21-8';
+const BUILD_ID = '2d-2026-11-21-v3-lobby';
 const TILE = 40;
 const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
 const lerp  = (a,b,t)=> a+(b-a)*t;
@@ -746,7 +898,7 @@ const Sound = {
 };
 
 /* =====================================================================
-   캐릭터 4종
+   캐릭터 5종
    ===================================================================== */
 const CHARACTERS = {
   male: {
@@ -784,9 +936,18 @@ const CHARACTERS = {
     caught:['우가… (죄송합니다)','우가우가 (바로 하겠습니다)','(가슴을 두드리며 사과)'],
     disguise:['우가 (화분인 척)','(숨죽인 킹콩)','우… (조용히)'],
     coffee:['우가!!! (각성)','카페인 × 킹콩 = 무한','우가우가우가']
+  },
+  sloth: {
+    id:'sloth', name:'나무늘보', tag:'느긋함 만렙 · 멈추면 잘 안 보임', icon:'🦥', email:'늘보',
+    speed:0.82, heavy:false, height:58, width:30, sloth:true,
+    intro:'오늘도… 천천히… 칼퇴…',
+    idle:['서두르면… 지는 거예요…','메일은… 내일 읽을게요…','회의… 몇 시였죠…','나뭇잎 라떼 없나…','하암… 아직 오전이네…'],
+    caught:['아… 지금… 하려던… 참…','죄송… 합니다…','(아주 천천히 고개를 숙인다)'],
+    disguise:['나는… 가구다…','원래 안 움직여요…','(미동도 없음)'],
+    coffee:['어… 빨라졌다…?','카페인… 체감… 2배…','늘보 인생 최고 속도']
   }
 };
-const CHAR_ORDER = ['male','female','giraffe','kong'];
+const CHAR_ORDER = ['male','female','giraffe','kong','sloth'];
 
 /* =====================================================================
    스킬 / 상품 / 브랜드
@@ -843,7 +1004,7 @@ const Store = {
   },
   saveAll(m){ try{ localStorage.setItem(PROFILE_KEY, JSON.stringify(m)); }catch(e){} },
   get(email){ return this.all()[emailKey(email)] || null; },
-  put(p){ const m = this.all(); m[emailKey(p.email)] = p; this.saveAll(m); },
+  put(p){ const m = this.all(); const k = emailKey(p.email); m[k] = Object.assign({}, m[k]||{}, p); this.saveAll(m); },
   remove(email){ const m = this.all(); delete m[emailKey(email)]; this.saveAll(m); }
 };
 function emailKey(e){ return String(e||'').trim().toLowerCase(); }
@@ -894,23 +1055,26 @@ function floater(x,y,text,color){
    ===================================================================== */
 
 const ELEV = {
-  1:{ door:{x:29.9,y:9,w:0.75,h:3}, face:'w', car:{x:30.65,y:9,w:2.2,h:3}, stand:{x:29.2,y:10.5} },
+  1:{ door:{x:2.2,y:8.05,w:3.0,h:0.75}, face:'s', car:{x:2.2,y:6.1,w:3.0,h:2.6}, stand:{x:3.7,y:9.55} },
   2:{ door:{x:34.4,y:10.15,w:3.0,h:0.75}, face:'s', car:{x:34.4,y:8.2,w:3.0,h:2.6}, stand:{x:35.9,y:11.35} },
-  3:{ door:{x:24.95,y:9,w:0.75,h:3}, face:'w', car:{x:25.7,y:9,w:2.6,h:3}, stand:{x:24.5,y:10.5} }
+  3:{ door:{x:25.2,y:8.05,w:3.0,h:0.75}, face:'s', car:{x:25.2,y:6.1,w:3.0,h:2.6}, stand:{x:26.7,y:9.55} }
 };
 
 const FLOOR_DEFS = [
 /* ---------------------------------------------------------------- 1F */
 {
   id:1, name:'로비 & OFFICE 24', short:'로비', W:34, H:21, theme:'lobby',
-  spawn:{x:29.0,y:10.5}, start:{x:5.2,y:16.6},
+  spawn:{x:3.7,y:9.75}, start:{x:5.2,y:16.6},
   rooms:[
     {x:1,y:1,w:32,h:19,type:'lobby'},
     {x:6.3,y:1,w:26,h:7,type:'store'},
     {x:1,y:9,w:32,h:3,type:'corridor'},
-    {x:29.4,y:8.8,w:3.4,h:3.6,type:'lift'}
+    {x:2.1,y:5.9,w:3.4,h:3.0,type:'lift'}
   ],
   walls:[
+    {x:2.0,y:5.9,w:0.3,h:3.0,kind:'wall'},
+    {x:2.0,y:5.9,w:3.6,h:0.3,kind:'wall'},
+    {x:5.4,y:5.9,w:0.3,h:3.0,kind:'wall'},
     {x:6,y:1,w:0.28,h:8,kind:'glass'},
     {x:6,y:8,w:7.0,h:0.28,kind:'glass'},
     {x:15.2,y:8,w:17.6,h:0.28,kind:'glass'},
@@ -951,7 +1115,19 @@ const FLOOR_DEFS = [
     {x:10.9,y:18.95,w:0.7,h:0.6,kind:'chair'},
     {x:14.6,y:16.1,w:0.9,h:0.9,kind:'plant',solid:false},
     {x:8.0,y:10.0,w:2.6,h:0.4,kind:'signFloor',label:'↑ OFFICE 24',solid:false},
-    {x:2.0,y:9.2,w:1.0,h:0.4,kind:'signFloor',label:'LOBBY',solid:false}
+    {x:7.0,y:11.3,w:1.4,h:0.4,kind:'signFloor',label:'LOBBY',solid:false},
+    /* --- v3 : 엘리베이터 홀 · 안내도 · 택배함 · 라운지 --- */
+    {x:1.6,y:1.4,w:3.8,h:0.7,kind:'directory',solid:true,sight:true},
+    {x:1.4,y:4.2,w:0.9,h:0.9,kind:'plant',solid:false},
+    {x:4.9,y:4.2,w:0.9,h:0.9,kind:'plant',solid:false},
+    {x:1.3,y:8.4,w:0.6,h:0.6,kind:'lamp'},
+    {x:30.2,y:9.15,w:2.6,h:0.9,kind:'lockers',label:'택배함'},
+    {x:31.8,y:11.0,w:0.9,h:0.9,kind:'plant',solid:false},
+    {x:20.4,y:15.5,w:6.6,h:3.2,kind:'rug',variant:'carpet',color:'#c9a98a'},
+    {x:3.4,y:14.4,w:5.8,h:3.4,kind:'rug',variant:'carpet',color:'#9fb2c0'},
+    {x:11.6,y:9.85,w:8.0,h:0.55,kind:'rug',variant:'label',label:'◀ 엘리베이터 · 1F 로비'},
+    {x:21.0,y:10.6,w:7.0,h:0.55,kind:'rug',variant:'label',label:'◀ 엘리베이터'},
+    {x:27.0,y:14.3,w:0.6,h:0.6,kind:'lamp'}
   ],
   npcs:[
     {id:'clerk', name:'점원', kind:'clerk', x:27.8,y:7.2, rect:{x:25.6,y:6.9,w:4.2,h:1.0}, lines:['어서오세요!','오늘 도시락 들어왔어요','봉투 필요하세요?','사원증 적립 되세요~'], speed:22},
@@ -959,7 +1135,7 @@ const FLOOR_DEFS = [
     {id:'lobby1', name:'배달기사', kind:'staff', x:20.0,y:17.6, rect:{x:7.0,y:15.8,w:14.0,h:3.4}, lines:['택배 왔습니다!','사인 부탁드려요','엘리베이터 어디죠?'], speed:44}
   ],
   interactables:[
-    {id:'elev', kind:'elev', x:29.0,y:10.5, label:'엘리베이터', key:'E'},
+    {id:'elev', kind:'elev', x:3.7,y:9.55, label:'엘리베이터', key:'E'},
     {id:'shop', kind:'shop', x:27.6,y:7.05, label:'OFFICE 24 계산대', key:'E'},
     {id:'shelf1', kind:'shop', x:10.0,y:4.5, label:'OFFICE 24 매대', key:'E'},
     {id:'vending1', kind:'talk', x:14.4,y:6.9, label:'진열대 살펴보기', key:'E'}
@@ -1077,7 +1253,21 @@ const FLOOR_DEFS = [
     {x:32.4,y:17.2,w:1.9,h:0.95,kind:'table',color:'#b98a5b'},
     {x:36.8,y:14.8,w:0.9,h:0.9,kind:'plant',solid:false},
     {x:31.4,y:19.4,w:1.0,h:0.9,kind:'bin',solid:false},
-    {x:9.8,y:20.4,w:0.9,h:0.9,kind:'plant',solid:false}
+    {x:9.8,y:20.4,w:0.9,h:0.9,kind:'plant',solid:false},
+    /* --- v3 : 창문 · 팀 구역 · 회의실 · 라운지 --- */
+    {x:2.2,y:0.12,w:11.2,h:0.76,kind:'windowWall',solid:false},
+    {x:15.2,y:0.12,w:13.4,h:0.76,kind:'windowWall',solid:false},
+    {x:4.6,y:7.05,w:9.4,h:0.5,kind:'rug',variant:'label',label:'기획팀 · 내 자리 구역'},
+    {x:15.4,y:9.95,w:11.2,h:0.5,kind:'rug',variant:'label',label:'개발팀'},
+    {x:10.9,y:14.2,w:9.6,h:0.5,kind:'rug',variant:'label',label:'디자인팀'},
+    {x:27.2,y:13.3,w:6.4,h:0.5,kind:'rug',variant:'label',label:'엘리베이터 ▶'},
+    {x:30.6,y:1.6,w:6.0,h:4.0,kind:'rug',variant:'carpet',color:'#c4a37c'},
+    {x:34.9,y:1.3,w:1.4,h:0.5,kind:'whiteboard'},
+    {x:30.9,y:15.0,w:5.0,h:3.7,kind:'rug',variant:'carpet',color:'#a9bfa6'},
+    {x:35.4,y:17.7,w:2.8,h:0.85,kind:'bookshelf'},
+    {x:30.2,y:15.1,w:0.6,h:0.6,kind:'lamp'},
+    {x:37.5,y:19.8,w:0.9,h:0.9,kind:'plant',solid:false},
+    {x:33.0,y:20.0,w:4.6,h:0.5,kind:'rug',variant:'label',label:'라운지 · 포커스존'}
   ],
   npcs:[
     {id:'choi', name:'커피 3잔 최과장', kind:'staff', x:5.2,y:16.6, rect:{x:2.8,y:16.2,w:5.0,h:1.8}, lines:['오늘 커피 세 잔째…','탕비실 커피가 제일 맛있어','점심은 또 회의랑 겹쳤네'], speed:30},
@@ -1097,17 +1287,17 @@ const FLOOR_DEFS = [
 /* ---------------------------------------------------------------- 3F */
 {
   id:3, name:'휴게실 & 오락실', short:'휴게실', W:30, H:19, theme:'lounge',
-  spawn:{x:24.8,y:10.5}, start:{x:5.0,y:5.4},
+  spawn:{x:26.7,y:9.75}, start:{x:5.0,y:5.4},
   rooms:[
     {x:1,y:1,w:28,h:17,type:'lounge'},
     {x:1,y:12,w:28,h:6,type:'arcade'},
     {x:1,y:9,w:28,h:3,type:'corridor'},
-    {x:25.0,y:8.8,w:3.0,h:3.6,type:'lift'}
+    {x:25.1,y:5.9,w:3.4,h:3.0,type:'lift'}
   ],
   walls:[
-    {x:25.0,y:8,w:0.3,h:3.0,kind:'wall'},
-    {x:25.0,y:8,w:3.6,h:0.3,kind:'wall'},
-    {x:28.3,y:8,w:0.3,h:3.0,kind:'wall'}
+    {x:25.0,y:5.9,w:0.3,h:3.0,kind:'wall'},
+    {x:25.0,y:5.9,w:3.6,h:0.3,kind:'wall'},
+    {x:28.4,y:5.9,w:0.3,h:3.0,kind:'wall'}
   ],
   props:[
     /* --- 휴게실 --- */
@@ -1141,13 +1331,19 @@ const FLOOR_DEFS = [
     {x:22.8,y:16.6,w:0.9,h:0.9,kind:'plant',solid:false},
     {x:7.0,y:16.6,w:3.2,h:0.9,kind:'table',color:'#a9845c'},
     {x:2.6,y:17.4,w:0.9,h:0.9,kind:'plant',solid:false},
-    {x:17.2,y:17.2,w:1.0,h:0.9,kind:'bin',solid:false}
+    {x:17.2,y:17.2,w:1.0,h:0.9,kind:'bin',solid:false},
+    /* --- v3 --- */
+    {x:2.4,y:2.3,w:6.0,h:5.4,kind:'rug',variant:'carpet',color:'#b7a3c9'},
+    {x:12.0,y:3.4,w:0.6,h:0.6,kind:'lamp'},
+    {x:24.4,y:1.35,w:2.8,h:0.8,kind:'bookshelf'},
+    {x:18.4,y:9.85,w:6.2,h:0.55,kind:'rug',variant:'label',label:'엘리베이터 ▶'},
+    {x:3.0,y:10.6,w:9.0,h:0.55,kind:'rug',variant:'label',label:'▼ 오락실 · ▲ 휴게실'}
   ],
   npcs:[
     {id:'sleep', name:'빈백에 누운 사원', kind:'staff', x:9.0,y:6.8, rect:{x:8.9,y:6.7,w:0.5,h:0.3}, lines:['zzZ… (일어날 생각 없음)','5분만…','점심시간 끝났어?'], speed:0}
   ],
   interactables:[
-    {id:'elev', kind:'elev', x:24.75,y:10.5, label:'엘리베이터', key:'E'},
+    {id:'elev', kind:'elev', x:26.7,y:9.55, label:'엘리베이터', key:'E'},
     {id:'arc1', kind:'arcade', game:'bubble',   x:5.45,y:15.75, label:'버블 슈터',   key:'E'},
     {id:'arc2', kind:'arcade', game:'breakout', x:10.15,y:15.75, label:'벽돌깨기',     key:'E'},
     {id:'arc3', kind:'arcade', game:'dodge',    x:14.85,y:15.75, label:'오피스 닷지',  key:'E'},
@@ -2097,7 +2293,8 @@ const PAL = {
   male:{ shirt:'#6f9bd1', pants:'#3f4d63', hair:'#2f2a26', skin:'#f6c99a', shoe:'#33404f' },
   female:{ shirt:'#e094a8', pants:'#4a4258', hair:'#4a3627', skin:'#f7cfae', shoe:'#392f3f' },
   giraffe:{ body:'#e8b95c', spot:'#a8712f', belly:'#f6ddb0', hoof:'#6b4a2a' },
-  kong:{ fur:'#4a3b35', fur2:'#332824', face:'#c99a72', eye:'#f4e2cf' }
+  kong:{ fur:'#4a3b35', fur2:'#332824', face:'#c99a72', eye:'#f4e2cf' },
+  sloth:{ fur:'#9a8670', fur2:'#7a6854', face:'#efe2c8', mask:'#4e3d30', claw:'#e9dcc0' }
 };
 function drawCharacter(c, id, x, y, dir, t, opts){
   opts = opts || {};
@@ -2111,6 +2308,8 @@ function drawCharacter(c, id, x, y, dir, t, opts){
   const bob = walking ? Math.sin(phase*2)*1.6 : Math.sin(t*2)*0.6;
   const step = walking ? Math.sin(phase)*Math.min(1,speed/120) : 0;
 
+  if(opts.plant && id !== 'male' && id !== 'female') return drawPlantDisguise(c, x, y);
+  if(id === 'sloth')   return drawSloth(c,x,y,dir,t,walking,phase,step,bob,opts);
   if(id === 'giraffe') return drawGiraffe(c,x,y,dir,t,walking,phase,step,bob,opts);
   if(id === 'kong')    return drawKong(c,x,y,dir,t,walking,phase,step,bob,opts);
   return drawHuman(c,x,y,dir,t,walking,step,bob,faceSide,faceUp, PAL[id]||PAL.male, opts);
@@ -2362,6 +2561,105 @@ function drawKong(c,x,y,dir,t,walking,phase,step,bob,opts){
     c.save(); c.strokeStyle='rgba(120,190,255,'+(.55+.25*Math.sin(t*6))+')';
     c.fillStyle='rgba(120,190,255,.12)'; c.lineWidth=2;
     c.beginPath(); c.ellipse(x, by-34, 30, 42, 0, 0, TAU); c.fill(); c.stroke(); c.restore();
+  }
+  c.restore();
+}
+
+/* 위장 화분 — 사람 외 캐릭터 공용 (기린·킹콩·나무늘보는 화분 크기를 조금 키움) */
+function drawPlantDisguise(c, x, y){
+  c.save();
+  shadowEl(c, x, y+1, 14, 5, .2);
+  c.fillStyle='#b5794f'; rr(c,x-11,y-15,22,15,3); c.fill();
+  c.fillStyle='#9a6440'; c.fillRect(x-11,y-15,22,3);
+  c.fillStyle='#4f8c5c';
+  for(let i=0;i<6;i++){
+    c.save(); c.translate(x,y-14); c.rotate(-Math.PI/2+(i-2.5)*0.42);
+    c.beginPath(); c.ellipse(0,-18,5,13,0,0,TAU); c.fill(); c.restore();
+  }
+  c.restore();
+}
+/* 나무늘보 — 축 늘어진 긴 팔, 눈가 줄무늬, 느긋한 흔들림 */
+function drawSloth(c,x,y,dir,t,walking,phase,step,bob,opts){
+  const P = PAL.sloth;
+  c.save();
+  shadowEl(c, x, y+1, 15, 5.2, .22);
+  if(opts.chair){
+    c.fillStyle='#4a6076'; rr(c,x-13,y-27,26,21,6); c.fill();
+    c.fillStyle='#3a4c5e'; rr(c,x-16,y-8,32,7,3); c.fill();
+    c.fillStyle='#2f2a26'; c.fillRect(x-12,y-2,3,8); c.fillRect(x+9,y-2,3,8);
+    c.fillStyle=P.claw; c.fillRect(x-17,y-12,2,6); c.fillRect(x+15,y-12,2,6);
+    c.restore(); return;
+  }
+  const fy = Math.sin(dir), fx = Math.cos(dir);
+  const faceUp = fy < -0.45;
+  const side = fx > 0.35 ? 1 : fx < -0.35 ? -1 : 0;
+  const sway = Math.sin(t*1.3) * (walking ? 1.4 : 2.2);     // 느긋한 좌우 흔들림
+  const by = y + bob*0.6;
+  // 다리 (짧고 뭉툭)
+  c.fillStyle = P.fur2;
+  rr(c, x-11+step*2, by-10, 9, 10, 4); c.fill();
+  rr(c, x+2-step*2, by-10, 9, 10, 4); c.fill();
+  c.fillStyle = P.claw;
+  for(let i=0;i<2;i++){ c.fillRect(x-10+step*2+i*3, by-1, 2, 2.4); c.fillRect(x+4-step*2+i*3, by-1, 2, 2.4); }
+  // 몸통 (서양배 모양)
+  c.fillStyle = P.fur;
+  c.beginPath(); c.ellipse(x+sway*.3, by-24, 14.5, 17, 0, 0, TAU); c.fill();
+  c.fillStyle = shade(P.fur, .16);
+  c.beginPath(); c.ellipse(x+sway*.3, by-21, 8.5, 11, 0, 0, TAU); c.fill();
+  // 털 결
+  c.strokeStyle = rgba(P.fur2, .55); c.lineWidth = 1;
+  for(let i=-2;i<=2;i++){ c.beginPath(); c.moveTo(x+i*5+sway*.3, by-36); c.lineTo(x+i*5.6+sway*.3, by-30); c.stroke(); }
+  // 긴 팔 — 축 늘어져 흔들림
+  const armSw = walking ? Math.sin(phase)*0.22 : Math.sin(t*1.1)*0.08;
+  [[-1, armSw],[1,-armSw]].forEach(([s, a])=>{
+    c.save(); c.translate(x + s*12 + sway*.3, by-34); c.rotate(s*0.18 + a);
+    c.fillStyle = P.fur;
+    c.beginPath(); c.ellipse(0, 13, 5, 15, 0, 0, TAU); c.fill();
+    c.fillStyle = P.claw;      // 세 갈래 발톱
+    for(let k=-1;k<=1;k++){ c.beginPath(); c.ellipse(k*2.3, 28.5, 1, 3.4, k*0.15, 0, TAU); c.fill(); }
+    c.restore();
+  });
+  // 머리
+  const hx = x + sway, hy = by-46;
+  c.fillStyle = P.fur;
+  c.beginPath(); c.arc(hx, hy, 13.5, 0, TAU); c.fill();
+  // 머리 위 나뭇잎
+  c.save(); c.translate(hx+5, hy-12); c.rotate(.5 + Math.sin(t*1.6)*.12);
+  c.fillStyle='#6fae6a'; c.beginPath(); c.ellipse(0,-4,3.2,6,0,0,TAU); c.fill();
+  c.strokeStyle='#4f8c5c'; c.lineWidth=.8; c.beginPath(); c.moveTo(0,1); c.lineTo(0,-8); c.stroke();
+  c.restore();
+  if(!faceUp){
+    const ox = side*3;
+    c.fillStyle = P.face;
+    c.beginPath(); c.ellipse(hx+ox, hy+1.5, 10.5, 8.5, 0, 0, TAU); c.fill();
+    // 눈가 줄무늬 (아래로 처진)
+    c.fillStyle = P.mask;
+    c.save(); c.translate(hx+ox-4.6, hy); c.rotate(.42); c.beginPath(); c.ellipse(0,0,4.4,2.3,0,0,TAU); c.fill(); c.restore();
+    c.save(); c.translate(hx+ox+4.6, hy); c.rotate(-.42); c.beginPath(); c.ellipse(0,0,4.4,2.3,0,0,TAU); c.fill(); c.restore();
+    // 졸린 눈 (가끔 깜빡)
+    const blink = (Math.sin(t*0.9) > .96);
+    c.fillStyle = '#1e1712';
+    if(blink){ c.fillRect(hx+ox-6,hy-.3,3,1.1); c.fillRect(hx+ox+3,hy-.3,3,1.1); }
+    else { c.beginPath(); c.arc(hx+ox-4.4, hy, 1.5, 0, TAU); c.arc(hx+ox+4.4, hy, 1.5, 0, TAU); c.fill(); }
+    // 코 + 미소
+    c.fillStyle = '#3a2b22';
+    c.beginPath(); c.ellipse(hx+ox, hy+3.6, 2.2, 1.5, 0, 0, TAU); c.fill();
+    c.strokeStyle = 'rgba(58,43,34,.75)'; c.lineWidth = 1.1;
+    c.beginPath(); c.arc(hx+ox, hy+4.6, 3.2, .18*Math.PI, .82*Math.PI); c.stroke();
+  } else {
+    c.fillStyle = shade(P.fur, -.1);
+    c.beginPath(); c.ellipse(hx, hy+2, 9, 7, 0, 0, TAU); c.fill();
+  }
+  // 사원증
+  if(!faceUp){
+    c.fillStyle='#fff6e0'; rr(c, x-3+sway*.3, by-31, 7, 9, 1); c.fill();
+    c.fillStyle='#c9463f'; c.fillRect(x-2.4+sway*.3, by-30, 5.8, 2.4);
+  }
+  if(opts.label) txt(c, opts.label, x, by-78, 9.5, 'rgba(60,44,30,.72)','center',900);
+  if(opts.shield){
+    c.save(); c.strokeStyle='rgba(120,190,255,'+(.55+.25*Math.sin(t*6))+')';
+    c.fillStyle='rgba(120,190,255,.12)'; c.lineWidth=2;
+    c.beginPath(); c.ellipse(x, by-30, 24, 38, 0, 0, TAU); c.fill(); c.stroke(); c.restore();
   }
   c.restore();
 }
@@ -2869,7 +3167,7 @@ function drawLoginPreviews(){
     c.clearRect(0,0,w,h);
     c.save();
     c.translate(w/2, h-6);
-    const scale = id==='giraffe'? .72 : id==='kong'? .98 : 1.2;
+    const scale = id==='giraffe'? .72 : id==='kong'? .98 : id==='sloth'? 1.08 : 1.2;
     c.scale(scale, scale);
     drawCharacterAt(c, id, 0, 0, Math.PI/2, loginT, false, 0, 0, {});
     c.restore();
@@ -3130,7 +3428,7 @@ function update(dt){
   G.time += dt * (540/250);
   if(G.time >= 18*60){ G.time = 18*60; endDay(); }
   // 멘탈 자연 감소
-  const drain = G.floor===2 ? 0.18 : 0.05;
+  const drain = (G.floor===2 ? 0.18 : 0.05) * (G.char==='sloth' ? 0.6 : 1) * ((G.mod && G.mod.drain) || 1);
   G.mental = clamp(G.mental - drain*dt, 0, 100);
   if(G.mental <= 0 && !G.over) burnout();
 }
@@ -3312,7 +3610,7 @@ function updateBoss(b, dt, f){
   if(sees){
     b.seeT += dt;
     b.loseT = 0;
-    if(b.seeT > .16){
+    if(b.seeT > ((G.char==='sloth' && !player.walking) ? .75 : .16)){
       if(b.state !== 'chase'){
         b.state = 'chase';
         say(b, pick(b.def.lines), 3.2, '#c9463f');
@@ -4677,8 +4975,13 @@ function openHelp(){
       <div class="helpItem"><b>💬 채팅</b><span>하단 채팅바에 입력하고 Enter. 내 말풍선이 뜨고 근처 동료가 맞장구칩니다. DH·SY 입력은 이스터에그(멘탈 +3).</span></div>
       <div class="helpItem"><b>👥 실시간 멀티</b><span>같은 층 접속자가 내 화면에 실시간으로 보입니다(닉네임·말풍선·위장 포함). 방은 30명 단위로 자동 분산.</span></div>
       <div class="helpItem"><b>🛒 편의점</b><span>1F OFFICE 24 계산대에서 복지포인트로 간식 구매</span></div>
+      <div class="helpItem"><b>📋 오늘의 업무</b><span>매일 3개가 주어져요. 왼쪽 위 패널에서 진행 상황 확인, 완료하면 XP·포인트.</span></div>
+      <div class="helpItem"><b>⭐ 돌발 업무</b><span>회의 소집·택배·피자 파티 등. 화면의 화살표를 따라 제한 시간 안에 도착하세요.</span></div>
+      <div class="helpItem"><b>💼 승진</b><span>XP를 모아 사원→주임→대리→과장→차장→부장→이사. 승진할 때마다 DH 최대치 +4, 칼퇴 보너스 증가.</span></div>
+      <div class="helpItem"><b>🗓️ 오늘의 분위기</b><span>월요병·결산 시즌·부장님 외근·월급날·감사 주간·불금 — 날마다 규칙이 조금씩 달라요.</span></div>
+      <div class="helpItem"><b>🦥 나무늘보</b><span>느리지만 멘탈이 40% 덜 닳고, 멈춰 있으면 부장님이 훨씬 늦게 알아챕니다.</span></div>
     </div>
-    <div class="kbdRow">단축키 <kbd>E</kbd> 상호작용 <kbd>1~4</kbd> 스킬 <kbd>ESC</kbd> 닫기 <kbd>M</kbd> 음소거 · 채팅은 하단 입력창 <kbd>Enter</kbd></div>
+    <div class="kbdRow">단축키 <kbd>E</kbd> 상호작용 <kbd>1~4</kbd> 스킬 <kbd>ESC</kbd> 닫기 <kbd>C</kbd> 커리어 <kbd>Q</kbd> 업무 패널 <kbd>M</kbd> 음소거 · 채팅은 하단 입력창 <kbd>Enter</kbd></div>
     <p class="fine" style="margin-top:10px">등장 인물·상호·브랜드는 모두 가상이며, 실명은 표시되지 않습니다.</p>`;
   openModal('❓ 게임 방법', 'OFFICE RUN 2D', html);
 }
@@ -4906,7 +5209,10 @@ const Net = {
     if(m.t !== 'state') return;
     if(m.floor != null && m.floor !== G.floor) return;   /* 다른 층은 그리지 않음 */
     /* 15초 넘게 갱신 없는 접속자는 유령으로 남기지 않음 */
-    if(m.ts && (Date.now() - m.ts) > (REALTIME_CONFIG.staleMs||15000)){ this.dropPeer(m.id); return; }
+    /* 오래된(나간) 접속자 거르기 — 서버 시각 기준. 기기 시계가 틀려도 친구가 사라지지 않음 */
+    if(typeof m.sts === 'number' && this.srvOffsetKnown){
+      if((Date.now() + (this.srvOffset||0)) - m.sts > (REALTIME_CONFIG.staleMs||15000)){ this.dropPeer(m.id); return; }
+    } else if(m.sts === undefined && m.ts && (Date.now() - m.ts) > 120000){ this.dropPeer(m.id); return; }
     const r = ensureRemote(m.id, m);
     r.nick = m.nick || r.nick;
     r.charType = CHARACTERS[m.charType] ? m.charType : r.charType;
@@ -5001,6 +5307,8 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
   function emit(id){
     const d = raw.get(id);
     if(!d){ onMsg({t:'bye', id}); return; }
+    /* 내 레코드의 서버 시각(sts)으로 기기 시계 오차 보정 */
+    if(id === myId && typeof d.sts === 'number'){ Net.srvOffset = d.sts - Date.now(); Net.srvOffsetKnown = true; }
     onMsg(Object.assign({t:'state', id}, d));
   }
   function merge(id, data){
@@ -5081,6 +5389,7 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
       const body = {};
       const keys = ['id','nick','charType','floor','x','y','dir','disguise','chatMsg','chatTs','chatSeq','moving','ts'];
       for(const k of keys) if(msg[k] !== undefined) body[k] = msg[k];
+      body.sts = {'.sv':'timestamp'};   /* 서버 시각 — 기기마다 시계가 달라도 접속 판정이 흔들리지 않게 */
       try{
         fetch(playerUrl, {method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body), keepalive:true})
           .then(r=>{ if(r.status === 401 || r.status === 403) deny(); else lastOk = Date.now(); })
@@ -5487,6 +5796,1169 @@ if(window.__OFFICE){
     }
   });
 }
+
+/* =====================================================================
+   OFFICE RUN 2D — part 8 : 커리어(승진) · 오늘의 업무 · 돌발 업무 · 하루 분위기 · 조명
+   ---------------------------------------------------------------------
+   · 기존 함수는 건드리지 않고 래핑(wrap)해서 확장한다.
+   · 커리어는 프로필(localStorage)의 career 필드에 저장된다.
+   ===================================================================== */
+
+const RANKS = [
+  { name:'사원', xp:0,    icon:'🌱', bonus:0     },
+  { name:'주임', xp:250,  icon:'📎', bonus:1500  },
+  { name:'대리', xp:700,  icon:'📊', bonus:3000  },
+  { name:'과장', xp:1400, icon:'💼', bonus:5000  },
+  { name:'차장', xp:2400, icon:'🗂️', bonus:7500  },
+  { name:'부장', xp:3800, icon:'👔', bonus:10000 },
+  { name:'이사', xp:5600, icon:'🏆', bonus:14000 }
+];
+const DH_PER_RANK = 4;
+
+const DAY_MODS = {
+  normal:  { id:'normal',  icon:'☁️', name:'평범한 하루',  desc:'특별한 일 없음. 평소 페이스로 칼퇴를 노려 보세요.' },
+  monday:  { id:'monday',  icon:'😩', name:'월요병',       desc:'멘탈이 1.4배 빨리 닳아요. 대신 오늘 얻는 XP +30%.', drain:1.4, xpMul:1.3 },
+  closing: { id:'closing', icon:'📈', name:'결산 시즌',    desc:'보고서 보상 2배(XP·DH). 대신 순찰 속도 +10%.', report:2, boss:1.1 },
+  trip:    { id:'trip',    icon:'✈️', name:'부장님 외근',  desc:'순찰 속도 25% 느려요. 숨 좀 돌리는 날.', boss:0.75 },
+  payday:  { id:'payday',  icon:'💰', name:'월급날',       desc:'칼퇴 정산 +5,000P. 기분이 좋아 멘탈 소모 0.8배.', drain:0.8, payBonus:5000 },
+  audit:   { id:'audit',   icon:'🔍', name:'감사 주간',    desc:'부장님 시야 거리 +20%. 하루 무적발이면 칼퇴 XP 2배.', range:1.2, cleanMul:2 },
+  friday:  { id:'friday',  icon:'🎉', name:'불금',         desc:'모든 XP +50%. 오후 4시부터 순찰이 느슨해져요.', xpMul:1.5, fridayLoose:true }
+};
+const RANDOM_MODS = ['normal','closing','trip','payday','audit','normal'];
+
+const QUEST_POOL = [
+  { id:'rep3',    icon:'📄', name:'보고서 3건 제출',      goal:3,   key:'reports', xp:50, pts:1500 },
+  { id:'talk3',   icon:'💬', name:'동료 3명과 대화',      goal:3,   key:'talked',  xp:40, pts:1000 },
+  { id:'arc150',  icon:'🕹️', name:'오락실 한 판 150점',   goal:150, key:'arcBest', xp:50, pts:1200 },
+  { id:'em1',     icon:'🚨', name:'긴급 호출 1회 방어',   goal:1,   key:'emWin',   xp:60, pts:2000 },
+  { id:'buy2',    icon:'🛒', name:'간식 2개 사 먹기',     goal:2,   key:'buys',    xp:35, pts:800  },
+  { id:'coffee2', icon:'☕', name:'카페인 폭주 2회',      goal:2,   key:'coffee',  xp:35, pts:800  },
+  { id:'rest1',   icon:'🛋️', name:'3F 소파에서 휴식',     goal:1,   key:'rest',    xp:30, pts:600  },
+  { id:'floors',  icon:'🛗', name:'1F·2F·3F 모두 들르기', goal:3,   key:'floors',  xp:40, pts:1000 },
+  { id:'clean',   icon:'🥷', name:'정오까지 안 들키기',   goal:1,   key:'cleanNoon', xp:70, pts:2000, failable:true },
+  { id:'ev2',     icon:'⭐', name:'돌발 업무 2건 처리',   goal:2,   key:'events',  xp:60, pts:1500 }
+];
+
+/* 돌발 업무 — 좌표는 타일 단위 */
+const EVENT_DEFS = [
+  { id:'meeting', icon:'🗣️', name:'긴급 회의 소집',  where:'2F 회의실', floor:2, tx:34.0, ty:5.6,  r:80,  dur:30, xp:45, pts:1200, mental:4,
+    win:'회의 시간 맞춰 착석! 존재감 +1', fail:'회의 지각… 눈총을 받았다', failMental:8 },
+  { id:'parcel',  icon:'📦', name:'택배 도착',       where:'1F 안내데스크', floor:1, tx:14.2, ty:15.8, r:80,  dur:45, xp:40, pts:1500,
+    win:'택배 수령 완료! 사은품 포인트 적립', fail:'택배가 반송됐다…', failMental:3 },
+  { id:'pizza',   icon:'🍕', name:'탕비실 피자 파티', where:'2F 탕비실', floor:2, tx:6.3,  ty:17.2, r:90,  dur:30, xp:30, pts:0, mental:14, dh:4,
+    win:'따끈한 피자 한 조각 득템!', fail:'빈 피자 박스만 남았다…', failMental:2 },
+  { id:'print',   icon:'🖨️', name:'팀장님 출력물 회수', where:'2F 프린터', floor:2, tx:17.0, ty:2.9, r:70, dur:26, xp:40, pts:900, dh:2,
+    win:'출력물 회수 완료. 팀장님 만족', fail:'출력물이 남의 손에… 잔소리 예약', failMental:6 },
+  { id:'cake',    icon:'🎂', name:'3F 생일 케이크 컷팅', where:'3F 휴게실 소파', floor:3, tx:8.0, ty:6.2, r:100, dur:40, xp:35, pts:500, mental:10, dh:3,
+    win:'생일 축하 노래 부르고 케이크 획득!', fail:'케이크가 이미 사라졌다…', failMental:2 }
+];
+
+const ACHIEVEMENTS = [
+  { id:'first',   icon:'🌇', name:'첫 칼퇴',       desc:'하루를 무사히 마감' },
+  { id:'week',    icon:'📅', name:'일주일 생존',   desc:'누적 7일 근무' },
+  { id:'ghost',   icon:'🥷', name:'투명 인간',     desc:'하루 동안 한 번도 안 들킴' },
+  { id:'allq',    icon:'✅', name:'올클리어',      desc:'하루 업무 3개 모두 완료' },
+  { id:'promo',   icon:'💼', name:'첫 승진',       desc:'주임으로 승진' },
+  { id:'manager', icon:'👔', name:'부장 달성',     desc:'부장까지 승진' },
+  { id:'rescue',  icon:'⚡', name:'번개 복귀',     desc:'긴급 호출 누적 10회 방어' },
+  { id:'fixer',   icon:'⭐', name:'해결사',        desc:'돌발 업무 누적 15건 처리' },
+  { id:'arcade',  icon:'🕹️', name:'오락실 고수',   desc:'한 판 500점 이상' },
+  { id:'sloth',   icon:'🦥', name:'느긋한 생존자', desc:'나무늘보로 칼퇴' }
+];
+
+/* ---------------------------------------------------------------- 커리어 상태 */
+function normCareer(c){
+  c = c || {};
+  return {
+    xp: c.xp||0,
+    days: c.days||0,
+    ach: Object.assign({}, c.ach||{}),
+    totals: Object.assign({ reports:0, emWin:0, emFail:0, caught:0, quests:0, events:0, arcades:0 }, c.totals||{})
+  };
+}
+function rankIdx(xp){
+  if(xp == null) xp = G.career ? G.career.xp : 0;
+  let i = 0;
+  for(let k=0;k<RANKS.length;k++) if(xp >= RANKS[k].xp) i = k;
+  return i;
+}
+function rankProgress(){
+  const xp = G.career.xp, i = rankIdx(xp);
+  if(i >= RANKS.length-1) return { i, pct:100, need:0, max:true };
+  const a = RANKS[i].xp, b = RANKS[i+1].xp;
+  return { i, pct: clamp((xp-a)/(b-a)*100, 0, 100), need: b-xp, max:false };
+}
+function applyRankStats(){
+  G.dhMax = 20 + rankIdx()*DH_PER_RANK;
+  G.dh = Math.min(G.dh, G.dhMax);
+}
+function addXP(amount, why, x, y){
+  if(!G.career) return 0;
+  const mul = (G.mod && G.mod.xpMul) || 1;
+  const v = Math.max(1, Math.round(amount * mul));
+  const before = rankIdx();
+  G.career.xp += v;
+  if(why !== false) floater(x!=null? x : player.x, (y!=null? y : player.y) - 78, '+'+v+' XP', '#cdb8f0');
+  const after = rankIdx();
+  if(after > before) promote(after);
+  return v;
+}
+function promote(i){
+  const r = RANKS[i];
+  const oldMax = G.dhMax;
+  applyRankStats();
+  G.dh = Math.min(G.dhMax, G.dh + (G.dhMax - oldMax));
+  const el = document.getElementById('promo');
+  if(el){
+    document.getElementById('promoIco').textContent = r.icon;
+    document.getElementById('promoName').textContent = r.name;
+    document.getElementById('promoSub').textContent = '승진을 축하합니다 · DH 최대치 '+G.dhMax;
+    el.classList.remove('hide','show'); void el.offsetWidth; el.classList.add('show');
+    clearTimeout(promote._t); promote._t = setTimeout(()=> el.classList.add('hide'), 3700);
+  }
+  Sound.levelClear();
+  cam.shake = 4;
+  addEffect('ring',{x:player.x,y:player.y,r0:10,r1:180,life:1.1});
+  addEffect('spark',{x:player.x,y:player.y-30,n:18,a0:0,life:1.1,color:'#ffe08a'});
+  say(playerRef, r.name+'이라니… 실화?', 3);
+  toast(r.icon+' '+r.name+' 승진! DH 최대치 '+G.dhMax+' · 칼퇴 보너스 +'+fmt(r.bonus)+'P', 'good');
+  if(i >= 1) unlockAch('promo');
+  if(i >= 5) unlockAch('manager');
+  if(G.plantUnlockedToast !== true && G.dhMax >= SKILLS.plant.cost){
+    G.plantUnlockedToast = true;
+    setTimeout(()=> toast('🪴 이제 화분 위장(30 DH)을 쓸 수 있어요', 'good'), 1600);
+  }
+  saveProfile();
+}
+function unlockAch(id){
+  if(!G.career || G.career.ach[id]) return;
+  const a = ACHIEVEMENTS.find(o=> o.id===id);
+  if(!a) return;
+  G.career.ach[id] = Date.now();
+  (G.todayAch = G.todayAch || []).push(id);
+  setTimeout(()=>{ toast('🏅 업적 달성 · '+a.icon+' '+a.name, 'good'); Sound.notify(); }, 500);
+  addXP(30, false);
+}
+
+/* ---------------------------------------------------------------- 하루 준비 */
+function pickDayMod(day){
+  if(day <= 1) return DAY_MODS.normal;
+  const wd = (day-1) % 7;               // 0 = 월
+  if(wd === 0) return DAY_MODS.monday;
+  if(wd === 4) return DAY_MODS.friday;
+  return DAY_MODS[pick(RANDOM_MODS)];
+}
+function pickQuests(){
+  const pool = QUEST_POOL.slice();
+  const out = [];
+  while(out.length < 3 && pool.length){
+    const q = pool.splice(Math.floor(Math.random()*pool.length),1)[0];
+    out.push({ id:q.id, def:q, done:false, fail:false });
+  }
+  return out;
+}
+function setupDay(){
+  G.mod = pickDayMod(G.day);
+  G.quests = pickQuests();
+  G.qc = { reports:0, talked:{}, arcBest:0, emWin:0, buys:0, coffee:0, rest:0, floors:{}, cleanNoon:0, events:0, caught:0 };
+  G.qc.floors[G.floor] = true;
+  G.ev = { active:null, next: rand(28, 45) };
+  G.todayAch = [];
+  G.dayXp = 0;
+  G.fridayApplied = false;
+  applyDayModsToBosses();
+  hideEventRow();
+  renderTaskPanel(true);
+}
+function applyDayModsToBosses(){
+  const m = G.mod || {};
+  for(const id in FLOORS){
+    for(const b of FLOORS[id].bosses){
+      if(b._baseRange == null) b._baseRange = b.range;
+      b.range = b._baseRange * (m.range || 1);
+      b.speed = b.speed * (m.boss || 1);
+    }
+  }
+}
+function openBriefing(first){
+  const m = G.mod;
+  const qs = G.quests.map(q=> '<li><span class="qi">'+q.def.icon+'</span>'+q.def.name+
+      '<span class="rw">+'+q.def.xp+' XP · +'+fmt(q.def.pts)+'P</span></li>').join('');
+  const pr = rankProgress();
+  const r = RANKS[pr.i];
+  const tip = G.char === 'sloth'
+    ? '🦥 나무늘보 팁: 부장님이 보이면 <b>멈추세요</b>. 가만히 있으면 알아채는 데 한참 걸려요.'
+    : '돌발 업무가 뜨면 화면 가장자리의 <b>주황 화살표</b>를 따라가세요. 다른 층이면 엘리베이터를 가리켜요.';
+  openModal('🗓️ D+'+G.day+' 아침 브리핑', r.icon+' '+r.name+(pr.max? ' · 최고 직급' : ' · 다음 승진까지 '+fmt(pr.need)+' XP'), `
+    <div class="modCard"><div class="mi">${m.icon}</div><div><b>오늘의 분위기 · ${m.name}</b><span>${m.desc}</span></div></div>
+    <div class="secT">오늘의 업무</div>
+    <ul class="qBrief">${qs}</ul>
+    <p class="tipLine">${tip}</p>
+    <div class="modalBtns"><button class="btnGo" id="brGo">업무 시작</button></div>`);
+  const b = document.getElementById('brGo'); if(b) b.onclick = closeModal;
+}
+
+/* ---------------------------------------------------------------- 업무 진행 */
+function qVal(q){
+  const v = G.qc[q.def.key];
+  if(v && typeof v === 'object') return Object.keys(v).length;
+  return v || 0;
+}
+function checkQuests(){
+  if(!G.quests) return;
+  let changed = false;
+  for(const q of G.quests){
+    if(q.done || q.fail) continue;
+    if(qVal(q) >= q.def.goal){
+      q.done = true; changed = true;
+      G.points += q.def.pts;
+      const v = addXP(q.def.xp, false);
+      G.dayXp += v;
+      G.career.totals.quests++;
+      Sound.levelClear();
+      floater(player.x, player.y-80, '업무 완료 +'+v+' XP', '#a8f0be');
+      addEffect('spark',{x:player.x,y:player.y-30,n:12,a0:0,life:.9,color:'#8fe3a8'});
+      toast('✅ 업무 완료 · '+q.def.name+' (+'+v+' XP · +'+fmt(q.def.pts)+'P)', 'good');
+    }
+  }
+  if(changed){
+    if(G.quests.every(q=> q.done)){
+      unlockAch('allq');
+      setTimeout(()=> toast('🎯 오늘 업무 올클리어! 칼퇴 때 보너스 XP +50', 'good'), 900);
+    }
+    renderTaskPanel(true);
+  }
+}
+function failQuest(key){
+  if(!G.quests) return;
+  for(const q of G.quests){
+    if(q.def.key === key && !q.done && !q.fail){
+      q.fail = true;
+      toast('❌ 업무 실패 · '+q.def.name, 'bad');
+      renderTaskPanel(true);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------- 돌발 업무 */
+function updateEvents(dt){
+  const ev = G.ev;
+  if(!ev) return;
+  if(ev.active){
+    const a = ev.active;
+    a.t -= dt;
+    if(G.floor === a.def.floor && dist(player.x, player.y, a.x, a.y) < a.def.r){ eventSuccess(); return; }
+    if(a.t <= 0) eventFail();
+    return;
+  }
+  if(G.em && G.em.active) return;
+  if(G.time > 17*60+15 || G.time < 9*60+20) return;
+  ev.next -= dt;
+  if(ev.next <= 0) eventStart();
+}
+function eventStart(forced){
+  const def = forced || pick(EVENT_DEFS.filter(d=> G.ev.lastId !== d.id));
+  G.ev.lastId = def.id;
+  G.ev.active = { def, t:def.dur, x:def.tx*TILE, y:def.ty*TILE };
+  Sound.notify();
+  toast(def.icon+' 돌발 업무 · '+def.name+' → '+def.where+' ('+def.dur+'초)', 'warn');
+  addEffect('ring',{x:player.x,y:player.y,r0:8,r1:90,life:.7});
+  renderTaskPanel(true);
+}
+function eventSuccess(){
+  const a = G.ev.active, d = a.def;
+  G.ev.active = null; G.ev.next = rand(38, 62);
+  if(d.pts) G.points += d.pts;
+  if(d.mental) G.mental = Math.min(100, G.mental + d.mental);
+  if(d.dh) G.dh = Math.min(G.dhMax, G.dh + d.dh);
+  const v = addXP(d.xp, false);
+  G.dayXp += v;
+  G.qc.events++;
+  G.career.totals.events++;
+  if(G.career.totals.events >= 15) unlockAch('fixer');
+  Sound.win();
+  addEffect('spark',{x:a.x,y:a.y,n:14,a0:0,life:.9,color:'#ffd166'});
+  floater(a.x, a.y-50, '+'+v+' XP', '#cdb8f0');
+  const extra = [d.pts? '+'+fmt(d.pts)+'P':'', d.mental? '🧠+'+d.mental:'', d.dh? '⚡+'+d.dh:''].filter(Boolean).join(' ');
+  toast(d.icon+' '+d.win+' · +'+v+' XP '+extra, 'good');
+  say(playerRef, pick(['해냈다!','휴, 안 늦었다','이 정도쯤이야']), 2.4);
+  hideEventRow();
+  checkQuests();
+}
+function eventFail(){
+  const d = G.ev.active.def;
+  G.ev.active = null; G.ev.next = rand(40, 64);
+  if(d.failMental) G.mental = clamp(G.mental - d.failMental, 0, 100);
+  Sound.lose();
+  toast(d.icon+' '+d.fail+(d.failMental? ' · 멘탈 -'+d.failMental : ''), 'bad');
+  hideEventRow();
+  if(G.mental <= 0) burnout();
+}
+function hideEventRow(){
+  const el = document.getElementById('evRow');
+  if(el){ el.classList.add('hide'); el.innerHTML=''; el.dataset.k=''; }
+}
+
+/* ---------------------------------------------------------------- 업무 패널 (HUD) */
+let taskPanelT = 0;
+function renderTaskPanel(force){
+  if(!G.ready || !G.quests) return;
+  const done = G.quests.filter(q=> q.done).length;
+  const cnt = document.getElementById('taskCount');
+  if(cnt){ cnt.textContent = done+'/'+G.quests.length; cnt.classList.toggle('all', done===G.quests.length); }
+  const list = document.getElementById('taskList');
+  if(list){
+    const html = G.quests.map(q=>{
+      const v = Math.min(qVal(q), q.def.goal);
+      const pct = q.done? 100 : (v/q.def.goal*100);
+      const prog = q.done? '완료' : q.fail? '실패' : (q.def.goal >= 100 ? (G.qc.arcBest||0)+'점' : v+'/'+q.def.goal);
+      return '<li class="'+(q.done?'done':q.fail?'fail':'')+'"><span class="qi">'+q.def.icon+'</span><span class="qn">'+q.def.name+'</span><span class="qp">'+prog+'</span>'+
+             '<span class="qb"><i style="width:'+pct.toFixed(0)+'%"></i></span></li>';
+    }).join('');
+    if(force || list.dataset.k !== html){ list.dataset.k = html; list.innerHTML = html; }
+  }
+  const er = document.getElementById('evRow');
+  if(er){
+    const a = G.ev && G.ev.active;
+    if(!a){ if(!er.classList.contains('hide')) hideEventRow(); }
+    else {
+      const sec = Math.max(0, Math.ceil(a.t));
+      const here = G.floor === a.def.floor;
+      const sub = here ? a.def.where+'로 · '+Math.round(dist(player.x,player.y,a.x,a.y)/TILE)+'m' : '🛗 엘리베이터로 '+a.def.floor+'F → '+a.def.where;
+      const html = '<div class="er"><span>'+a.def.icon+'</span><b>'+a.def.name+'</b><em>'+sec+'s</em></div><small>'+sub+'</small>'+
+                   '<div class="eb"><i style="width:'+clamp(a.t/a.def.dur*100,0,100).toFixed(1)+'%"></i></div>';
+      if(er.dataset.k !== html){ er.dataset.k = html; er.innerHTML = html; }
+      er.classList.remove('hide');
+      er.classList.toggle('urgent', a.t < 8);
+    }
+  }
+}
+/* 플레이어가 왼쪽 위 HUD 뒤에 가려지면 HUD를 반투명하게 */
+function ghostHudIfCovering(){
+  const hud = document.getElementById('hudTL');
+  if(!hud) return;
+  const cr = canvas.getBoundingClientRect(), hr = hud.getBoundingClientRect();
+  const px = cr.left + VW/2 + (player.x - cam.x)*cam.zoom;
+  const py = cr.top + VH/2 + (player.y - cam.y)*cam.zoom;
+  const h = (CHARACTERS[G.char].height||56)*cam.zoom;
+  const covered = px > hr.left-12 && px < hr.right+12 && py-h < hr.bottom+8 && py > hr.top;
+  hud.classList.toggle('ghost', covered);
+}
+function updateCareerHUD(){
+  if(!G.career) return;
+  const pr = rankProgress();
+  const r = RANKS[pr.i];
+  setText('valXP', r.name);
+  setText('rankIco', r.icon);
+  const bar = document.getElementById('barXP');
+  if(bar) bar.style.width = pr.pct.toFixed(1)+'%';
+  const g = document.getElementById('gXP');
+  if(g){
+    g.classList.toggle('max', pr.max);
+    const tt = pr.max ? '최고 직급 · '+fmt(G.career.xp)+' XP' : r.name+' · 다음 승진까지 '+fmt(pr.need)+' XP';
+    if(g.title !== tt) g.title = tt;
+  }
+}
+
+/* ---------------------------------------------------------------- 목표 화살표 · 조명 */
+function currentTarget(){
+  if(G.em && G.em.active){
+    if(G.floor === 2) return { x:MY_DESK.x, y:MY_DESK.y, color:'#e8544a', label:'내 자리', mark:'!', ring:60 };
+    const e = ELEV[G.floor];
+    return { x:e.stand.x*TILE, y:e.stand.y*TILE, color:'#e8544a', label:'🛗 2F 내 자리', mark:'🛗' };
+  }
+  const a = G.ev && G.ev.active;
+  if(a){
+    if(G.floor === a.def.floor) return { x:a.x, y:a.y, color:'#ff8a3d', label:a.def.icon+' '+a.def.where, mark:a.def.icon, ring:a.def.r };
+    const e = ELEV[G.floor];
+    return { x:e.stand.x*TILE, y:e.stand.y*TILE, color:'#ff8a3d', label:'🛗 '+a.def.floor+'F '+a.def.where, mark:'🛗' };
+  }
+  return null;
+}
+function drawOverlay(t){
+  const c = ctx;
+  c.setTransform(DPR,0,0,DPR,0,0);
+  // 시간대 조명 — 아침은 살짝 따뜻하게, 오후 늦게는 노을빛
+  const m = G.time;
+  let col = null, a = 0;
+  if(m < 10*60){ col = '255,236,200'; a = .10 * (1 - (m-9*60)/60); c.globalCompositeOperation = 'soft-light'; }
+  else if(m > 15*60+30){ col = '255,170,110'; a = .30 * clamp((m-(15*60+30))/150, 0, 1); c.globalCompositeOperation = 'multiply'; }
+  if(col && a > .005){
+    c.fillStyle = 'rgba('+col+','+a.toFixed(3)+')';
+    c.fillRect(0,0,VW,VH);
+  }
+  c.globalCompositeOperation = 'source-over';
+
+  const tg = currentTarget();
+  if(!tg) return;
+  // 월드 좌표 → 화면 좌표
+  const sx = VW/2 + (tg.x - cam.x)*cam.zoom;
+  const sy = VH/2 + (tg.y - cam.y)*cam.zoom;
+  const pulse = .5 + .5*Math.sin(t*6);
+  const margin = 46;
+  const onScreen = sx > margin && sx < VW-margin && sy > 90 && sy < VH-margin;
+  c.save();
+  if(onScreen){
+    // 목표 지점 링 + 바운스 마커
+    const rr0 = (tg.ring || 46) * cam.zoom;
+    c.strokeStyle = tg.color; c.globalAlpha = .35 + .35*pulse; c.lineWidth = 2.5;
+    c.setLineDash([7,6]); c.lineDashOffset = -t*20;
+    c.beginPath(); c.ellipse(sx, sy, rr0, rr0*.55, 0, 0, TAU); c.stroke();
+    c.setLineDash([]); c.globalAlpha = 1;
+    const by = sy - 46*cam.zoom - Math.abs(Math.sin(t*4))*8;
+    c.fillStyle = tg.color;
+    c.beginPath(); c.moveTo(sx, by+14); c.lineTo(sx-9, by); c.lineTo(sx+9, by); c.closePath(); c.fill();
+    c.beginPath(); c.arc(sx, by-8, 13, 0, TAU); c.fill();
+    c.fillStyle = '#fff'; c.font = '900 12px Pretendard, "Apple SD Gothic Neo", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(tg.mark, sx, by-7);
+  } else {
+    // 화면 가장자리 화살표
+    const cx = VW/2, cy = VH/2;
+    const ang = Math.atan2(sy-cy, sx-cx);
+    const hw = VW/2 - margin, hh = VH/2 - margin - 20;
+    const k = Math.min(hw/Math.abs(Math.cos(ang)||1e-6), hh/Math.abs(Math.sin(ang)||1e-6));
+    const ax = cx + Math.cos(ang)*k, ay = cy + 10 + Math.sin(ang)*k;
+    c.translate(ax, ay);
+    c.save(); c.rotate(ang);
+    c.fillStyle = tg.color; c.globalAlpha = .92;
+    c.beginPath(); c.moveTo(22 + pulse*4, 0); c.lineTo(2, -13); c.lineTo(6, 0); c.lineTo(2, 13); c.closePath(); c.fill();
+    c.restore();
+    c.globalAlpha = 1;
+    c.fillStyle = 'rgba(40,30,22,.85)';
+    const lbl = tg.label;
+    c.font = '900 11px Pretendard, "Apple SD Gothic Neo", sans-serif';
+    const w = c.measureText(lbl).width + 14;
+    rr(c, -w/2, -30, w, 20, 9); c.fill();
+    c.fillStyle = '#ffe4bf'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(lbl, 0, -20);
+  }
+  c.restore();
+}
+
+/* ---------------------------------------------------------------- 커리어 모달 */
+function openCareer(){
+  if(!G.ready || !G.career) return;
+  const pr = rankProgress(), r = RANKS[pr.i], C = G.career;
+  const ladder = RANKS.map((k,i)=> '<div class="'+(i<pr.i?'got':i===pr.i?'got cur':'')+'"><span>'+k.icon+'</span>'+k.name+'</div>').join('');
+  const ach = ACHIEVEMENTS.map(a=> '<div class="ach '+(C.ach[a.id]?'':'lock')+'"><span class="ai">'+a.icon+'</span><div><b>'+a.name+'</b><span>'+a.desc+'</span></div></div>').join('');
+  const qs = (G.quests||[]).map(q=> '<li class="'+(q.done?'done':q.fail?'fail':'')+'"><span class="qi">'+q.def.icon+'</span>'+q.def.name+
+     '<span class="rw">'+(q.done?'완료':q.fail?'실패':Math.min(qVal(q),q.def.goal)+'/'+q.def.goal)+'</span></li>').join('');
+  const T = C.totals;
+  const got = Object.keys(C.ach).length;
+  openModal('🏅 커리어', G.nick+' · '+CHARACTERS[G.char].name, `
+    <div class="crHead"><div class="ic">${r.icon}</div><div class="tx"><b>${r.name}</b>
+      <span>${pr.max? '최고 직급 달성 · '+fmt(C.xp)+' XP' : fmt(C.xp)+' XP · 다음 직급 '+RANKS[pr.i+1].name+'까지 '+fmt(pr.need)+' XP'}</span>
+      <div class="crBar"><i style="width:${pr.pct.toFixed(1)}%"></i></div></div></div>
+    <div class="rankLadder">${ladder}</div>
+    <p class="tipLine" style="margin-top:4px">현재 혜택 · DH 최대치 <b>${G.dhMax}</b> · 칼퇴 직급 보너스 <b>+${fmt(r.bonus)}P</b></p>
+    <div class="secT">오늘 · ${G.mod.icon} ${G.mod.name}</div>
+    <ul class="qBrief">${qs}</ul>
+    <div class="secT">누적 기록</div>
+    <div class="rewardRow">
+      <div class="reward"><b>${C.days}</b><span>근무일</span></div>
+      <div class="reward"><b>${T.quests}</b><span>업무 완료</span></div>
+      <div class="reward"><b>${T.events}</b><span>돌발 업무</span></div>
+    </div>
+    <div class="rewardRow">
+      <div class="reward"><b>${T.emWin}</b><span>호출 방어</span></div>
+      <div class="reward"><b>${T.reports}</b><span>보고서</span></div>
+      <div class="reward"><b>${T.caught}</b><span>적발</span></div>
+    </div>
+    <div class="secT">업적 ${got}/${ACHIEVEMENTS.length}</div>
+    <div class="achGrid">${ach}</div>`, {wide:true});
+}
+
+/* ---------------------------------------------------------------- 기존 함수 래핑 */
+(function wrapCore(){
+  const _startGame = startGame;
+  startGame = function(profile){
+    const stored = (profile && profile.email && Store.get(profile.email)) || {};
+    G.career = normCareer(stored.career);
+    _startGame(profile);
+    applyRankStats();
+    G.dh = G.dhMax;
+    G.plantUnlockedToast = G.dhMax >= SKILLS.plant.cost;
+    setupDay();
+    updateCareerHUD();
+    const narrow = window.matchMedia('(max-width:760px)').matches;
+    document.getElementById('taskPanel').classList.toggle('collapsed', narrow);
+    setTimeout(()=> openBriefing(true), 650);
+  };
+
+  const _saveProfile = saveProfile;
+  saveProfile = function(){
+    _saveProfile();
+    if(G.email && G.career) Store.put({ email:G.email, career:G.career });
+  };
+
+  const _update = update;
+  update = function(dt){
+    _update(dt);
+    if(!G.qc || G.paused || G.over) return;
+    G.qc.floors[G.floor] = true;
+    updateEvents(dt);
+    if(G.time >= 12*60 && !G.qc.cleanChecked){
+      G.qc.cleanChecked = true;
+      if(G.qc.caught === 0){ G.qc.cleanNoon = 1; }
+    }
+    if(G.mod && G.mod.fridayLoose && !G.fridayApplied && G.time >= 16*60){
+      G.fridayApplied = true;
+      for(const id in FLOORS) for(const b of FLOORS[id].bosses) b.speed *= .82;
+      toast('🎉 불금 오후 · 순찰이 느슨해졌다', 'good');
+    }
+    checkQuests();
+    taskPanelT -= dt;
+    if(taskPanelT <= 0){ taskPanelT = .2; renderTaskPanel(false); ghostHudIfCovering(); }
+  };
+
+  const _render = render;
+  render = function(t){
+    _render(t);
+    if(G.ready) drawOverlay(t);
+  };
+
+  const _updateHUD = updateHUD;
+  updateHUD = function(){ _updateHUD(); if(G.ready) updateCareerHUD(); };
+
+  const _submitReport = submitReport;
+  submitReport = function(){
+    const before = G.stats.reports;
+    _submitReport();
+    if(G.stats.reports > before && G.qc){
+      G.qc.reports++;
+      G.career.totals.reports++;
+      const mul = (G.mod && G.mod.report) || 1;
+      if(mul > 1){ G.dh = Math.min(G.dhMax, G.dh + 2*(mul-1)); }
+      G.dayXp += addXP(15*mul, true, MY_DESK.x, MY_DESK.y);
+    }
+  };
+
+  const _emergencySuccess = emergencySuccess;
+  emergencySuccess = function(){
+    _emergencySuccess();
+    if(!G.qc) return;
+    G.qc.emWin++;
+    G.career.totals.emWin++;
+    if(G.career.totals.emWin >= 10) unlockAch('rescue');
+    G.dayXp += addXP(40, true, MY_DESK.x, MY_DESK.y);
+  };
+  const _emergencyFail = emergencyFail;
+  emergencyFail = function(){ if(G.career) G.career.totals.emFail++; _emergencyFail(); };
+
+  const _caughtBy = caughtBy;
+  caughtBy = function(b){
+    if(G.qc){
+      G.qc.caught++;
+      G.career.totals.caught++;
+      if(G.time < 12*60 && !G.qc.cleanChecked){ G.qc.cleanChecked = true; failQuest('cleanNoon'); }
+    }
+    _caughtBy(b);
+  };
+
+  const _talkTo = talkTo;
+  talkTo = function(npc){
+    const isNew = npc && G.qc && !G.qc.talked[npc.id];
+    _talkTo(npc);
+    if(!npc || !G.qc) return;
+    G.qc.talked[npc.id] = true;
+    if(isNew) G.dayXp += addXP(8, true, npc.x, npc.y);
+  };
+
+  const _grantArcadeReward = grantArcadeReward;
+  grantArcadeReward = function(g){
+    _grantArcadeReward(g);
+    const score = Math.max(0, Math.floor((g && g.score)||0));
+    if(!score || !G.qc) return;
+    G.qc.arcBest = Math.max(G.qc.arcBest, score);
+    G.career.totals.arcades++;
+    if(score >= 500) unlockAch('arcade');
+    G.dayXp += addXP(clamp(Math.round(score/10), 3, 60));
+  };
+
+  const _buyProduct = buyProduct;
+  buyProduct = function(key){
+    const before = G.points;
+    _buyProduct(key);
+    if(G.points < before && G.qc){ G.qc.buys++; G.dayXp += addXP(4, false); renderTaskPanel(false); }
+  };
+  const _vendingBuy = vendingBuy;
+  vendingBuy = function(){
+    const before = G.points;
+    _vendingBuy();
+    if(G.points < before && G.qc){ G.qc.buys++; G.dayXp += addXP(4, false); }
+  };
+
+  const _drinkCoffee = drinkCoffee;
+  drinkCoffee = function(){
+    const before = interactCool.coffee;
+    _drinkCoffee();
+    if(G.qc && G.coffeeT >= 7.9 && interactCool.coffee !== before){ G.qc.coffee++; G.dayXp += addXP(5, false); }
+  };
+  const _restSofa = restSofa;
+  restSofa = function(){
+    const before = interactCool.rest;
+    _restSofa();
+    if(G.qc && interactCool.rest !== before){ G.qc.rest++; G.dayXp += addXP(6, false); }
+  };
+
+  const _endDay = endDay;
+  endDay = function(){
+    if(G.over || !G.career) return _endDay();
+    const C = G.career, m = G.mod || {};
+    C.days++;
+    const clean = G.qc.caught === 0;
+    const allQ = G.quests.every(q=> q.done);
+    let base = 60 + (clean ? 40*(m.cleanMul||1) : 0) + (allQ ? 50 : 0);
+    const before = rankIdx();
+    const v = addXP(base, false);
+    G.dayXp += v;
+    const r = RANKS[rankIdx()];
+    const rankBonus = r.bonus, payBonus = m.payBonus || 0;
+    G.points += rankBonus + payBonus;
+    unlockAch('first');
+    if(C.days >= 7) unlockAch('week');
+    if(clean) unlockAch('ghost');
+    if(G.char === 'sloth') unlockAch('sloth');
+    _endDay();
+    // 칼퇴 모달에 커리어 정산 블록 추가
+    const body = document.getElementById('mBody');
+    const btns = body && body.querySelector('.modalBtns');
+    if(body && btns){
+      const pr = rankProgress();
+      const qline = G.quests.map(q=> (q.done?'✅':q.fail?'❌':'⬜')+' '+q.def.name).join('<br>');
+      const achs = (G.todayAch||[]).map(id=>{ const a = ACHIEVEMENTS.find(o=>o.id===id); return a? a.icon+' '+a.name : ''; }).filter(Boolean).join(' · ');
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <div class="secT">커리어 정산 · ${m.icon||''} ${m.name||''}</div>
+        <div class="crHead"><div class="ic">${r.icon}</div><div class="tx"><b>${r.name}${rankIdx()>before?' 승진!':''}</b>
+          <span>오늘 +${fmt(G.dayXp)} XP${clean?' · 무적발 보너스':''}${allQ?' · 올클리어 보너스':''}</span>
+          <div class="crBar"><i style="width:${pr.pct.toFixed(1)}%"></i></div></div></div>
+        <div class="rewardRow" style="margin-top:8px">
+          <div class="reward"><b>+${fmt(rankBonus)}</b><span>직급 보너스</span></div>
+          <div class="reward"><b>${payBonus? '+'+fmt(payBonus) : '-'}</b><span>월급날 보너스</span></div>
+          <div class="reward"><b>${G.quests.filter(q=>q.done).length}/3</b><span>오늘의 업무</span></div>
+        </div>
+        <div class="paperDoc" style="margin-top:10px">${qline}${achs? '<br><br>🏅 새 업적 · '+achs : ''}</div>`;
+      body.insertBefore(div, btns);
+    }
+    saveProfile();
+  };
+
+  const _nextDay = nextDay;
+  nextDay = function(){
+    _nextDay();
+    if(!G.career) return;
+    applyRankStats();
+    G.dh = G.dhMax;
+    G.stats.caught = 0;
+    setupDay();
+    if(G.ev) G.ev.active = null;
+    setTimeout(()=> openBriefing(false), 350);
+  };
+
+  const _burnout = burnout;
+  burnout = function(){
+    if(G.ev && G.ev.active){ G.ev.active = null; G.ev.next = rand(40,60); hideEventRow(); }
+    _burnout();
+  };
+
+  // 설정에서 캐릭터 변경 시 나무늘보 포함 5종이 자동 노출됨 (CHAR_ORDER)
+})();
+
+/* ---------------------------------------------------------------- UI 바인딩 */
+(function bindCareerUI(){
+  const head = document.getElementById('taskHead');
+  if(head) head.onclick = ()=>{ document.getElementById('taskPanel').classList.toggle('collapsed'); Sound.click(); };
+  const bc = document.getElementById('btnCareer');
+  if(bc) bc.onclick = openCareer;
+  const av = document.getElementById('avatarBox');
+  if(av){ av.style.cursor = 'pointer'; av.onclick = openCareer; }
+  const gx = document.getElementById('gXP');
+  if(gx){ gx.style.cursor = 'pointer'; gx.onclick = openCareer; }
+  window.addEventListener('keydown', e=>{
+    if(typeof isChatTyping === 'function' && isChatTyping()) return;
+    if(!G.ready || arcadeOpen) return;
+    if(e.key.toLowerCase() === 'c' && !modalOpen) openCareer();
+    if(e.key.toLowerCase() === 'q' && !modalOpen){ document.getElementById('taskPanel').classList.toggle('collapsed'); }
+  });
+  if(window.__OFFICE){
+    window.__OFFICE.career = ()=> G.career;
+    window.__OFFICE.addXP = (n)=> addXP(n);
+    window.__OFFICE.startEvent = (id)=>{ if(G.ev && !G.ev.active) eventStart(EVENT_DEFS.find(o=>o.id===id) || EVENT_DEFS[0]); };
+    window.__OFFICE.endDay = ()=>{ G.time = 18*60 - 0.01; };
+  }
+})();
+
+/* =====================================================================
+   OFFICE RUN 2D — part 9 : 엘리베이터 리디자인 · 모바일 조작 안정화 · 오피스 소품
+                            · 동료 찾기(전 층 접속자) · 초대 링크 · 나가기
+   ===================================================================== */
+
+/* ---------------------------------------------------------------- 엘리베이터 (정면 3/4 뷰) */
+const elevAnim = {};
+drawElevator = function(c, f, t){
+  const e = f.elevator; if(!e) return;
+  const C = {x:e.car.x*TILE, y:e.car.y*TILE, w:e.car.w*TILE, h:e.car.h*TILE};
+  const D = {x:e.door.x*TILE, y:e.door.y*TILE, w:e.door.w*TILE, h:e.door.h*TILE};
+  const st = {x:e.stand.x*TILE, y:e.stand.y*TILE};
+  const near = G.floor === f.id && dist(player.x, player.y, st.x, st.y) < 120;
+  const want = (near || traveling) ? 1 : 0;
+  const a = elevAnim[f.id] = lerp(elevAnim[f.id]||0, want, 0.12);
+  const open = smooth(clamp(a,0,1));
+  const bottom = D.y + D.h;
+  c.save();
+  // 바닥 빛
+  const lg = c.createRadialGradient(st.x, bottom+10, 8, st.x, bottom+10, 150);
+  lg.addColorStop(0, 'rgba(255,214,140,'+(.22+.18*open)+')'); lg.addColorStop(1,'rgba(255,214,140,0)');
+  c.fillStyle = lg; c.fillRect(st.x-160, bottom-40, 320, 200);
+  // 파사드(돌 프레임)
+  const fx = C.x-8, fy = C.y-4, fw = C.w+16, fh = bottom - fy;
+  const fg = c.createLinearGradient(0, fy, 0, fy+fh);
+  fg.addColorStop(0,'#d8d0c2'); fg.addColorStop(1,'#bdb3a2');
+  c.fillStyle = fg; rr(c, fx, fy, fw, fh, 6); c.fill();
+  c.fillStyle = 'rgba(255,255,255,.35)'; c.fillRect(fx+4, fy+2, fw-8, 2);
+  // 층 표시창
+  const hw = 74, hh = 18, hx = C.x + C.w/2 - hw/2, hy = C.y + 2;
+  c.fillStyle = '#1f1a17'; rr(c, hx, hy, hw, hh, 5); c.fill();
+  c.fillStyle = '#ffb347';
+  c.font = "900 12px 'Pretendard',system-ui,sans-serif"; c.textAlign='center'; c.textBaseline='middle';
+  const blink = traveling ? (Math.sin(t*10)>0 ? 1 : .35) : 1;
+  c.globalAlpha = blink;
+  c.fillText('▲  '+f.id+'F  ▼', hx+hw/2, hy+hh/2+.5);
+  c.globalAlpha = 1;
+  // 문 개구부
+  const ox = C.x + 10, oy = hy + hh + 6, ow = C.w - 20, oh = bottom - oy - 3;
+  // 내부 (문 열리면 보임)
+  const ig = c.createLinearGradient(0, oy, 0, oy+oh);
+  ig.addColorStop(0,'#fff1d2'); ig.addColorStop(1,'#d9b98a');
+  c.fillStyle = ig; c.fillRect(ox, oy, ow, oh);
+  c.strokeStyle = 'rgba(150,110,60,.35)'; c.lineWidth = 1;
+  for(let i=1;i<4;i++){ c.beginPath(); c.moveTo(ox+ow*i/4, oy); c.lineTo(ox+ow*i/4, oy+oh*.7); c.stroke(); }
+  c.fillStyle = 'rgba(120,90,50,.45)'; c.fillRect(ox+4, oy+oh*.48, ow-8, 2.5);   // 손잡이
+  c.fillStyle = 'rgba(80,60,40,.18)'; c.fillRect(ox, oy+oh*.72, ow, oh*.28);       // 바닥
+  // 문짝 (좌우로 열림)
+  const half = ow/2, gap = half*open;
+  const leaf = (lx, lw)=>{
+    if(lw <= .5) return;
+    const g = c.createLinearGradient(lx, 0, lx+lw, 0);
+    g.addColorStop(0,'#c9ced5'); g.addColorStop(.5,'#eef1f4'); g.addColorStop(1,'#aeb4bc');
+    c.fillStyle = g; c.fillRect(lx, oy, lw, oh);
+    c.strokeStyle = 'rgba(70,78,88,.55)'; c.lineWidth = 1; c.strokeRect(lx+.5, oy+.5, lw-1, oh-1);
+  };
+  leaf(ox, half-gap);
+  leaf(ox+half+gap, half-gap);
+  if(open < .05){ c.strokeStyle = 'rgba(60,66,74,.8)'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(ox+half, oy); c.lineTo(ox+half, oy+oh); c.stroke(); }
+  // 문 프레임
+  c.strokeStyle = '#8d8578'; c.lineWidth = 3; c.strokeRect(ox-1.5, oy-1.5, ow+3, oh+3);
+  // 문턱
+  c.fillStyle = '#9aa1aa'; c.fillRect(ox-4, bottom-3, ow+8, 4);
+  // 호출 버튼
+  const bx = C.x + C.w + 1, by = oy + 10;
+  c.fillStyle = '#efe8dc'; rr(c, bx-6, by, 12, 26, 4); c.fill();
+  const glow = near ? (.6+.4*Math.sin(t*6)) : .25;
+  c.fillStyle = 'rgba(255,150,60,'+glow+')';
+  c.beginPath(); c.arc(bx, by+7, 3.6, 0, TAU); c.arc(bx, by+19, 3.6, 0, TAU); c.fill();
+  // 바닥 매트 + 화살표
+  const mx = C.x + 14, my = bottom + 6, mw = C.w - 28, mh = 22;
+  c.fillStyle = 'rgba(52,40,30,.82)'; rr(c, mx, my, mw, mh, 7); c.fill();
+  c.fillStyle = '#ffe0b0'; c.font = "900 10.5px 'Pretendard',system-ui,sans-serif";
+  c.fillText('🛗 엘리베이터', mx+mw/2, my+mh/2+.5);
+  if(!near && G.floor === f.id){
+    const k = (t*1.4)%1;
+    for(let i=0;i<3;i++){
+      const yy = my + mh + 22 - ((i/3 + k)%1)*18;
+      c.globalAlpha = .55 * (1 - ((i/3+k)%1));
+      c.fillStyle = '#ff8a3d';
+      c.beginPath(); c.moveTo(st.x, yy-6); c.lineTo(st.x-8, yy+2); c.lineTo(st.x+8, yy+2); c.closePath(); c.fill();
+    }
+    c.globalAlpha = 1;
+  }
+  c.restore();
+};
+
+/* ---------------------------------------------------------------- 새 소품 */
+const _drawProp9 = drawProp;
+drawProp = function(c, p, t){
+  const {x,y,w,h} = p;
+  if(p.kind === 'rug' && p.variant === 'label'){
+    c.save();
+    c.fillStyle = 'rgba(60,44,30,.10)'; rr(c, x, y, w, h, 8); c.fill();
+    txt(c, p.label||'', x+w/2, y+h/2+1, 10.5, 'rgba(80,60,40,.62)', 'center', 900);
+    c.restore(); return;
+  }
+  if(p.kind === 'rug' && p.variant === 'carpet'){
+    c.save();
+    const col = p.color || '#c9a98a';
+    c.fillStyle = rgba(col, .55); rr(c, x, y, w, h, 10); c.fill();
+    c.strokeStyle = 'rgba(255,255,255,.45)';
+    c.lineWidth = 2; rr(c, x+6, y+6, w-12, h-12, 7); c.stroke();
+    c.restore(); return;
+  }
+  switch(p.kind){
+    case 'windowWall': {
+      c.save();
+      const g = c.createLinearGradient(0, y, 0, y+h);
+      const dusk = clamp((G.time - (15*60+30))/150, 0, 1);
+      g.addColorStop(0, dusk > 0 ? 'rgb('+Math.round(143+90*dusk)+','+Math.round(195-40*dusk)+','+Math.round(221-90*dusk)+')' : '#8fc3dd');
+      g.addColorStop(1, '#d6eaf2');
+      c.fillStyle = g; c.fillRect(x, y, w, h);
+      c.fillStyle = 'rgba(60,90,120,.32)';
+      const n = Math.floor(w/34);
+      for(let i=0;i<n;i++){ const bh = 6 + ((i*37 + Math.floor(x))%16); c.fillRect(x+4+i*34, y+h-bh, 22, bh); }
+      c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = 2; c.strokeRect(x, y, w, h);
+      for(let gx=x+TILE*2; gx<x+w-4; gx+=TILE*2){ c.beginPath(); c.moveTo(gx, y); c.lineTo(gx, y+h); c.stroke(); }
+      c.restore(); return;
+    }
+    case 'whiteboard': {
+      c.save();
+      shadowEl(c, x+w/2, y+h+2, w*.5, 3, .15);
+      c.fillStyle = '#9aa1aa'; c.fillRect(x+4, y+h-2, 2, 8); c.fillRect(x+w-6, y+h-2, 2, 8);
+      box(c, x, y-14, w, h+12, '#fbfbf7', {r:3});
+      c.strokeStyle = '#8f96a0'; c.lineWidth = 1.5; c.strokeRect(x+.5, y-13.5, w-1, h+11);
+      c.strokeStyle = '#4f88c6'; c.lineWidth = 1.4;
+      c.beginPath(); c.moveTo(x+6, y-6); c.lineTo(x+w*.55, y-6); c.moveTo(x+6, y-1); c.lineTo(x+w*.4, y-1); c.stroke();
+      c.strokeStyle = '#e2683f'; c.beginPath(); c.arc(x+w*.75, y-3, 5, 0, TAU); c.stroke();
+      c.restore(); return;
+    }
+    case 'bookshelf': {
+      c.save();
+      shadowEl(c, x+w/2, y+h, w*.52, h*.22, .16);
+      box(c, x, y-16, w, h+16, '#8a6a4a', {r:3});
+      const cols = ['#c9463f','#4f88c6','#f0a62e','#5aa86b','#8a6bbd','#e9dfc8'];
+      for(let r=0;r<2;r++){
+        let bx = x+4, i = r*3;
+        const ry = y-13 + r*((h+10)/2);
+        while(bx < x+w-6){
+          const bw = 4 + (i*7)%4;
+          c.fillStyle = cols[i%cols.length];
+          c.fillRect(bx, ry, bw, (h+10)/2-4);
+          bx += bw+1; i++;
+        }
+      }
+      c.restore(); return;
+    }
+    case 'lockers': {
+      c.save();
+      shadowEl(c, x+w/2, y+h, w*.5, h*.2, .16);
+      box(c, x, y-14, w, h+14, '#7d94a8', {r:3});
+      const n = Math.max(3, Math.round(w/16));
+      for(let i=0;i<n;i++){
+        const lx = x + 3 + i*((w-6)/n);
+        c.strokeStyle = 'rgba(40,52,64,.45)'; c.lineWidth = 1;
+        c.strokeRect(lx+.5, y-11.5, (w-6)/n-2, h+8);
+        c.fillStyle = '#ffd166'; c.fillRect(lx+(w-6)/n-6, y-4, 2, 4);
+      }
+      if(p.label) txt(c, p.label, x+w/2, y-20, 9.5, 'rgba(60,44,30,.7)', 'center', 900);
+      c.restore(); return;
+    }
+    case 'lamp': {
+      c.save();
+      const cx0 = x+w/2, cy0 = y+h/2;
+      const lg = c.createRadialGradient(cx0, cy0-18, 2, cx0, cy0-18, 46);
+      lg.addColorStop(0,'rgba(255,220,150,.35)'); lg.addColorStop(1,'rgba(255,220,150,0)');
+      c.fillStyle = lg; c.fillRect(cx0-50, cy0-70, 100, 100);
+      shadowEl(c, cx0, cy0+4, 8, 3, .18);
+      c.fillStyle = '#5b4a3a'; c.fillRect(cx0-1.2, cy0-26, 2.4, 30);
+      c.fillStyle = '#fff3d6'; c.beginPath(); c.moveTo(cx0-9, cy0-24); c.lineTo(cx0+9, cy0-24); c.lineTo(cx0+6, cy0-36); c.lineTo(cx0-6, cy0-36); c.closePath(); c.fill();
+      c.restore(); return;
+    }
+    case 'directory': {
+      c.save();
+      shadowEl(c, x+w/2, y+h+2, w*.5, 4, .16);
+      box(c, x, y-30, w, h+30, '#3b2c1e', {r:6});
+      txt(c, '사내 안내도', x+w/2, y-21, 10, '#ffe0b0', 'center', 900);
+      const rows = [['3F','휴게실 · 오락실'],['2F','오피스 · 내 자리'],['1F','로비 · OFFICE 24']];
+      rows.forEach((r,i)=>{
+        const ry = y-9 + i*10;
+        c.fillStyle = r[0]===G.floor+'F' ? '#ff8a3d' : 'rgba(255,224,176,.75)';
+        c.font = "900 8.5px 'Pretendard',system-ui,sans-serif"; c.textAlign='left'; c.textBaseline='middle';
+        c.fillText(r[0], x+8, ry); c.fillStyle = 'rgba(255,240,220,.8)'; c.fillText(r[1], x+26, ry);
+      });
+      c.restore(); return;
+    }
+  }
+  return _drawProp9(c, p, t);
+};
+
+/* ---------------------------------------------------------------- 모바일 조작 · 모달 안정화 */
+(function mobileControls(){
+  // 1) 탭 직후 '유령 클릭'이 방금 연 모달을 닫거나 버튼을 누르지 않도록
+  const _openModal = openModal;
+  openModal = function(title, sub, bodyHtml, opts){
+    _openModal(title, sub, bodyHtml, opts);
+    const wrap = document.getElementById('modalWrap');
+    const modal = document.getElementById('modal');
+    const at = performance.now();
+    wrap.onclick = (e)=>{ if(e.target === wrap && !(opts && opts.noClose) && performance.now() - at > 450) closeModal(); };
+    modal.classList.add('justOpened');
+    clearTimeout(openModal._t);
+    openModal._t = setTimeout(()=> modal.classList.remove('justOpened'), 380);
+  };
+
+  // 2) 엘리베이터 이동이 어떤 이유로든 멈추면 3초 뒤 강제로 풀어줌
+  const _travelTo = travelTo;
+  travelTo = function(id){
+    _travelTo(id);
+    clearTimeout(travelTo._wd);
+    travelTo._wd = setTimeout(()=>{
+      if(traveling){ traveling = false; const fx = document.getElementById('elevFx'); if(fx) fx.className = 'hide'; }
+      unstickPlayer();
+    }, 3000);
+  };
+
+  // 3) 화면 왼쪽 아래 아무 곳이나 누르고 끌면 그 자리에 조이스틱이 생김
+  const app = document.getElementById('app');
+  const joy = document.getElementById('joy'), knob = document.getElementById('joyKnob');
+  let fl = null;   // {id, bx, by, r}
+  app.addEventListener('pointerdown', e=>{
+    if(e.pointerType === 'mouse' || !G.ready || modalOpen || arcadeOpen || traveling) return;
+    if(e.target.closest && e.target.closest('#hud, #chatDock, #skills, #prompt, #joy, #modalWrap, button, input')) return;
+    if(e.clientX > window.innerWidth*0.5 || e.clientY < window.innerHeight*0.38) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    const r = joy.offsetWidth || 112;
+    fl = { id:e.pointerId, bx:e.clientX, by:e.clientY, r:r*0.34 };
+    joy.classList.add('on','floating');
+    joy.style.left = (e.clientX - r/2) + 'px';
+    joy.style.top = (e.clientY - r/2) + 'px';
+    joy.style.bottom = 'auto';
+    input.joy.active = true; input.joy.id = e.pointerId; input.joy.x = 0; input.joy.y = 0;
+    player.path = null;
+  }, {capture:true});
+  window.addEventListener('pointermove', e=>{
+    if(!fl || e.pointerId !== fl.id) return;
+    let dx = e.clientX - fl.bx, dy = e.clientY - fl.by;
+    const d = Math.hypot(dx,dy);
+    if(d > fl.r){ dx = dx/d*fl.r; dy = dy/d*fl.r; }
+    knob.style.transform = 'translate('+dx+'px,'+dy+'px)';
+    input.joy.x = dx/fl.r; input.joy.y = dy/fl.r;
+  }, {passive:true});
+  const endFl = e=>{
+    if(!fl || e.pointerId !== fl.id) return;
+    fl = null;
+    input.joy.active = false; input.joy.x = 0; input.joy.y = 0;
+    knob.style.transform = '';
+    joy.classList.remove('floating');
+    joy.style.left = ''; joy.style.top = ''; joy.style.bottom = '';
+  };
+  window.addEventListener('pointerup', endFl);
+  window.addEventListener('pointercancel', endFl);
+})();
+
+/* 벽·가구에 끼었으면 가장 가까운 빈칸으로 */
+function unstickPlayer(){
+  if(!G.ready) return;
+  const f = FLOORS[G.floor];
+  if(!collidesAt(f, player.x, player.y, player.radius||9)) return;
+  for(let r=1;r<=8;r++){
+    for(let k=0;k<16;k++){
+      const a = k/16*TAU;
+      const nx = player.x + Math.cos(a)*r*12, ny = player.y + Math.sin(a)*r*12;
+      if(!collidesAt(f, nx, ny, player.radius||9)){ player.x = nx; player.y = ny; playerRef.x = nx; playerRef.y = ny; return; }
+    }
+  }
+}
+(function wrapUpdate9(){
+  const _update = update;
+  let chk = 0;
+  update = function(dt){
+    _update(dt);
+    chk -= dt;
+    if(chk <= 0){ chk = .5; unstickPlayer(); }
+  };
+})();
+
+/* ---------------------------------------------------------------- 동료 찾기 (전 층 접속자 목록) */
+const Presence = {
+  list:[], ok:null, at:0, timer:null, busy:false,
+  base(){ return '/presence/' + encodeURIComponent(Net.baseRoom ? Net.baseRoom() : 'floor_main'); },
+  url(p){ return Net.firebaseUrl() + p + '.json'; },
+  usable(){ return !!(Net && Net.backend === 'firebase' && Net.firebaseUrl && Net.firebaseUrl() && Net.myId); },
+  start(){
+    if(this.timer) return;
+    this.timer = setInterval(()=> this.tick(), 5000);
+    this.tick();
+    window.addEventListener('pagehide', ()=> this.leave());
+  },
+  async tick(){
+    if(!G.ready || this.busy) return;
+    if(!this.usable()){ this.fallback(); return; }
+    this.busy = true;
+    try{
+      const me = this.url(this.base() + '/' + encodeURIComponent(Net.myId));
+      const w = await fetch(me, {method:'PATCH', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ nick:G.nick, charType:G.char, floor:G.floor, sts:{'.sv':'timestamp'} }), keepalive:true});
+      if(w.status === 401 || w.status === 403){ this.ok = 'denied'; this.fallback(); return; }
+      const r = await fetch(this.url(this.base()), {cache:'no-store'});
+      if(!r.ok){ this.ok = r.status===401||r.status===403 ? 'denied' : 'error'; this.fallback(); return; }
+      const data = (await r.json()) || {};
+      const mine = data[Net.myId];
+      if(mine && typeof mine.sts === 'number'){ Net.srvOffset = mine.sts - Date.now(); Net.srvOffsetKnown = true; }
+      const now = Date.now() + (Net.srvOffset||0);
+      const out = [];
+      for(const id in data){
+        const v = data[id];
+        if(!v || typeof v.sts !== 'number') continue;
+        const age = now - v.sts;
+        if(age > 600000 && id !== Net.myId){ fetch(this.url(this.base()+'/'+encodeURIComponent(id)), {method:'DELETE'}).catch(()=>{}); continue; }
+        if(age > 20000) continue;
+        out.push({ id, nick:String(v.nick||'동료').slice(0,12), charType:CHARACTERS[v.charType]? v.charType : 'male', floor:+v.floor||2, me:id===Net.myId });
+      }
+      if(!out.some(o=> o.me)) out.push({ id:Net.myId, nick:G.nick, charType:G.char, floor:G.floor, me:true });
+      this.list = out; this.ok = 'live'; this.at = Date.now();
+    }catch(e){ this.ok = 'error'; this.fallback(); }
+    finally{ this.busy = false; this.paint(); }
+  },
+  fallback(){
+    const out = [{ id:Net.myId||'me', nick:G.nick, charType:G.char, floor:G.floor, me:true }];
+    for(const r of netRemotes) out.push({ id:r.id, nick:r.nick, charType:r.charType, floor:r.floor, me:false });
+    this.list = out; this.paint();
+  },
+  leave(){
+    if(!this.usable()) return;
+    try{ fetch(this.url(this.base()+'/'+encodeURIComponent(Net.myId)), {method:'DELETE', keepalive:true}).catch(()=>{}); }catch(e){}
+  },
+  count(floor){ return this.list.filter(o=> o.floor === floor).length; },
+  status(){
+    const st = (Net.adapter && Net.adapter.stats) ? Net.adapter.stats() : {};
+    if(Net.backend !== 'firebase') return {k:'local', t:'이 기기 탭끼리만 연결', c:'#f0a62e'};
+    if(st.denied || this.ok === 'denied') return {k:'denied', t:'서버 권한 오류 · 친구가 안 보여요', c:'#e8544a'};
+    if(this.ok === 'live' || (st.lastOk && Date.now() - st.lastOk < 20000)) return {k:'live', t:'실시간 연결됨', c:'#4fae74'};
+    if(this.ok === 'error') return {k:'error', t:'서버 연결 실패 · 네트워크 확인', c:'#e8544a'};
+    return {k:'wait', t:'연결 중…', c:'#a3907b'};
+  },
+  paint(){
+    const dot = document.getElementById('netDot');
+    if(dot){ const s = this.status(); dot.style.background = s.c; dot.title = s.t; }
+    const all = document.getElementById('allPeople');
+    if(all){ const n = this.list.length; const tx = '전체 '+n+'명'; if(all.textContent !== tx) all.textContent = tx; }
+  }
+};
+
+function inviteLink(code){
+  const u = new URL(location.href);
+  u.search = ''; u.hash = '';
+  if(code && code !== 'floor_main') u.searchParams.set('room', code);
+  return u.toString();
+}
+function openPeople(){
+  if(!G.ready) return;
+  Presence.tick();
+  const s = Presence.status();
+  const room = Net.baseRoom ? Net.baseRoom() : 'floor_main';
+  const isMain = room === 'floor_main';
+  const byFloor = [3,2,1].map(fl=>{
+    const ppl = Presence.list.filter(o=> o.floor === fl);
+    const names = ppl.length ? ppl.map(o=> '<span class="pp'+(o.me?' me':'')+'">'+CHARACTERS[o.charType].icon+' '+escapeHtml9(o.nick)+(o.me?' (나)':'')+'</span>').join('') : '<span class="ppEmpty">아무도 없어요</span>';
+    const go = (fl !== G.floor && ppl.length) ? '<button class="miniBtn goFl" data-fl="'+fl+'">'+fl+'F로 가기</button>' : (fl === G.floor ? '<span class="here">지금 여기</span>' : '');
+    return '<div class="flRow"><div class="flHead"><b>'+fl+'F</b><span>'+FLOOR_INFO[fl].name+' · '+ppl.length+'명</span>'+go+'</div><div class="ppList">'+names+'</div></div>';
+  }).join('');
+  openModal('👥 동료 찾기', isMain ? '공용 방' : '팀 방 · '+room, `
+    <div class="netState"><i style="background:${s.c}"></i><b>${s.t}</b></div>
+    ${byFloor}
+    <div class="secT">친구와 같은 방에서 만나기</div>
+    <p class="tipLine" style="margin-top:0">같은 링크로 들어온 사람끼리 같은 공간에 모여요. 링크가 없으면 모두 <b>공용 방</b>에서 만납니다. 우리끼리만 모이고 싶다면 팀 방 코드를 정해 링크를 공유하세요.</p>
+    <div class="roomRow">
+      <input id="roomCode" class="fInput" maxlength="20" placeholder="팀 방 코드 (예: team-sy)" value="${isMain?'':room}">
+      <button class="btnGo" id="roomCopy">초대 링크 복사</button>
+    </div>
+    <div class="miniBtns" style="margin-top:8px">
+      <button class="miniBtn" id="roomGo">이 코드의 방으로 이동</button>
+      ${isMain? '' : '<button class="miniBtn" id="roomMain">공용 방으로 돌아가기</button>'}
+    </div>
+    ${s.k==='denied' ? '<p class="tipLine" style="color:#c9463f">서버(Firebase) 권한이 막혀 있어 다른 기기의 친구가 보이지 않아요. 관리자가 Realtime Database 규칙을 확인해야 합니다.</p>' : ''}
+    ${s.k==='local' ? '<p class="tipLine">실시간 서버 설정이 없어 같은 브라우저의 탭끼리만 연결돼요.</p>' : ''}`);
+  document.querySelectorAll('.goFl').forEach(b=> b.onclick = ()=>{ const fl = +b.dataset.fl; closeModal(); travelTo(fl); });
+  const codeOf = ()=> (document.getElementById('roomCode').value||'').trim().replace(/[^a-zA-Z0-9_-]/g,'').slice(0,20);
+  const cp = document.getElementById('roomCopy');
+  if(cp) cp.onclick = async ()=>{
+    const link = inviteLink(codeOf() || room);
+    try{ await navigator.clipboard.writeText(link); toast('🔗 초대 링크를 복사했어요', 'good'); }
+    catch(e){ prompt('이 링크를 친구에게 보내세요', link); }
+  };
+  const rg = document.getElementById('roomGo');
+  if(rg) rg.onclick = ()=>{ const c = codeOf(); if(!c){ toast('방 코드를 입력하세요 (영문·숫자·-·_)', 'warn'); return; } saveProfile(); Net.leave(); Presence.leave(); location.href = inviteLink(c); };
+  const rm = document.getElementById('roomMain');
+  if(rm) rm.onclick = ()=>{ saveProfile(); Net.leave(); Presence.leave(); location.href = inviteLink(''); };
+}
+function escapeHtml9(s){ return String(s).replace(/[&<>"']/g, c=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* 엘리베이터 창에 층별 접속자 수 표시 */
+(function wrapElevator9(){
+  const _openElevator = openElevator;
+  openElevator = function(){
+    _openElevator();
+    document.querySelectorAll('.elevBtn').forEach(btn=>{
+      const fl = +btn.dataset.floor;
+      const n = Presence.count(fl);
+      const sm = btn.querySelector('.fl small');
+      if(sm) sm.textContent = n ? ' 👥'+n : '';
+    });
+  };
+})();
+
+/* ---------------------------------------------------------------- 나가기 */
+function openExit(){
+  if(!G.ready) return;
+  openModal('🚪 나가기', 'D+'+G.day+' · '+fmt(G.points)+'P', `
+    <div class="bigTitle"><div class="em">🚪</div><b>오늘은 여기까지 할까요?</b><span>진행 상황(날짜·포인트·직급)은 이 기기에 저장돼요. 다시 들어오면 오늘 아침부터 시작해요.</span></div>
+    <div class="modalBtns">
+      <button class="btnGhost" id="exNo">계속하기</button>
+      <button class="btnGo" id="exYes">저장하고 나가기</button>
+    </div>`);
+  document.getElementById('exNo').onclick = closeModal;
+  document.getElementById('exYes').onclick = ()=>{
+    try{ saveProfile(); }catch(e){}
+    try{ Net.leave(); }catch(e){}
+    try{ Presence.leave(); }catch(e){}
+    G.ready = false;
+    location.reload();
+  };
+}
+
+/* ---------------------------------------------------------------- 첫 접속 조작 안내 (브리핑에 추가) */
+(function wrapBriefing9(){
+  const _openBriefing = openBriefing;
+  openBriefing = function(first){
+    _openBriefing(first);
+    if(!((G.visits||1) <= 2 || G.day <= 1)) return;
+    const body = document.getElementById('mBody');
+    const btns = body && body.querySelector('.modalBtns');
+    if(!body || !btns) return;
+    const touch = isTouchDevice();
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="secT">처음이라면 · 이렇게 해요</div>
+      <ol class="howTo">
+        <li><b>이동</b><span>${touch ? '화면 <b>왼쪽 아래</b>를 누른 채 끌거나, 가고 싶은 곳을 <b>톡</b> 누르세요.' : '<kbd>WASD</kbd>·방향키 또는 가고 싶은 곳을 클릭.'}</span></li>
+        <li><b>행동</b><span>물건·사람 근처에서 ${touch ? '오른쪽 아래 <b>주황 버튼</b>' : '<kbd>E</kbd>'} — 보고서 제출, 커피, 엘리베이터 탑승.</span></li>
+        <li><b>목표</b><span><b>18:00</b>까지 멘탈 🧠이 0이 되지 않게 버티면 칼퇴 성공. 부장님 앞의 <b>주황 부채꼴</b>(시야)에 들어가면 들켜요.</span></li>
+        <li><b>층 이동</b><span>복도의 <b>🛗 엘리베이터</b> 앞에 서면 문이 열려요. 1F 편의점 · 3F 오락실.</span></li>
+      </ol>`;
+    body.insertBefore(div, btns);
+  };
+})();
+
+/* ---------------------------------------------------------------- UI 바인딩 */
+(function bind9(){
+  const ex = document.getElementById('btnExit'); if(ex) ex.onclick = openExit;
+  const chip = document.getElementById('floorChip');
+  if(chip){
+    chip.style.cursor = 'pointer';
+    chip.title = '동료 찾기';
+    if(!document.getElementById('netDot')){
+      const d = document.createElement('i'); d.id = 'netDot'; chip.insertBefore(d, chip.firstChild);
+    }
+    const hint = document.getElementById('roomHint');
+    if(hint){ hint.id = 'allPeople'; hint.textContent = '전체 1명'; }
+    chip.onclick = openPeople;
+  }
+  // 접속자 목록은 로그인 후 Net 이 준비되면 시작
+  const t = setInterval(()=>{ if(G.ready && Net && Net.myId){ clearInterval(t); Presence.start(); } }, 500);
+  if(window.__OFFICE){
+    window.__OFFICE.presence = ()=> ({ status:Presence.status(), list:Presence.list });
+    window.__OFFICE.openPeople = openPeople;
+  }
+})();
 
 </script>
 </body>
