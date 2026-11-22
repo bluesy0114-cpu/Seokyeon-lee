@@ -1556,6 +1556,10 @@ function buildFloor(def){
     const r = Object.assign({}, p, rectInTiles(p));
     if(r.solid === undefined) r.solid = true;
     if(p.kind === 'chair') r.solid = false;
+    /* 바닥 장식(러그·카펫·바닥 라벨)은 통행을 막지 않는다.
+       예전에는 기본값(solid=true)이 적용돼 카펫·바닥 라벨이 보이지 않는 벽이 됐고,
+       그 위에 놓인 상호작용 지점(1F 건강검진·3F 소파 휴식)에 닿을 수 없었다. */
+    if(p.kind === 'rug') r.solid = false;
     r.sight = !!p.sight;
     // 파티션/유리벽은 얇아도 시야를 막음
     if(p.kind==='partition') { r.sight = true; }
