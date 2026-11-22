@@ -5427,7 +5427,9 @@ const Net = {
     }
     /* 이모지 · 업무 토스 */
     if(m.fxSeq && m.fxSeq !== r.fxSeq){
-      const fresh = (Date.now() - (m.fxTs||0) < 8000) && r.fxSeq !== undefined;
+      /* 새로 본 상대(r.fxSeq === undefined)의 첫 fx도 신선하면 받아야 한다.
+         기존 조건은 첫 이모지·첫 업무 토스를 항상 버렸다. */
+      const fresh = (Date.now() - (m.fxTs||0) < 8000);
       r.fxSeq = m.fxSeq;
       if(fresh && typeof onRemoteFx === 'function') onRemoteFx(r, m);
     }
