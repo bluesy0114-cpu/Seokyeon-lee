@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="OFFICE RUN — 직장 생활 살아남기. 엘리베이터로 층을 오가고, 편의점과 오락실을 누비는 2D 오피스 생존 게임.">
 <title>OFFICE RUN · 직장 생활 살아남기</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root{
     --cream:#fffaf1;
@@ -30,9 +32,10 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{
     margin:0;padding:0;height:100%;overflow:hidden;background:#17110d;
-    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;
+    font-family:'Pretendard Variable','Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;
     color:var(--ink);user-select:none;-webkit-user-select:none;overscroll-behavior:none;touch-action:none;
-    -webkit-font-smoothing:antialiased;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    word-break:keep-all;overflow-wrap:anywhere;font-variant-numeric:tabular-nums;
   }
   #game{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;}
   .hide{display:none !important;}
@@ -65,7 +68,9 @@
   }
   .brandRow h1{margin:0;font-size:30px;letter-spacing:-1.1px;font-weight:900;color:#241a12;}
   .brandRow h1 em{font-style:normal;color:var(--accent2);}
-  .brandRow p{margin:2px 0 0;font-size:12.5px;font-weight:700;color:var(--ink3);letter-spacing:-.2px;}
+  .brandRow p{margin:2px 0 0;font-size:12.5px;font-weight:700;color:var(--ink3);letter-spacing:-.2px;line-height:1.5;white-space:normal;word-break:keep-all;}
+  .brandRow p .bsSep,.brandRow p .bsDash{margin:0 4px;color:#c9b8a2;}
+  .brandRow p .bs2{display:inline;}
   .loginGrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:26px;margin-top:20px;}
   .fLabel{display:flex;align-items:baseline;gap:8px;font-size:12px;font-weight:900;color:#5b4836;letter-spacing:-.2px;margin:0 0 6px;}
   .fLabel .hint{font-size:10.5px;font-weight:700;color:#b09b83;}
@@ -83,9 +88,9 @@
     position:relative;border-radius:16px;border:2px solid #ecdfc8;background:#fffdf7;padding:6px 4px 8px;
     display:flex;flex-direction:column;align-items:center;gap:2px;transition:.16s;overflow:hidden;
   }
-  .charCard canvas{width:100%;height:88px;display:block;}
+  .charCard canvas{width:100%;height:92px;display:block;}
   .charCard b{font-size:11.5px;font-weight:900;letter-spacing:-.3px;color:#3a2d22;}
-  .charCard i{font-style:normal;font-size:9.5px;font-weight:800;color:#b09b83;letter-spacing:-.2px;}
+  .charCard i{font-style:normal;font-size:9.5px;font-weight:800;color:#b09b83;letter-spacing:-.2px;text-align:center;line-height:1.3;min-height:2.6em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .charCard:hover{border-color:#ffc79b;transform:translateY(-1px);}
   .charCard.on{border-color:#ff8a3d;background:linear-gradient(180deg,#fff7ec,#ffeede);box-shadow:0 8px 18px rgba(255,138,61,.22);}
   .charCard.on::after{content:'✓';position:absolute;top:6px;right:7px;width:16px;height:16px;border-radius:50%;background:#ff8a3d;color:#fff;font-size:10px;font-weight:900;display:grid;place-items:center;}
@@ -96,7 +101,10 @@
   }
   .btnPrimary:hover{filter:brightness(1.04);transform:translateY(-1px);}
   .btnPrimary:active{transform:translateY(1px) scale(.995);}
-  .fine{margin:10px 0 0;text-align:center;font-size:10.5px;font-weight:700;color:#b09b83;}
+  .fine{margin:10px 0 0;text-align:center;font-size:10.5px;font-weight:700;color:#b09b83;line-height:1.5;}
+  .fine span{display:inline;}
+  .fine .fine2::before{content:' · ';}
+  .fine .fine2{white-space:nowrap;}
   .sideCol{
     border-radius:20px;background:linear-gradient(165deg,#2c2118,#1d1712);padding:16px 16px 14px;color:#f4e7d3;
     display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
@@ -395,9 +403,16 @@
     .loginCard{padding:20px 16px 18px;border-radius:22px;margin:auto;}
     .brandRow h1{font-size:24px;}
     .brandRow .logoBox{width:46px;height:46px;font-size:22px;border-radius:15px;}
+    .brandRow p{font-size:12px;line-height:1.45;}
+    .brandRow p .bsDash{display:none;}
+    .brandRow p .bs2{display:block;margin-top:1px;}
     .loginGrid{grid-template-columns:1fr;gap:14px;}
     .sideCol{display:none;}
-    .charCard canvas{height:70px;}
+    .charCard canvas{height:78px;}
+    .fine{font-size:10px;margin-top:9px;}
+    .fine span{display:block;}
+    .fine .fine2::before{content:none;}
+    .fine .fine2{white-space:normal;}
     #hudTL{left:8px;top:8px;width:168px;padding:7px 9px;gap:5px;border-radius:14px;}
     .whoRow .nm b{font-size:12px;}
     .whoRow .nm span{font-size:9.5px;}
@@ -628,7 +643,7 @@
       <div class="logoBox">🏢</div>
       <div>
         <h1>OFFICE <em>RUN</em></h1>
-        <p>직장 생활 살아남기 · 2D 리마스터 — 엘리베이터 · 오락실 · 기린/킹콩</p>
+        <p class="brandSub"><span class="bs1">직장 생활 살아남기</span><span class="bsSep">·</span><span class="bs1b">2D 리마스터</span><span class="bsDash">—</span><span class="bs2">엘리베이터 · 오락실 · 기린/킹콩</span></p>
       </div>
     </div>
     <div class="loginGrid">
@@ -640,7 +655,7 @@
         <div class="charHead"><b>캐릭터 선택</b><span>5종 · 언제든 설정에서 변경</span></div>
         <div class="charGrid" id="charGrid"></div>
         <button id="btnStart" class="btnPrimary">출근하기 →</button>
-        <p class="fine">이메일 1개 = 프로필 1개 · 이 기기에 저장 · 하단 채팅바로 같은 층 동료와 실시간 대화</p>
+        <p class="fine"><span class="fine1">이메일 1개 = 프로필 1개 · 이 기기에 저장</span><span class="fine2">하단 채팅바로 같은 층 동료와 실시간 대화</span></p>
       </div>
       <div class="sideCol">
         <h3>오늘의 사내 생존 루틴</h3>
@@ -1734,7 +1749,7 @@ function box(c,x,y,w,h,col,o){
 }
 function txt(c, s, x, y, size, color, align, weight){
   c.save();
-  c.font = (weight||800)+' '+size+"px 'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif";
+  c.font = (weight||800)+' '+size+"px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif";
   c.fillStyle = color; c.textAlign = align||'center'; c.textBaseline='middle';
   c.fillText(s, x, y);
   c.restore();
@@ -2713,7 +2728,7 @@ function drawBoss(c, b, t){
   // 이름표
   c.save();
   const label = b.short;
-  c.font = "900 9px 'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+  c.font = "900 9px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
   const tw = c.measureText(label).width + 12;
   c.fillStyle='rgba(40,28,20,.82)';
   rr(c, x-tw/2, hy-27, tw, 14, 7); c.fill();
@@ -2829,7 +2844,7 @@ function drawEffects(c){
     const k = f0.t/f0.life;
     ctx.save();
     ctx.globalAlpha = 1-k;
-    ctx.font = "900 13px 'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+    ctx.font = "900 13px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
     ctx.textAlign='center'; ctx.textBaseline='middle';
     ctx.lineWidth = 3; ctx.strokeStyle='rgba(30,20,12,.55)';
     ctx.strokeText(f0.text, f0.x, f0.y);
@@ -2858,7 +2873,7 @@ function drawBubble(c, e, text, t){
   const h = isPlayer ? (CHARACTERS[G.char].height||56) : (e.bubbleH || (e.def? 60 : 56));
   const bx = e.x, by = e.y - h - 16;
   c.save();
-  c.font = "800 11px 'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif";
+  c.font = "800 11px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif";
   const tw = Math.min(190, c.measureText(text).width + 20);
   const th = 26;
   const x0 = bx - tw/2, y0 = by - th;
@@ -2945,7 +2960,7 @@ function drawElevator(c, f, t){
   c.fillStyle = 'rgba(30,26,24,.92)'; rr(c, px, py, pw, ph, 6); c.fill();
   c.strokeStyle='rgba(255,220,160,.35)'; c.lineWidth=1; rr(c, px+.5, py+.5, pw-1, ph-1, 6); c.stroke();
   c.fillStyle = '#ffb347';
-  c.font = "900 15px 'Pretendard',system-ui,sans-serif";
+  c.font = "900 15px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
   c.textAlign='center'; c.textBaseline='middle';
   c.fillText(f.id+'F', px+pw/2, py+ph/2+.5);
   // 호출 버튼
@@ -3156,25 +3171,65 @@ function chooseCharacter(id){
   document.querySelectorAll('.charCard').forEach(el=> el.classList.toggle('on', el.dataset.char===id));
   drawLoginPreviews();
 }
+/* 캐릭터 미리보기 — 실제로 그려진 픽셀 경계를 재서 카드 안에 머리부터 발끝까지 꼭 맞춤 */
+const PREVIEW_FIT = {};
+function PREVIEW_FIT_CLEAR(){ for(const k in PREVIEW_FIT) delete PREVIEW_FIT[k]; }
+function previewFit(id, w, h){
+  const key = id+'|'+Math.round(w)+'|'+Math.round(h);
+  if(PREVIEW_FIT[key]) return PREVIEW_FIT[key];
+  const S = 220;
+  const oc = document.createElement('canvas'); oc.width = S; oc.height = S;
+  const o = oc.getContext('2d');
+  o.save(); o.translate(S/2, S-20);
+  drawCharacterAt(o, id, 0, 0, Math.PI/2, 0, false, 0, 0, {});
+  o.restore();
+  let minX = S, maxX = -1, minY = S, maxY = -1;
+  try{
+    const d = o.getImageData(0,0,S,S).data;
+    for(let y=0; y<S; y++){
+      const row = y*S*4;
+      for(let x=0; x<S; x++){
+        if(d[row + x*4 + 3] > 128){
+          if(x < minX) minX = x;
+          if(x > maxX) maxX = x;
+          if(y < minY) minY = y;
+          if(y > maxY) maxY = y;
+        }
+      }
+    }
+  }catch(e){}
+  if(maxX < 0){ minX = S/2-10; maxX = S/2+10; minY = S-60; maxY = S-20; }   /* 측정 실패 시 기본값 */
+  const bw = Math.max(1, maxX - minX + 1), bh = Math.max(1, maxY - minY + 1);
+  const pad = 4;
+  const sc = Math.min((h - pad*2) / bh, (w - pad*2) / bw);
+  const cx = (minX + maxX) / 2 - S/2;                 /* 발 기준 x=0에서 본 가로 중심 */
+  const feetY = pad + ((h - pad*2) - bh*sc)/2 + bh*sc; /* 세로 가운데 정렬 */
+  const fit = { sc: sc, cx: cx, feetY: feetY };
+  PREVIEW_FIT[key] = fit;
+  return fit;
+}
 function drawLoginPreviews(){
   document.querySelectorAll('.charCard canvas').forEach(cv=>{
     const id = cv.parentElement.dataset.char;
+    if(!CHARACTERS[id]) return;
     const c = cv.getContext('2d');
     const dpr = Math.min(2, window.devicePixelRatio||1);
-    const w = cv.clientWidth||64, h = cv.clientHeight||88;
-    cv.width = w*dpr; cv.height = h*dpr;
+    const w = Math.round(cv.clientWidth || 64), h = Math.round(cv.clientHeight || 88);
+    if(cv.width !== Math.round(w*dpr) || cv.height !== Math.round(h*dpr)){ cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); }
     c.setTransform(dpr,0,0,dpr,0,0);
     c.clearRect(0,0,w,h);
+    const fit = previewFit(id, w, h);
     c.save();
-    c.translate(w/2, h-6);
-    const scale = id==='giraffe'? .72 : id==='kong'? .98 : id==='sloth'? 1.08 : 1.2;
-    c.scale(scale, scale);
+    c.translate(w/2 - fit.cx*fit.sc, fit.feetY);
+    c.scale(fit.sc, fit.sc);
     drawCharacterAt(c, id, 0, 0, Math.PI/2, loginT, false, 0, 0, {});
     c.restore();
   });
   const pc = document.getElementById('loginPreview');
   if(pc){ /* reserved */ }
 }
+/* Pretendard 웹폰트가 준비되면 미리보기를 한 번 다시 그린다 */
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ try{ PREVIEW_FIT_CLEAR(); drawLoginPreviews(); }catch(e){} }); }
 function drawCharacterAt(c,id,x,y,dir,t,walking,phase,step,opts){
   // 캐릭터 드로잉을 임시 오프셋 좌표로 호출
   drawCharacter(c, id, x, y, dir, t, Object.assign({walking, phase}, opts||{}));
@@ -4540,7 +4595,7 @@ function bubbleGame(){
     }
     // 안내
     c.save();
-    c.fillStyle='rgba(255,255,255,.55)'; c.font="800 11px 'Pretendard',system-ui,sans-serif";
+    c.fillStyle='rgba(255,255,255,.55)'; c.font="800 11px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
     c.textAlign='left'; c.textBaseline='top';
     c.fillText('🫧 같은 색 3개 이상 = 팡! / 7발마다 한 줄 내려옴', 14, 12);
     c.textAlign='right';
@@ -4676,7 +4731,7 @@ function breakoutGame(){
       c.fillStyle = gd; rr(c,b.x,b.y,b.w,b.h,5); c.fill();
       c.strokeStyle='rgba(0,0,0,.22)'; c.lineWidth=1; rr(c,b.x+.5,b.y+.5,b.w-1,b.h-1,5); c.stroke();
       c.fillStyle='rgba(255,255,255,.92)';
-      c.font="900 11px 'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+      c.font="900 11px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
       c.textAlign='center'; c.textBaseline='middle';
       c.fillText(b.label, b.x+b.w/2, b.y+b.h/2+.5);
       if(b.hp>1){ c.fillStyle='rgba(255,255,255,.55)'; c.beginPath(); c.arc(b.x+b.w-8,b.y+8,2.4,0,TAU); c.fill(); }
@@ -4697,7 +4752,7 @@ function breakoutGame(){
     c.fillStyle = bg2; c.beginPath(); c.arc(b.x,b.y,b.r,0,TAU); c.fill();
     // 상태
     c.save();
-    c.fillStyle='rgba(255,255,255,.6)'; c.font="800 11px 'Pretendard',system-ui,sans-serif";
+    c.fillStyle='rgba(255,255,255,.6)'; c.font="800 11px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
     c.textAlign='left'; c.textBaseline='top';
     c.fillText('🧱 야근·결재·회의 블록을 부수세요 · WAVE '+g.wave, 14, 12);
     c.textAlign='right';
@@ -4705,7 +4760,7 @@ function breakoutGame(){
     c.restore();
     if(!g.launched && !g.over){
       c.save(); c.fillStyle='rgba(255,255,255,.75)';
-      c.font="900 13px 'Pretendard',system-ui,sans-serif"; c.textAlign='center';
+      c.font="900 13px 'Pretendard Variable','Pretendard',system-ui,sans-serif"; c.textAlign='center';
       c.fillText('클릭 또는 Space 로 발사', ARC_W/2, ARC_H-78);
       c.restore();
     }
@@ -4845,7 +4900,7 @@ function dodgeGame(){
       c.beginPath(); c.arc(b.x,b.y-6,4.4,1.12*Math.PI,1.88*Math.PI); c.stroke();
       // 이름표
       c.fillStyle='rgba(30,22,16,.7)'; rr(c,b.x-19,b.y+22,38,12,6); c.fill();
-      c.fillStyle='#ffd9a8'; c.font="900 8px 'Pretendard',system-ui,sans-serif";
+      c.fillStyle='#ffd9a8'; c.font="900 8px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
       c.textAlign='center'; c.textBaseline='middle';
       c.fillText(b.face+' 상사', b.x, b.y+28.5);
       c.restore();
@@ -4859,7 +4914,7 @@ function dodgeGame(){
     c.restore();
     // 안내
     c.save();
-    c.fillStyle='rgba(255,255,255,.62)'; c.font="800 11px 'Pretendard',system-ui,sans-serif";
+    c.fillStyle='rgba(255,255,255,.62)'; c.font="800 11px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
     c.textAlign='left'; c.textBaseline='top';
     c.fillText('🏃 간식 먹고 상사 피하기 · 먹은 간식 '+g.snacks, 14, 14);
     c.textAlign='right';
@@ -5548,7 +5603,7 @@ function drawRemote(c, r, t){
   /* 닉네임 + 접속 표시 */
   const ly = r.y - effH - 10;
   c.save();
-  c.font = "900 9px 'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+  c.font = "900 9px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
   const label = String(r.nick||'동료');
   const tw = Math.min(120, c.measureText(label).width + 22);
   c.fillStyle = 'rgba(36,26,18,.80)';
@@ -6209,7 +6264,7 @@ function drawOverlay(t){
     c.fillStyle = tg.color;
     c.beginPath(); c.moveTo(sx, by+14); c.lineTo(sx-9, by); c.lineTo(sx+9, by); c.closePath(); c.fill();
     c.beginPath(); c.arc(sx, by-8, 13, 0, TAU); c.fill();
-    c.fillStyle = '#fff'; c.font = '900 12px Pretendard, "Apple SD Gothic Neo", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = '#fff'; c.font = '900 12px Pretendard Variable, Pretendard, "Apple SD Gothic Neo", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
     c.fillText(tg.mark, sx, by-7);
   } else {
     // 화면 가장자리 화살표
@@ -6226,7 +6281,7 @@ function drawOverlay(t){
     c.globalAlpha = 1;
     c.fillStyle = 'rgba(40,30,22,.85)';
     const lbl = tg.label;
-    c.font = '900 11px Pretendard, "Apple SD Gothic Neo", sans-serif';
+    c.font = '900 11px Pretendard Variable, Pretendard, "Apple SD Gothic Neo", sans-serif';
     const w = c.measureText(lbl).width + 14;
     rr(c, -w/2, -30, w, 20, 9); c.fill();
     c.fillStyle = '#ffe4bf'; c.textAlign = 'center'; c.textBaseline = 'middle';
@@ -6521,7 +6576,7 @@ drawElevator = function(c, f, t){
   const hw = 74, hh = 18, hx = C.x + C.w/2 - hw/2, hy = C.y + 2;
   c.fillStyle = '#1f1a17'; rr(c, hx, hy, hw, hh, 5); c.fill();
   c.fillStyle = '#ffb347';
-  c.font = "900 12px 'Pretendard',system-ui,sans-serif"; c.textAlign='center'; c.textBaseline='middle';
+  c.font = "900 12px 'Pretendard Variable','Pretendard',system-ui,sans-serif"; c.textAlign='center'; c.textBaseline='middle';
   const blink = traveling ? (Math.sin(t*10)>0 ? 1 : .35) : 1;
   c.globalAlpha = blink;
   c.fillText('▲  '+f.id+'F  ▼', hx+hw/2, hy+hh/2+.5);
@@ -6561,7 +6616,7 @@ drawElevator = function(c, f, t){
   // 바닥 매트 + 화살표
   const mx = C.x + 14, my = bottom + 6, mw = C.w - 28, mh = 22;
   c.fillStyle = 'rgba(52,40,30,.82)'; rr(c, mx, my, mw, mh, 7); c.fill();
-  c.fillStyle = '#ffe0b0'; c.font = "900 10.5px 'Pretendard',system-ui,sans-serif";
+  c.fillStyle = '#ffe0b0'; c.font = "900 10.5px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
   c.fillText('🛗 엘리베이터', mx+mw/2, my+mh/2+.5);
   if(!near && G.floor === f.id){
     const k = (t*1.4)%1;
@@ -6671,7 +6726,7 @@ drawProp = function(c, p, t){
       rows.forEach((r,i)=>{
         const ry = y-9 + i*10;
         c.fillStyle = r[0]===G.floor+'F' ? '#ff8a3d' : 'rgba(255,224,176,.75)';
-        c.font = "900 8.5px 'Pretendard',system-ui,sans-serif"; c.textAlign='left'; c.textBaseline='middle';
+        c.font = "900 8.5px 'Pretendard Variable','Pretendard',system-ui,sans-serif"; c.textAlign='left'; c.textBaseline='middle';
         c.fillText(r[0], x+8, ry); c.fillStyle = 'rgba(255,240,220,.8)'; c.fillText(r[1], x+26, ry);
       });
       c.restore(); return;
