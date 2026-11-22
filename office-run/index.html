@@ -5460,14 +5460,48 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
   const playerUrl  = base + rootPath + '/' + encodeURIComponent(myId) + '.json' + auth;
   let es = null, closed = false, pollT = null, denied = false, lastOk = 0;
   const raw = new Map();           /* id → 마지막으로 알려진 접속자 상태 (patch 병합용) */
+  let maxSts = 0;                  /* 이 세션에서 본 가장 최근 서버 시각 (시계 보정 전 기준점) */
+  const STALE = ()=> (REALTIME_CONFIG.staleMs || 15000);
+  const GHOST = 90000;             /* 이보다 오래된 DB 기록은 나간 접속자로 보고 지운다 */
+
+  /* 기기 시계가 틀려도 쓸 수 있는 기준 시각: 보정값이 있으면 그걸, 없으면 본 것 중 최신 서버 시각 */
+  function nowRef(){ return Net.srvOffsetKnown ? (Date.now() + (Net.srvOffset||0)) : maxSts; }
 
   function emit(id){
     const d = raw.get(id);
     if(!d){ onMsg({t:'bye', id}); return; }
     /* 내 레코드의 서버 시각(sts)으로 기기 시계 오차 보정 */
     if(id === myId && typeof d.sts === 'number'){ Net.srvOffset = d.sts - Date.now(); Net.srvOffsetKnown = true; }
+    if(typeof d.sts === 'number' && d.sts > maxSts) maxSts = d.sts;
+    /* 유령 접속자: 갱신이 끊긴 지 오래된 기록은 아예 올리지 않는다 (보정 전에도 동작) */
+    if(id !== myId && typeof d.sts === 'number'){
+      const ref = nowRef();
+      if(ref && (ref - d.sts) > STALE()){ raw.delete(id); onMsg({t:'bye', id}); return; }
+    }
     onMsg(Object.assign({t:'state', id}, d));
   }
+  /* 오래 남은 DB 기록 청소 — 나간 사람이 다음 접속자에게 유령으로 보이지 않게 */
+  async function sweepGhosts(){
+    if(denied || closed) return;
+    try{
+      const r = await fetch(playersUrl, {cache:'no-store'});
+      if(!r.ok) return;
+      const data = (await r.json()) || {};
+      const ref = nowRef();
+      if(!ref) return;
+      let n = 0;
+      for(const id in data){
+        if(id === myId || n >= 8) continue;
+        const st = data[id] && data[id].sts;
+        if(typeof st !== 'number' || (ref - st) <= GHOST) continue;
+        n++;
+        raw.delete(id); onMsg({t:'bye', id});
+        fetch(base + rootPath + '/' + encodeURIComponent(id) + '.json' + auth, {method:'DELETE', keepalive:true}).catch(()=>{});
+      }
+    }catch(e){}
+  }
+  setTimeout(sweepGhosts, 5000);
+  const sweepT = setInterval(sweepGhosts, 60000);
   function merge(id, data){
     if(data === null || data === undefined){ raw.delete(id); onMsg({t:'bye', id}); return; }
     if(typeof data !== 'object') return;
