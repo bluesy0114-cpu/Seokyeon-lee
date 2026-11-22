@@ -479,7 +479,7 @@
     #chatDock.typing #chatLog{display:flex;max-height:64px;}
     #chatDock.typing #chatIn{font-size:14px;}
     body.typing #skills,body.typing #joy,body.typing #prompt{opacity:0;pointer-events:none;transition:opacity .16s;}
-    #roomHint{display:none;}
+    #allPeople{display:none;}
     #peopleTxt{font-size:8.5px;}
   }
   @media (max-width:400px){
@@ -4235,6 +4235,12 @@ const Arcade = {
   state(){ return this.game? {kind:this.game.kind, score:Math.floor(this.game.score), over:this.game.over} : null; }
 };
 const ARC_LABEL = { bubble:'버블 슈터', breakout:'벽돌깨기', dodge:'오피스 닷지' };
+const TOUCH_UI = (()=>{ try{ return window.matchMedia('(pointer:coarse)').matches || ('ontouchstart' in window); }catch(e){ return false; } })();
+const ARC_HINT_TOUCH = {
+  bubble:'손가락으로 각도 조절 · 탭 발사 — 같은 색 3개 이상 연결하면 팡!',
+  breakout:'좌우로 드래그해 패들 이동 · 탭해서 발사',
+  dodge:'드래그로 도망 · 간식 먹고 상사 피하기'
+};
 const ARC_HINT = {
   bubble:'마우스로 각도 조절 · 클릭 발사 — 같은 색 3개 이상 연결하면 팡!',
   breakout:'마우스/←→ 로 패들 이동 · 클릭 또는 Space 발사',
@@ -4263,7 +4269,7 @@ function injectArcadeDOM(){
           <button class="btnGo" id="arcEndBtn" style="padding:10px 20px;border-radius:12px;font-size:13px;margin-top:4px">결과 받고 나가기</button>
         </div>
       </div>
-      <div class="arcFoot"><span id="arcHint"></span><span style="margin-left:auto"><b>ESC</b> 나가기</span></div>
+      <div class="arcFoot"><span id="arcHint"></span><span id="arcQuit" style="margin-left:auto"></span></div>
     </div>`;
   document.body.appendChild(wrap);
   const cv = document.getElementById('arcCanvas');
@@ -4299,7 +4305,8 @@ function openArcade(kind){
   G.paused = true;
   document.getElementById('arcTitle').textContent = ARC_LABEL[kind];
   document.getElementById('arcIcon').textContent = kind==='bubble'?'🫧':kind==='breakout'?'🧱':'🏃';
-  document.getElementById('arcHint').textContent = ARC_HINT[kind];
+  document.getElementById('arcHint').textContent = (TOUCH_UI && ARC_HINT_TOUCH[kind]) ? ARC_HINT_TOUCH[kind] : ARC_HINT[kind];
+  document.getElementById('arcQuit').innerHTML = TOUCH_UI ? '<b>✕</b> 닫기' : '<b>ESC</b> 나가기';
   document.getElementById('arcLivesWrap').style.display = kind==='dodge'? '':'none';
   document.getElementById('arcEnd').classList.add('hide');
   document.getElementById('arcAlert').classList.add('hide');
@@ -4362,7 +4369,7 @@ function updateArcadeAlert(dt){
   if(G.em && G.em.active){
     const n = Math.max(0, Math.ceil(G.em.t));
     el.classList.remove('hide');
-    el.innerHTML = '<span>🚨</span><span>부장님 긴급 호출! <b>'+n+'초</b> — ESC로 나가서 2F 내 자리로!</span>';
+    el.innerHTML = '<span>🚨</span><span>부장님 긴급 호출! <b>'+n+'초</b> — '+(TOUCH_UI?'✕로 나가서':'ESC로 나가서')+' 2F 내 자리로!</span>';
     return;
   }
   const a = Arcade.alert;
@@ -4370,7 +4377,7 @@ function updateArcadeAlert(dt){
   if(a.t > 0){
     a.t -= dt;
     el.classList.remove('hide');
-    el.innerHTML = '<span>👀</span><span>부장님이 3F로 올라오는 중! <b>'+Math.ceil(a.t)+'초</b> 안에 ESC로 나가세요</span>';
+    el.innerHTML = '<span>👀</span><span>부장님이 3F로 올라오는 중! <b>'+Math.ceil(a.t)+'초</b> 안에 '+(TOUCH_UI?'✕로 나가세요':'ESC로 나가세요')+'</span>';
     if(a.t <= 0){
       el.classList.add('hide');
       closeArcade(true);
@@ -5023,7 +5030,7 @@ function openHelp(){
       <div class="helpItem"><b>🛗 엘리베이터</b><span>1F 로비·OFFICE 24 / 2F 오피스 / 3F 휴게실·오락실. 복도 끝에서 E.</span></div>
       <div class="helpItem"><b>🚶 이동</b><span>WASD·방향키, 화면 클릭(자동 경로), 모바일 조이스틱.</span></div>
       <div class="helpItem"><b>🚨 긴급 호출</b><span>다른 층에 있을 때 20초 안에 2F 내 자리로. 성공 +2DH.</span></div>
-      <div class="helpItem"><b>🕹️ 오락실</b><span>3F 오락기 3종. 점수에 따라 DH·멘탈 회복, ESC로 후퇴.</span></div>
+      <div class="helpItem"><b>🕹️ 오락실</b><span>3F 오락기 3종. 점수에 따라 DH·멘탈 회복, ${TOUCH_UI?'✕':'ESC'}로 후퇴.</span></div>
       <div class="helpItem"><b>⚡ DH 스킬</b><span>1 방패 10 · 2 의자 20 · 3 화분 30 · 4 가짜통화 무료/5</span></div>
       <div class="helpItem"><b>☕ 카페인 폭주</b><span>2F 탕비실 커피머신 → 8초간 1.7배속 + 잔상</span></div>
       <div class="helpItem"><b>📄 보고서</b><span>2F 내 자리에서 E → +2DH (쿨 22초)</span></div>
@@ -5113,7 +5120,8 @@ const REALTIME_CONFIG = {
   publishHzBroadcast: 10,     // BroadcastChannel/Supabase 초당 전송 수
   publishHzFirebase: 3,       // Firebase REST 초당 전송 수 (300~330ms 스로틀)
   heartbeatMs: 4000,          // 유휴 시 하트비트 주기
-  staleMs: 15000              // 이 시간 넘게 갱신 없는 접속자는 숨김 (유령 캐릭터 방지)
+  staleMs: 15000,             // 이 시간 넘게 갱신 없는 접속자는 숨김 (유령 캐릭터 방지)
+  ghostMs: 90000              // 이 시간 넘게 남아 있는 DB 기록은 '나간 접속자'로 보고 삭제 (유령 데이터 청소)
 };
 
 const NET_ROOM_QUERY = (()=>{
@@ -5391,6 +5399,26 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
     denied = true;
     onFirebaseDenied();
   }
+  /* 유령 데이터 청소 — 오래 남아 있는 접속자 기록은 지운다 (다시 볼 때 남의 캐릭터가 유령으로 보이지 않게) */
+  const sweptIds = new Set();
+  async function sweepGhosts(){
+    try{
+      const r = await fetch(playersUrl, {cache:'no-store'});
+      if(!r.ok) return;
+      const data = (await r.json()) || {};
+      const nowS = Date.now() + (Net.srvOffset||0);
+      let removed = 0;
+      for(const id in data){
+        if(id === myId || sweptIds.has(id)) continue;
+        const d = data[id] || {};
+        const st = typeof d.sts === 'number' ? d.sts : (typeof d.ts === 'number' ? d.ts : 0);
+        if(!st || nowS - st <= (REALTIME_CONFIG.ghostMs||90000)) continue;
+        sweptIds.add(id); removed++;
+        raw.delete(id); onMsg({t:'bye', id});
+        if(removed <= 6) fetch(base + rootPath + '/' + encodeURIComponent(id) + '.json' + auth, {method:'DELETE', keepalive:true}).catch(()=>{});
+      }
+    }catch(e){}
+  }
   /* 경로는 players 노드 기준 상대경로: '/' , '/<id>' , '/<id>/<field>' */
   function handlePacket(ev){
     let pkt; try{ pkt = JSON.parse(ev.data); }catch(e){ return; }
@@ -5437,6 +5465,8 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
   }
   snapshot();
   connect();
+  setTimeout(sweepGhosts, 6000);
+  const sweepT = setInterval(sweepGhosts, 60000);
   return {
     kind:'firebase',
     send(msg){
@@ -5454,6 +5484,7 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
     close(final){
       closed = true;
       try{ if(es) es.close(); }catch(e){}
+      try{ clearInterval(sweepT); }catch(e){}
       if(pollT){ clearInterval(pollT); pollT = null; }
       if(final){ try{ fetch(playerUrl, {method:'DELETE', keepalive:true}).catch(()=>{}); }catch(e){} }
     },
@@ -6854,7 +6885,7 @@ const Presence = {
         const v = data[id];
         if(!v || typeof v.sts !== 'number') continue;
         const age = now - v.sts;
-        if(age > 600000 && id !== Net.myId){ fetch(this.url(this.base()+'/'+encodeURIComponent(id)), {method:'DELETE'}).catch(()=>{}); continue; }
+        if(age > 180000 && id !== Net.myId){ fetch(this.url(this.base()+'/'+encodeURIComponent(id)), {method:'DELETE'}).catch(()=>{}); continue; }
         if(age > 20000) continue;
         out.push({ id, nick:String(v.nick||'동료').slice(0,12), charType:CHARACTERS[v.charType]? v.charType : 'male', floor:+v.floor||2, me:id===Net.myId });
       }
@@ -7004,7 +7035,7 @@ function openExit(){
       const d = document.createElement('i'); d.id = 'netDot'; chip.insertBefore(d, chip.firstChild);
     }
     const hint = document.getElementById('roomHint');
-    if(hint){ hint.id = 'allPeople'; hint.textContent = '전체 1명'; }
+    if(hint){ hint.id = 'allPeople'; hint.textContent = ''; }
     chip.onclick = openPeople;
   }
   // 접속자 목록은 로그인 후 Net 이 준비되면 시작
