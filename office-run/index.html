@@ -6,6 +6,10 @@
 <meta name="theme-color" content="#17110d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OFFICE RUN">
+<link rel="icon" type="image/png" sizes="64x64" href="./favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<link rel="manifest" href="./manifest.webmanifest">
 <meta name="description" content="OFFICE RUN — 직장 생활 살아남기. 엘리베이터로 층을 오가고, 편의점과 오락실을 누비는 2D 오피스 생존 게임.">
 <title>OFFICE RUN · 직장 생활 살아남기</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -63,9 +67,10 @@
   }
   .brandRow{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
   .logoBox{
-    width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:27px;
-    background:linear-gradient(160deg,#ffcf7a,#ff8a3d 60%,#e2603f);box-shadow:0 8px 18px rgba(226,96,63,.35), inset 0 1px 0 rgba(255,255,255,.7);
+    width:56px;height:56px;border-radius:18px;display:block;padding:0;overflow:hidden;
+    background:#f2703c;box-shadow:0 8px 18px rgba(226,96,63,.35), 0 0 0 1px rgba(226,96,63,.18);
   }
+  .logoBox img{width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit;-webkit-user-drag:none;}
   .brandRow h1{margin:0;font-size:30px;letter-spacing:-1.1px;font-weight:900;color:#241a12;}
   .brandRow h1 em{font-style:normal;color:var(--accent2);}
   .brandRow p{margin:2px 0 0;font-size:12.5px;font-weight:700;color:var(--ink3);letter-spacing:-.2px;line-height:1.5;white-space:normal;word-break:keep-all;}
@@ -456,7 +461,7 @@
     #login{padding:12px;align-items:flex-start;}
     .loginCard{padding:20px 16px 18px;border-radius:22px;margin:auto;}
     .brandRow h1{font-size:24px;}
-    .brandRow .logoBox{width:46px;height:46px;font-size:22px;border-radius:15px;}
+    .brandRow .logoBox{width:46px;height:46px;border-radius:15px;}
     .brandRow p{font-size:12px;line-height:1.45;}
     .brandRow p .bsDash{display:none;}
     .brandRow p .bs2{display:block;margin-top:1px;}
@@ -694,7 +699,7 @@
 <div id="login">
   <div class="loginCard">
     <div class="brandRow">
-      <div class="logoBox">🏢</div>
+      <div class="logoBox"><img src="./app-icon-rounded.png" alt="OFFICE RUN 로고" width="56" height="56" decoding="async"></div>
       <div>
         <h1>OFFICE <em>RUN</em></h1>
         <p class="brandSub"><span class="bs1">직장 생활 살아남기</span><span class="bsSep">·</span><span class="bs1b">2D 리마스터</span><span class="bsDash">—</span><span class="bs2">엘리베이터 · 오락실 · 기린/킹콩</span></p>

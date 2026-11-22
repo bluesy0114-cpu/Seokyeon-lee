@@ -1,0 +1,31 @@
+{
+  "name": "OFFICE RUN · 직장 생활 살아남기",
+  "short_name": "OFFICE RUN",
+  "description": "OFFICE RUN — 직장 생활 살아남기. 엘리베이터로 층을 오가고, 편의점과 오락실을 누비는 2D 오피스 생존 게임.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#17110d",
+  "theme_color": "#17110d",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
