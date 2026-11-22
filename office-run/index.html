@@ -411,6 +411,14 @@
   .sw::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.16s;}
   .sw.on{background:#4fae74;}
   .sw.on::after{transform:translateX(20px);}
+  /* 배경음악 스타일 선택 */
+  .bgmSeg{display:flex;gap:6px;margin-top:9px;}
+  .bgmSeg button{flex:1;min-width:0;border:1.5px solid #ecdfc8;background:#fffdf7;border-radius:13px;padding:8px 4px 7px;
+    font-size:11px;font-weight:900;letter-spacing:-.3px;color:#7a6653;line-height:1.2;transition:.14s;}
+  .bgmSeg button span{display:block;font-size:9px;font-weight:800;color:#a3907b;margin-top:2px;letter-spacing:-.2px;}
+  .bgmSeg button:hover{border-color:#ffc79b;}
+  .bgmSeg button.on{border-color:#ff8a3d;background:#fff6ea;color:#c8641f;}
+  .bgmSeg button.on span{color:#c98a56;}
   .miniBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
   .miniBtn{border-radius:13px;border:1.5px solid #ecdfc8;background:#fffdf7;padding:10px;font-size:11.5px;font-weight:900;color:#5c4834;transition:.14s;}
   .miniBtn:hover{border-color:#ffc79b;background:#fff8ee;}
@@ -856,9 +864,23 @@ function rgba(hex,a){
 /* =====================================================================
    SOUND — WebAudio 절차적 현장음 / 8bit 오락실
    ===================================================================== */
+/* 배경음악 스타일 — 설정에서 고르고 이 기기에 저장한다 */
+const BGM_KEY = 'officeRun2d.bgmStyle.v1';
+const BGM_STYLES = ['office','tense','off'];
+const BGM_LABEL = { office:'기본 오피스', tense:'긴장감 모드', off:'끄기' };
+const BGM_DESC = {
+  office:'잔잔한 사무실 루프',
+  tense:'빠른 템포 추격 멜로디',
+  off:'배경음악만 끔 · 효과음은 유지'
+};
+function loadBgmStyle(){
+  try{ const v = localStorage.getItem(BGM_KEY); return BGM_STYLES.indexOf(v) >= 0 ? v : 'office'; }catch(e){ return 'office'; }
+}
+function saveBgmStyle(v){ try{ localStorage.setItem(BGM_KEY, v); }catch(e){} }
 const Sound = {
   ctx:null, master:null, sfx:null, bgmGain:null, ready:false,
   muted:false, volume:0.55, bgmTimer:null, bgmStep:0, ambTimer:null,
+  bgmStyle: loadBgmStyle(),
   init(){
     if(this.ctx) return;
     try{
@@ -896,7 +918,7 @@ const Sound = {
     o.connect(g); g.connect(dest||this.sfx);
     o.start(t0); o.stop(t0+dur+0.03);
   },
-  noise(dur, vol, hp, when){
+  noise(dur, vol, hp, when, dest){
     if(!this.ready) return;
     const c = this.ctx, t0 = (when||0)+c.currentTime;
     const len = Math.max(1, Math.floor(c.sampleRate*dur));
@@ -906,7 +928,7 @@ const Sound = {
     const src = c.createBufferSource(); src.buffer = buf;
     const f = c.createBiquadFilter(); f.type='bandpass'; f.frequency.value = hp||1200; f.Q.value=0.8;
     const g = c.createGain(); g.gain.value = vol==null?0.2:vol;
-    src.connect(f); f.connect(g); g.connect(this.sfx);
+    src.connect(f); f.connect(g); g.connect(dest||this.sfx);
     src.start(t0);
   },
   /* --- 현장음 --- */
@@ -942,7 +964,21 @@ const Sound = {
   levelClear(){ [523,659,784,1047,1319].forEach((f,i)=> this.tone(f,.12,'square',.12,i*.07)); },
   /* --- 배경음 --- */
   startBGM(){
-    if(!this.ready || this.bgmTimer) return;
+    if(!this.ready) return;
+    if(this.bgmTimer){ clearInterval(this.bgmTimer); this.bgmTimer = null; }
+    this.bgmStep = 0;
+    if(this.bgmStyle === 'off') return;
+    if(this.bgmStyle === 'tense') this.runTenseBGM();
+    else this.runOfficeBGM();
+  },
+  setBgmStyle(style){
+    if(BGM_STYLES.indexOf(style) < 0) return;
+    this.bgmStyle = style;
+    saveBgmStyle(style);
+    if(this.ready) this.startBGM();
+  },
+  /* 기본 오피스 — 잔잔한 사무실 루프 */
+  runOfficeBGM(){
     const scale=[261.6,293.7,329.6,392.0,440.0,523.3,587.3,659.3];
     const bass=[130.8,146.8,174.6,196.0];
     this.bgmTimer = setInterval(()=>{
@@ -952,6 +988,35 @@ const Sound = {
       if(s%2===0) this.tone(scale[(s*3+(s%5))%scale.length],.18,'sine',.038,0,null,this.bgmGain);
       if(s%16===14) this.tone(scale[0],.34,'sine',.04,0,null,this.bgmGain);
     }, 270);
+  },
+  /* 긴장감 모드 — 빠른 템포의 추격전 칩튠 루프 (A단조, 16분음표 112ms ≈ 134BPM) */
+  runTenseBGM(){
+    const lead = [
+      440.0,0,659.3,440.0, 523.3,493.9,659.3,587.3, 523.3,0,493.9,523.3, 659.3,698.5,659.3,587.3,
+      523.3,0,440.0,523.3, 493.9,0,415.3,493.9, 440.0,0,659.3,587.3, 523.3,493.9,415.3,440.0
+    ];
+    const leadHi = [
+      0,880.0,0,0, 0,0,0,0, 0,1046.5,0,0, 0,0,0,0,
+      0,880.0,0,0, 0,0,0,0, 0,1046.5,0,0, 0,0,0,0
+    ];
+    const bassLine = [110.0, 87.3, 98.0, 82.4];   /* A2 → F2 → G2 → E2, 한 마디에 네 번 */
+    this.bgmTimer = setInterval(()=>{
+      if(!this.ready || this.muted || this.ctx.state!=='running') return;
+      const s = this.bgmStep++ % 32;
+      const bar = s % 16;
+      /* 저음 펄스 — 4분음표마다 밀어붙이는 추격 리듬 */
+      if(bar % 4 === 0) this.tone(bassLine[(bar/4)|0], .16, 'square', .062, 0, null, this.bgmGain);
+      if(bar % 8 === 6) this.tone(bassLine[(bar/4)|0] * 2, .09, 'triangle', .034, 0, null, this.bgmGain);
+      /* 리드 멜로디 — 16분음표 스타카토 */
+      const f = lead[s];
+      if(f) this.tone(f, .10, 'square', .058, 0, null, this.bgmGain);
+      const fh = leadHi[s];
+      if(fh) this.tone(fh, .07, 'square', .024, 0, null, this.bgmGain);
+      /* 하이햇 · 킥 — 긴박한 박자감 */
+      if(s % 2 === 1) this.noise(.028, .013, 6800, 0, this.bgmGain);
+      if(bar % 4 === 0) this.tone(56, .10, 'sine', .05, 0, 40, this.bgmGain);
+      if(bar === 15) this.noise(.05, .02, 3400, 0, this.bgmGain);
+    }, 112);
   },
   startAmbient(){
     if(!this.ready || this.ambTimer) return;
@@ -5126,6 +5191,9 @@ function openSettings(){
     return '<button class="prod" data-c="'+id+'" style="'+(G.char===id?'border-color:#ff8a3d;background:#fff6ea;':'')+'">'+
       '<span class="ic">'+c.icon+'</span><span class="tx"><b>'+c.name+'</b><span>'+c.tag+'</span></span></button>';
   }).join('');
+  const bgmHtml = BGM_STYLES.map(k=>
+    '<button data-b="'+k+'" class="'+(Sound.bgmStyle===k?'on':'')+'">'+BGM_LABEL[k]+'<span>'+BGM_DESC[k]+'</span></button>'
+  ).join('');
   const html = `
     <div class="setRow"><div class="lb">캐릭터<span>안 바뀝니다 · 즉시 적용</span></div></div>
     <div class="prodList" id="settingChars">${chars}</div>
@@ -5133,6 +5201,8 @@ function openSettings(){
       <div class="sw ${Sound.muted?'':'on'}" id="setMute"></div></div>
     <div class="setRow"><div class="lb">볼륨<span>0 ~ 100</span></div>
       <div class="rangeRow" style="width:170px"><input type="range" id="setVol" min="0" max="100" value="${Math.round(Sound.volume*100)}"></div></div>
+    <div class="setRow" style="display:block"><div class="lb">배경음악<span id="setBgmDesc">${BGM_DESC[Sound.bgmStyle]}</span></div>
+      <div class="bgmSeg" id="setBgm">${bgmHtml}</div></div>
     <div class="setRow"><div class="lb">진행도<span>D+${G.day} · ${fmt(G.points)}P · 최고점 ${G.best.bubble}/${G.best.breakout}/${G.best.dodge}</span></div></div>
     <div class="setRow"><div class="lb">같은 층 접속자<span>${(typeof Net!=='undefined') ? (Net.people()+'명 · '+(Net.adapterName==='broadcast'?'이 브라우저 탭 동기화':Net.adapterName+' 실시간')+' · 방 '+(Net.shard+1)) : '연결 준비 중'}</span></div></div>
     <div class="miniBtns">
@@ -5148,6 +5218,18 @@ function openSettings(){
   if(sw) sw.onclick = ()=>{ toggleMute(); sw.classList.toggle('on', !Sound.muted); };
   const vol = document.getElementById('setVol');
   if(vol) vol.oninput = ()=>{ Sound.setVolume(vol.value/100); if(Sound.muted){ Sound.setMuted(false); } };
+  const bgmSeg = document.getElementById('setBgm');
+  if(bgmSeg) bgmSeg.querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{
+      Sound.setBgmStyle(b.dataset.b);
+      Sound.init(); Sound.resume();
+      bgmSeg.querySelectorAll('button').forEach(x=> x.classList.toggle('on', x.dataset.b === b.dataset.b));
+      const ds = document.getElementById('setBgmDesc');
+      if(ds) ds.textContent = BGM_DESC[b.dataset.b];
+      Sound.click();
+      toast('🎵 배경음악 · '+BGM_LABEL[b.dataset.b], 'good');
+    };
+  });
   const sh = document.getElementById('setHelp'); if(sh) sh.onclick = ()=>{ closeModal(); setTimeout(openHelp,120); };
   const rs = document.getElementById('setReset');
   if(rs) rs.onclick = ()=>{ if(confirm('이 기기의 프로필을 모두 지울까요? (되돌릴 수 없음)')){ Store.saveAll({}); location.reload(); } };
@@ -5169,6 +5251,7 @@ function openHelp(){
       <div class="helpItem"><b>⭐ 돌발 업무</b><span>회의 소집·택배·피자 파티 등. 화면의 화살표를 따라 제한 시간 안에 도착하세요.</span></div>
       <div class="helpItem"><b>💼 승진</b><span>XP를 모아 사원→주임→대리→과장→차장→부장→이사. 승진할 때마다 DH 최대치 +4, 칼퇴 보너스 증가.</span></div>
       <div class="helpItem"><b>🗓️ 오늘의 분위기</b><span>월요병·결산 시즌·부장님 외근·월급날·감사 주간·불금 — 날마다 규칙이 조금씩 달라요.</span></div>
+      <div class="helpItem"><b>🎵 배경음악</b><span>우측 상단 ⚙️ 설정에서 기본 오피스·긴장감 모드(추격 멜로디)·끄기 중 고를 수 있어요. 고른 값은 이 기기에 저장됩니다.</span></div>
       <div class="helpItem"><b>🦥 나무늘보</b><span>느리지만 멘탈이 40% 덜 닳고, 멈춰 있으면 부장님이 훨씬 늦게 알아챕니다.</span></div>
     </div>
     <div class="kbdRow">단축키 <kbd>E</kbd> 상호작용 <kbd>1~4</kbd> 스킬 <kbd>ESC</kbd> 닫기 <kbd>C</kbd> 커리어 <kbd>Q</kbd> 업무 패널 <kbd>M</kbd> 음소거 · 채팅은 하단 입력창 <kbd>Enter</kbd></div>
