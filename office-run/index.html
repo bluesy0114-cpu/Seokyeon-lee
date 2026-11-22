@@ -722,7 +722,7 @@
           <li><span class="ico">🛗</span><div><b>1F 로비 &amp; OFFICE 24</b> — 중앙 복도로 편의점과 로비가 나뉘어 있어요.</div></li>
           <li><span class="ico">🧑‍💻</span><div><b>2F 오피스</b> — 내 자리·탕비실. 부장님과 팀장님이 순찰 중.</div></li>
           <li><span class="ico">🕹️</span><div><b>3F 휴게실 &amp; 오락실</b> — 버블슈터·벽돌깨기·닷지 3종.</div></li>
-          <li><span class="ico">🚨</span><div>다른 층에 있을 때 <b>긴급 호출</b>이 뜨면 20초 안에 내 자리로!</div></li>
+          <li><span class="ico">🚨</span><div>다른 층에 있을 때 <b>긴급 호출</b>이 뜨면 40초 안에 내 자리로!</div></li>
           <li><span class="ico">📋</span><div><b>오늘의 업무 3개</b>와 <b>돌발 업무</b>를 처리하고 경험치를 모아 <b>사원 → 이사</b>까지 승진하세요.</div></li>
         </ul>
         <div class="savedChip" id="savedChip" style="display:none">
@@ -780,8 +780,8 @@
   <div id="alarm" class="hide">
     <div class="aTop">
       <div class="siren">🚨</div>
-      <div class="aTxt"><b>부장님 긴급 호출!</b><span id="alarmSub">20초 안에 2F 내 자리로 복귀하세요!</span></div>
-      <div class="aTime"><span id="alarmNum">20</span><small>초</small></div>
+      <div class="aTxt"><b>부장님 긴급 호출!</b><span id="alarmSub">40초 안에 2F 내 자리로 복귀하세요!</span></div>
+      <div class="aTime"><span id="alarmNum">40</span><small>초</small></div>
     </div>
     <div id="alarmBar"><i id="alarmFill"></i></div>
   </div>
@@ -1831,7 +1831,7 @@ const GENERIC_CHAT = ['ㅇㅇ 듣고 있어요','화이팅!','점심 뭐 먹지'
 const NPC_REACT = {
   coffee:['커피 또 마셔요?','그거 마시면 심장 두근두근해요','카페인 각성 크루'],
   arcade:['놀러 왔어요?','저도 한 판만…','부장님 오기 전에 나와요'],
-  emergency:['빨리 올라가요!','엘리베이터 잡았어요!','20초밖에 없어요!'],
+  emergency:['빨리 올라가요!','엘리베이터 잡았어요!','40초밖에 없어요!'],
   store:['그거 맛있어요','오늘 신상 들어왔대요','계산은 저기요~'],
   caught:['아이고…','들켰네요','괜찮아요?'],
   report:['잘 했어요','이번엔 통과하겠네요','깔끔해요']
@@ -3406,7 +3406,7 @@ function startGame(profile){
   G.stats = { caught:0, talks:0, arcades:0, emergencyWin:0, emergencyFail:0, reports:0 };
   G.metColleagues = {};
   G.visits = (profile.visits||0) + 1;
-  G.em = { next:null, active:false, t:0, dur:20 };
+  G.em = { next:null, active:false, t:0, dur:40 };
   G.over = false; G.paused = false;
   G.skills = {}; G.cool = {};
   effects.length = 0; bubbles.length = 0; floaters.length = 0;
@@ -3950,7 +3950,7 @@ function emergencyStart(){
   document.getElementById('vignette').classList.add('on');
   Sound.alarm();
   if(modalOpen) closeModal();
-  toast('🚨 부장님 긴급 호출! 20초 안에 내 자리로', 'bad');
+  toast('🚨 부장님 긴급 호출! 40초 안에 내 자리로', 'bad');
   cam.shake = 5;
   addEffect('ring',{x:player.x,y:player.y,r0:10,r1:140,life:.9});
 }
@@ -3985,8 +3985,8 @@ function emergencyFail(){
   const reason = G.floor===3 ? '휴게실·오락실에서 잠깐의 재충전'
                : G.floor===1 ? '사내 편의점에서 간식 구매'
                : '2F 사무실 안에서 제시간에 자리로 돌아오지 못함';
-  openModal('📄 시말서 제출', '20초 초과 · 부장님 호출 미응답', `
-    <div class="bigTitle"><div class="em">😰</div><b>시말서가 자동 작성되었습니다</b><span>사유: 부장님 호출 미응답 (20초 초과)</span></div>
+  openModal('📄 시말서 제출', '40초 초과 · 부장님 호출 미응답', `
+    <div class="bigTitle"><div class="em">😰</div><b>시말서가 자동 작성되었습니다</b><span>사유: 부장님 호출 미응답 (40초 초과)</span></div>
     <div class="paperDoc">
       <b>경위서</b><br>
       본인은 근무 시간 중 부장님의 긴급 호출 시간 안에 소속 좌석으로 복귀하지 못하였습니다.<br>
@@ -4013,8 +4013,8 @@ function updateAlarmUI(){
   if(el.classList.contains('hide')) el.classList.remove('hide');
   const n = Math.max(0, Math.ceil(G.em.t));
   document.getElementById('alarmNum').textContent = String(n);
-  document.getElementById('alarmFill').style.width = clamp(G.em.t/20*100,0,100)+'%';
-  el.classList.toggle('critical', G.em.t < 7);
+  document.getElementById('alarmFill').style.width = clamp(G.em.t/G.em.dur*100,0,100)+'%';
+  el.classList.toggle('critical', G.em.t < G.em.dur*0.35);
   const sub = document.getElementById('alarmSub');
   sub.textContent = G.floor===2 ? '내 자리로 이동 중… '+Math.ceil(dist(player.x,player.y,MY_DESK.x,MY_DESK.y))+'px' : '2F 오피스 · 내 자리로 복귀하세요!';
 }
@@ -4324,7 +4324,7 @@ function nextDay(){
   G.dh = G.dhMax;
   G.points += 4000;
   G.freeCallUsed = false;
-  G.em = { next:null, active:false, t:0, dur:20 };
+  G.em = { next:null, active:false, t:0, dur:40 };
   Object.assign(G.stats, { reports:0, talks:0, arcades:0, emergencyWin:0, emergencyFail:0, caught:0 });
   for(const id in FLOORS){
     for(const b of FLOORS[id].bosses){
@@ -5244,7 +5244,7 @@ function openHelp(){
     <div class="helpGrid">
       <div class="helpItem"><b>🛗 엘리베이터</b><span>1F 로비·OFFICE 24 / 2F 오피스 / 3F 휴게실·오락실. 복도 끝에서 E.</span></div>
       <div class="helpItem"><b>🚶 이동</b><span>WASD·방향키, 화면 클릭(자동 경로), 모바일 조이스틱.</span></div>
-      <div class="helpItem"><b>🚨 긴급 호출</b><span>다른 층에 있을 때 20초 안에 2F 내 자리로. 성공 +2DH.</span></div>
+      <div class="helpItem"><b>🚨 긴급 호출</b><span>다른 층에 있을 때 40초 안에 2F 내 자리로. 성공 +2DH.</span></div>
       <div class="helpItem"><b>🕹️ 오락실</b><span>3F 오락기 3종. 점수에 따라 DH·멘탈 회복, ESC로 후퇴.</span></div>
       <div class="helpItem"><b>⚡ DH 스킬</b><span>1 방패 10 · 2 의자 20 · 3 화분 30 · 4 가짜통화 무료/5</span></div>
       <div class="helpItem"><b>☕ 카페인 폭주</b><span>2F 탕비실 커피머신 → 8초간 1.7배속 + 잔상</span></div>
