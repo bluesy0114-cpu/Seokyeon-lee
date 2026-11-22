@@ -259,6 +259,34 @@
     box-shadow:0 4px 10px rgba(226,96,63,.38);transition:transform .12s, filter .15s;
   }
   #chatSend:hover{filter:brightness(1.06);}
+  #emoBtn{flex:none;width:30px;height:30px;border-radius:50%;font-size:16px;display:grid;place-items:center;background:rgba(255,255,255,.12);margin-left:-8px;}
+  #emoPop{position:absolute;right:0;bottom:52px;display:flex;gap:6px;padding:6px 8px;border-radius:16px;background:rgba(30,24,18,.86);
+    pointer-events:auto;box-shadow:0 8px 20px rgba(0,0,0,.3);}
+  #emoPop.hide{display:none;}
+  #emoPop button{font-size:22px;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);}
+  #emoPop .eh{position:absolute;top:-20px;right:6px;font-size:10px;font-weight:900;color:#fff3df;text-shadow:0 1px 3px rgba(0,0,0,.6);white-space:nowrap;}
+  #ticker{position:absolute;left:0;right:0;top:0;height:24px;z-index:30;overflow:hidden;pointer-events:none;
+    background:linear-gradient(90deg,#c9463f,#e2683f);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;
+    padding-top:env(safe-area-inset-top);box-shadow:0 3px 10px rgba(0,0,0,.25);}
+  #ticker.hide{display:none;}
+  #ticker .tk{white-space:nowrap;padding-left:100%;animation:tickerMove 13s linear forwards;}
+  @keyframes tickerMove{to{transform:translateX(-100%)}}
+  #jokeBox{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(240px + env(safe-area-inset-bottom));z-index:28;
+    pointer-events:auto;text-align:center;}
+  #jokeBox.hide{display:none;}
+  #jokeBox button{padding:12px 20px;border-radius:16px;background:linear-gradient(180deg,#ffd166,#f2a62e);color:#4a3220;font-size:15px;font-weight:900;
+    box-shadow:0 8px 20px rgba(0,0,0,.3), 0 3px 0 #b97a1c;animation:jokePulse .5s ease-in-out infinite alternate;}
+  #jokeBox .jb{height:5px;border-radius:3px;background:rgba(0,0,0,.25);margin-top:7px;overflow:hidden;}
+  #jokeBox .jb i{display:block;height:100%;background:#fff;}
+  @keyframes jokePulse{to{transform:scale(1.06)}}
+  .awk{text-align:center;}
+  .awk .scene{font-size:34px;letter-spacing:6px;margin:4px 0 2px;}
+  .awk .fl{font-size:11px;font-weight:900;color:#8c7560;}
+  .awk .bar{height:6px;border-radius:4px;background:#efe3cf;overflow:hidden;margin:10px 0;}
+  .awk .bar i{display:block;height:100%;background:#e2683f;width:100%;}
+  .awk .opts{display:flex;flex-direction:column;gap:7px;}
+  .awk .opts button{padding:11px;border-radius:12px;border:1.5px solid #ecdfc8;background:#fffdf7;font-weight:900;font-size:13px;color:#3b2c1e;}
+  .awk .res{margin-top:10px;font-weight:900;font-size:13px;min-height:20px;}
   #chatSend:active{transform:scale(.92);}
   #chatLog{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-height:92px;overflow:hidden;width:100%;}
   .chatLine{
@@ -756,11 +784,14 @@
 
   <div id="joy"><div id="joyKnob"></div></div>
   <div id="toasts"></div>
+  <div id="ticker" class="hide"></div>
+  <div id="jokeBox" class="hide"><button id="jokeGo" type="button">😅 웃는 척 하기</button><div class="jb"><i id="jokeBar"></i></div></div>
 
   <!-- 하단 채팅바 : 같은 층 동료에게 한마디 (+실시간 멀티 동기화) -->
   <div id="chatDock">
     <div id="chatLog" aria-live="polite"></div>
     <form id="chatBar" autocomplete="off">
+      <button id="emoBtn" type="button" aria-label="이모지 날리기" title="이모지 날리기">😀</button>
       <input id="chatIn" type="text" maxlength="80" placeholder="동료에게 한마디..." aria-label="동료에게 말 걸기" enterkeyhint="send" autocomplete="off" spellcheck="false">
       <button id="chatSend" type="submit" aria-label="전송" title="전송 (Enter)">➤</button>
     </form>
@@ -3062,6 +3093,7 @@ function render(t){
   for(const r of netRemotes){ if(r.floor === G.floor) list.push({ y: r.y, draw: ()=> drawRemote(ctx, r, t) }); }
   list.push({ y: player.y, draw: ()=> drawPlayer(ctx, t) });
   if(f.id === 1 && typeof clinicPushDraw === 'function') clinicPushDraw(list, t);
+  if(typeof funPushDraw === 'function') funPushDraw(f, list, t);
   list.sort((a,b)=> a.y - b.y);
   for(const it of list) it.draw();
 
@@ -3072,6 +3104,7 @@ function render(t){
   for(const b of f.bosses) if(b.bubble) drawBubble(ctx, b, b.bubble, t);
   for(const r of netRemotes) if(r.floor === G.floor && r.bubble) drawBubble(ctx, r, r.bubble, t);
   if(f.id === 1 && typeof clinicDrawTop === 'function') clinicDrawTop(ctx, t);
+  if(typeof funDrawTop === 'function') funDrawTop(ctx, t, f);
   if(playerRef.bubble) drawBubble(ctx, playerRef, playerRef.bubble, t);
 
   // 상호작용 하이라이트
@@ -5325,6 +5358,7 @@ const Net = {
       x:Math.round(player.x*10)/10, y:Math.round(player.y*10)/10,
       dir:Math.round((player.dir||0)*100)/100, moving:mv?1:0,
       disguise:this.myDisguise(), chatMsg:G.chatMsg||'', chatTs:G.chatTs||0, chatSeq:G.chatSeq||0,
+      fxSeq:G.fxSeq||0, fxKind:G.fxKind||'', fxVal:G.fxVal||'', fxTo:G.fxTo||'', fxTs:G.fxTs||0,
       ts:Date.now()
     };
   },
@@ -5342,7 +5376,7 @@ const Net = {
     const m = this.stateMsg();
     const prev = this.lastSent || {};
     const changed = !prev || prev.x!==m.x || prev.y!==m.y || prev.dir!==m.dir || prev.disguise!==m.disguise ||
-       prev.chatSeq!==m.chatSeq || prev.moving!==m.moving || prev.nick!==m.nick || prev.charType!==m.charType;
+       prev.chatSeq!==m.chatSeq || prev.fxSeq!==m.fxSeq || prev.moving!==m.moving || prev.nick!==m.nick || prev.charType!==m.charType;
     if(changed || (Date.now() - (this._lastPubAt||0) > (REALTIME_CONFIG.heartbeatMs||4000))){
       this.lastSent = m; this._lastPubAt = Date.now(); this.post(m);
     }
@@ -5390,6 +5424,12 @@ const Net = {
       r.bubble = String(m.chatMsg).slice(0,80);
       r.bubbleT = 0; r.bubbleLife = 4.4;
       addChatLine(r.nick, r.bubble, '');
+    }
+    /* 이모지 · 업무 토스 */
+    if(m.fxSeq && m.fxSeq !== r.fxSeq){
+      const fresh = (Date.now() - (m.fxTs||0) < 8000) && r.fxSeq !== undefined;
+      r.fxSeq = m.fxSeq;
+      if(fresh && typeof onRemoteFx === 'function') onRemoteFx(r, m);
     }
   },
   dropPeer(id){
@@ -5578,7 +5618,7 @@ function makeFirebaseAdapter(cfg, room, myId, onMsg){
     send(msg){
       if(msg.t !== 'hello' && msg.t !== 'state') return;
       const body = {};
-      const keys = ['id','nick','charType','floor','x','y','dir','disguise','chatMsg','chatTs','chatSeq','moving','ts'];
+      const keys = ['id','nick','charType','floor','x','y','dir','disguise','chatMsg','chatTs','chatSeq','moving','ts','fxSeq','fxKind','fxVal','fxTo','fxTs'];
       for(const k of keys) if(msg[k] !== undefined) body[k] = msg[k];
       body.sts = {'.sv':'timestamp'};   /* 서버 시각 — 기기마다 시계가 달라도 접속 판정이 흔들리지 않게 */
       try{
@@ -7691,8 +7731,8 @@ function drawAlien(c, v, t){
   const glow = .6 + .4*Math.sin(t*8);
   c.fillStyle = 'rgba(255,120,200,'+glow+')'; c.beginPath(); c.arc(x-9, y-65, 2.6, 0, TAU); c.arc(x+9, y-65, 2.6, 0, TAU); c.fill();
 }
-function drawUfo(c, t){
-  const u = CLINIC.ufo; if(!u) return;
+function drawUfo(c, t, uu){
+  const u = uu || CLINIC.ufo; if(!u) return;
   let alt, beam = 0;
   const T1 = 1.3, T2 = 3.0, T3 = 4.4;
   if(u.t < T1){ alt = 300 - (u.t/T1)*150; }
@@ -7930,6 +7970,571 @@ function drawPlayerTag(c, x, y, nick, t, me){
     }
     ctx.restore();
   };
+})();
+
+/* =====================================================================
+   개그 패키지 — 사내방송 · 아재개그 · 프린터 폭주 · 비둘기 · 부장님 납치
+                 · 엘리베이터 어색함 · 17:30 회식 · 검진 효과 · 이모지 · 업무 토스
+   ===================================================================== */
+const FUN = { papers:[], pigeon:null, abduct:null, flies:[], joke:null, tickT:12, jokeCD:25, lastAwk:-999 };
+const TICKER_LINES = [
+  '엘리베이터 2호기에서 방귀 뀐 분, 자수 바랍니다. CCTV에 냄새는 안 찍혔지만 표정은 찍혔습니다.',
+  '탕비실 냉장고 "민지 요거트" 드신 분, 민지가 울고 있습니다.',
+  '주차장 B2, 비상등 켜진 회색 SUV 차주분… 사흘째입니다.',
+  '오늘 점심 메뉴는 "아무거나"입니다. 영양사님이 지치셨습니다.',
+  '1층 건강검진센터에 외계인이 내원 중입니다. 사진 촬영은 자제 부탁드립니다.',
+  '회의실 3번 예약하고 안 쓰신 분, 회의실이 외로워합니다.',
+  '프린터 용지 걸림의 99%는 "급한 사람"이 원인입니다.',
+  '사내 와이파이 비밀번호가 "야근금지"로 변경되었습니다. 아무도 못 외웁니다.',
+  '금일 18시 정각 소등 예정. …은 거짓말이고 그냥 해보고 싶었습니다.',
+  '복도에서 뛰지 마세요. 특히 부장님 호출 받고 뛰는 분들.',
+  '사내 동호회 "칼퇴 연구회" 회원 모집. 첫 모임은 18:00:01.',
+  '어제 회식 노래방에서 "내 마음은 칼퇴" 부르신 분, 앵콜 요청 쇄도 중.',
+  '비둘기 출입 금지. 비둘기분들은 이 방송을 듣고 계시다면 나가주세요.'
+];
+const DAD_JOKES = [
+  ['왕이 넘어지면?','킹콩!'], ['소가 웃으면?','우하하!'], ['바나나가 웃으면?','바나나킥!'],
+  ['오리가 얼면?','언덕!'], ['자동차를 발로 차면?','카톡!'], ['미국에 비가 오면?','USB!'],
+  ['세상에서 제일 뜨거운 과일은?','천도복숭아!'], ['인천 앞바다의 반대말은?','인천 엄마다!'],
+  ['신발이 화나면?','신발끈!'], ['딸기가 회사에서 잘리면?','딸기시럽!'], ['세상에서 가장 야한 채소는?','버섯!… 아 아니 이건 취소']
+];
+const AWK_OPTS = [
+  { t:'"날씨 좋네요, 부장님~"', ok:1, r:'"그러게. 퇴근하기 좋은 날이야." (부장님 미소)', m:5 },
+  { t:'"부장님 요즘 바쁘시죠?"', ok:-1, r:'"응, 그래서 말인데… 그 보고서 말이야."', m:-8 },
+  { t:'(휴대폰 보는 척)', ok:0, r:'(부장님도 휴대폰 보는 척) …평화롭다', m:0 },
+  { t:'(층수 버튼 연타)', ok:0, r:'"…급한가 보네?" (1초가 1년 같다)', m:-2 },
+  { t:'"부장님 넥타이 멋지세요!"', ok:1, r:'"이거? 딸이 사줬어." (급 훈훈)', m:6 },
+  { t:'"주말에 뭐 하셨어요?"', ok:-1, r:'"등산. 다음 주에 같이 갈래?" (위기)', m:-6 },
+  { t:'(허밍으로 노래 부르기)', ok:0, r:'(부장님이 화음을 넣었다) …?!', m:2 },
+  { t:'"…"(숨 참기)', ok:0, r:'(숨 참다 딸꾹질) 히끅!', m:-1 }
+];
+const HEALTH_RESULTS = [
+  { t:'카페인 중독 소견 · 오늘 커피 효과 2배, 대신 손이 덜덜', fx:'caffeine' },
+  { t:'거북목 2단계 · 오늘 하루 세상이 기울어 보입니다', fx:'turtle' },
+  { t:'놀랍게도 완벽한 정상! 멘탈 +5 추가', fx:'healthy' },
+  { t:'혈압: 부장님 근처에서만 상승하는 특이 소견', fx:null },
+  { t:'스트레스 지수: 측정 불가 (기계가 한숨 쉼)', fx:null },
+  { t:'간 수치: 회식 자제 권고 · 오늘 회식 걸리면 큰일', fx:null }
+];
+
+function tigerBoss(){ return (FLOORS[2].bosses||[]).find(b=> b.id === 'tiger'); }
+function funMinute(a, b){ return rand(a, b) * 60; }
+
+/* ---------------------------------------------------------------- 하루 준비 */
+function funSetupDay(){
+  const m = G.mod || {};
+  G.fun = {
+    printerAt: [funMinute(10, 12.5), funMinute(13.5, 16.5)],
+    pigeonAt: funMinute(10.5, 15.5), pigeonDone:false,
+    abductAt: (G.day >= 2 && Math.random() < .35) ? funMinute(10.5, 15.5) : null, abducted:false,
+    hoesik: (m.id === 'friday' || Math.random() < .5) ? { at:17*60+30, started:false, caught:false, canceled:false } : null,
+    awkCount:0, health:null
+  };
+  FUN.papers.length = 0; FUN.pigeon = null; FUN.abduct = null;
+  const tb = tigerBoss();
+  if(tb && tb.abducted){ tb.abducted = false; tb.stunT = 0; tb.state = 'patrol'; tb.x = tb.route[0].x; tb.y = tb.route[0].y; tb.wp = 1 % tb.route.length; }
+  for(const b of FLOORS[2].bosses){ b.hoesik = false; if(b._baseSpeed){ b.speed = b._baseSpeed; b._baseSpeed = null; } }
+  canvas.style.transform = '';
+}
+function showTicker(text){
+  const el = document.getElementById('ticker'); if(!el) return;
+  el.innerHTML = '';
+  const s = document.createElement('div'); s.className = 'tk'; s.textContent = '📢 사내방송 · ' + text;
+  el.appendChild(s); el.classList.remove('hide');
+  clearTimeout(showTicker._t); showTicker._t = setTimeout(()=> el.classList.add('hide'), 13200);
+}
+
+/* ---------------------------------------------------------------- 업데이트 (게임 진행 중) */
+function funUpdate(dt){
+  const F = G.fun; if(!F) return;
+  const tm = G.time;
+  // 사내방송
+  FUN.tickT -= dt;
+  if(FUN.tickT <= 0){ FUN.tickT = rand(32, 55); showTicker(pick(TICKER_LINES)); }
+  // 프린터 폭주
+  if(F.printerAt.length && tm >= F.printerAt[0]){
+    F.printerAt.shift();
+    if(G.floor === 2) printerBurst(); else F.printerAt.unshift(tm + 15);
+  }
+  // 비둘기
+  if(!F.pigeonDone && tm >= F.pigeonAt && G.floor === 2 && !FUN.pigeon){ F.pigeonDone = true; pigeonEnter(); }
+  // 부장님 납치
+  if(F.abductAt != null && !F.abducted && tm >= F.abductAt && G.floor === 2 && !(G.em && G.em.active)){
+    if(tm > 16.5*60) F.abductAt = null; else startAbduction();
+  }
+  // 17:30 회식
+  const H = F.hoesik;
+  if(H && !H.started && tm >= H.at){
+    H.started = true;
+    const tb = tigerBoss();
+    if(!tb || tb.abducted){ H.canceled = true; showTicker('부장님이 우주에 계셔서 오늘 회식은 취소되었습니다. 만세.'); toast('🛸 부장님 부재로 회식 취소!', 'good'); }
+    else {
+      tb.hoesik = true; tb._baseSpeed = tb.speed; tb.speed *= 1.3;
+      say(tb, '오늘 회식 어때?! 다들 시간 되지?', 4, '#c9463f');
+      showTicker('부장님: "오늘 회식 어때?" — 18:00까지 부장님에게 잡히면 회식 확정입니다.');
+      toast('🍻 17:30 회식 공포! 18시까지 부장님을 피하세요', 'bad');
+      Sound.alarm();
+    }
+  }
+  // 종이 위 미끄러짐
+  updatePapers(dt);
+  updatePigeon(dt);
+  updateAbduction(dt);
+  updateJoke(dt);
+  // 카페인 손떨림
+  if(F.health === 'caffeine' && player.walking){
+    tryMove(FLOORS[G.floor], player, rand(-1.4, 1.4), rand(-1.4, 1.4));
+  }
+}
+
+/* ---------------------------------------------------------------- 프린터 폭주 */
+function printerBurst(){
+  const px = 16.5*TILE, py = 2.6*TILE, f = FLOORS[2];
+  FUN.papers.length = 0;
+  for(let i=0;i<16;i++){
+    let x, y, k = 0;
+    do{ const a = rand(0, TAU), r = rand(30, 170); x = px + Math.cos(a)*r; y = py + 30 + Math.abs(Math.sin(a))*r; k++; }
+    while(collidesAt(f, x, y, 6) && k < 12);
+    FUN.papers.push({ x, y, rot:rand(-1, 1), life:38, flyT:rand(0, .5) });
+  }
+  addEffect('spark',{x:px, y:py, n:16, a0:0, life:.9, color:'#ffffff'});
+  Sound.paper();
+  toast('🖨️ 프린터 폭주! 바닥 종이를 밟으면 미끄러져요', 'warn');
+  showTicker('2층 프린터가 폭주 중입니다. A4 용지 500장이 자유를 찾았습니다.');
+  const n = (f.npcs||[]).find(o=> dist(o.x,o.y,px,py) < 400);
+  if(n) say(n, '프린터가 미쳤어요!!', 3);
+}
+function updatePapers(dt){
+  if(!FUN.papers.length) return;
+  for(const p of FUN.papers){ p.life -= dt; if(p.flyT > 0) p.flyT -= dt; }
+  FUN.papers = FUN.papers.filter(p=> p.life > 0);
+  if(G.floor !== 2) return;
+  FUN.slipT = Math.max(0, (FUN.slipT||0) - dt);
+  if(FUN.slipT > 0){
+    const k = FUN.slipT / .7;
+    tryMove(FLOORS[2], player, Math.cos(FUN.slipDir)*240*k*dt, Math.sin(FUN.slipDir)*240*k*dt);
+  } else if(player.walking){
+    for(const p of FUN.papers){
+      if(dist(player.x, player.y, p.x, p.y) < 15){
+        FUN.slipT = .7; FUN.slipDir = player.dir;
+        floater(player.x, player.y-70, '미끄덩!', '#ffffff');
+        say(playerRef, pick(['으악!','어어어어?!','종이 누구야!!']), 1.8);
+        cam.shake = Math.max(cam.shake, 3);
+        p.life = Math.min(p.life, .3);
+        break;
+      }
+    }
+  }
+  for(const b of FLOORS[2].bosses){
+    if(b.abducted || b.stunT > 0) continue;
+    for(const p of FUN.papers){
+      if(dist(b.x, b.y, p.x, p.y) < 15){
+        b.stunT = 1.8; b.slip = 1.8; p.life = Math.min(p.life, .3);
+        say(b, pick(['어이쿠!','누가 종이를…!','허리야…']), 2.2, '#c9463f');
+        break;
+      }
+    }
+  }
+}
+
+/* ---------------------------------------------------------------- 비둘기 */
+function pigeonEnter(){
+  FUN.pigeon = { x:0.6*TILE, y:6*TILE, tx:0, ty:0, fly:1, t:0, life:45, dir:1, wait:0, flap:0, leaving:false };
+  pigeonTarget(FUN.pigeon);
+  toast('🐦 비둘기가 사무실에 들어왔다! 가까이 가서 E로 쫓아내기', 'warn');
+  const ns = FLOORS[2].npcs.slice(0, 3);
+  ns.forEach((n,i)=> setTimeout(()=> say(n, pick(['비둘기다!','꺄악!','누가 창문 열었어?!','구구구…?']), 2.4), i*300));
+}
+function pigeonTarget(pg){
+  const f = FLOORS[2];
+  for(let k=0;k<20;k++){
+    const x = rand(3, 36)*TILE, y = rand(3, 20)*TILE;
+    if(!collidesAt(f, x, y, 8)){ pg.tx = x; pg.ty = y; return; }
+  }
+  pg.tx = 20*TILE; pg.ty = 12*TILE;
+}
+function updatePigeon(dt){
+  const pg = FUN.pigeon; if(!pg) return;
+  pg.t += dt; pg.life -= dt; pg.flap += dt;
+  if(pg.life <= 0 && !pg.leaving){
+    pg.leaving = true; pg.tx = -2*TILE; pg.ty = 6*TILE; pg.fly = 1;
+    const desk = MY_DESK;
+    if(G.floor === 2){ toast('💩 비둘기가 내 책상에 선물을 남기고 떠났다… 멘탈 -5', 'bad'); G.mental = clamp(G.mental-5, 0, 100); floater(desk.x, desk.y-40, '💩', '#fff'); }
+  }
+  if(pg.wait > 0){ pg.wait -= dt; pg.fly = 0; return; }
+  const dx = pg.tx - pg.x, dy = pg.ty - pg.y, d = Math.hypot(dx, dy);
+  const sp = pg.leaving ? 260 : (pg.fly ? 170 : 55);
+  if(d < 6){
+    if(pg.leaving){ FUN.pigeon = null; return; }
+    pg.fly = 0; pg.wait = rand(1.2, 3);
+    if(Math.random() < .5) pigeonTarget(pg), pg.fly = Math.random() < .4 ? 1 : 0;
+    else pigeonTarget(pg);
+    return;
+  }
+  pg.x += dx/d*sp*dt; pg.y += dy/d*sp*dt; pg.dir = dx >= 0 ? 1 : -1;
+  if(!pg.leaving && dist(pg.x, pg.y, player.x, player.y) < 60 && pg.fly === 0 && Math.random() < dt*0.6) say(pg, '구구구', 1.4);
+}
+function shooPigeon(){
+  const pg = FUN.pigeon; if(!pg || pg.leaving) return;
+  pg.leaving = true; pg.tx = -2*TILE; pg.ty = rand(3, 9)*TILE; pg.fly = 1; pg.wait = 0;
+  G.points += 800;
+  const v = (typeof addXP === 'function') ? addXP(10, true) : 0;
+  if(G.dayXp != null) G.dayXp += v;
+  say(playerRef, '훠이! 훠이!', 2);
+  say(pg, '구구구!!', 1.6, '#c9463f');
+  Sound.win();
+  toast('🐦 비둘기 퇴치 성공! +800P · 사무실의 영웅', 'good');
+  updateHUD();
+}
+function drawPigeon(c, pg, t){
+  const lift = pg.fly ? 26 + Math.sin(t*3)*4 : 0;
+  const x = pg.x, y = pg.y - lift;
+  shadowEl(c, pg.x, pg.y+1, 8, 3, .16);
+  c.save(); c.translate(x, y); c.scale(pg.dir, 1);
+  const flap = pg.fly ? Math.sin(pg.flap*28) : 0;
+  c.fillStyle = '#8b939c'; c.beginPath(); c.ellipse(0, -8, 9, 6, 0, 0, TAU); c.fill();
+  c.fillStyle = '#6f7780';
+  c.beginPath(); c.moveTo(-2, -10); c.lineTo(-12, -10 - flap*10); c.lineTo(-6, -5); c.closePath(); c.fill();
+  c.fillStyle = '#5d8a7a'; c.beginPath(); c.arc(7, -13, 4.5, 0, TAU); c.fill();
+  c.fillStyle = '#f0a62e'; c.beginPath(); c.moveTo(11, -13); c.lineTo(14.5, -12); c.lineTo(11, -11); c.closePath(); c.fill();
+  c.fillStyle = '#e8544a'; c.beginPath(); c.arc(8.4, -14, 1.2, 0, TAU); c.fill();
+  c.fillStyle = '#5c646d'; c.beginPath(); c.moveTo(-8, -8); c.lineTo(-14, -6); c.lineTo(-8, -5); c.closePath(); c.fill();
+  if(!pg.fly){ c.strokeStyle = '#e8846a'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(-1, -3); c.lineTo(-2, 0); c.moveTo(2, -3); c.lineTo(3, 0); c.stroke(); }
+  c.restore();
+}
+
+/* ---------------------------------------------------------------- 부장님 외계인 납치 */
+function startAbduction(){
+  const tb = tigerBoss(); if(!tb || tb.abducted) return;
+  G.fun.abducted = true;
+  FUN.abduct = { t:0, x:tb.x, y:tb.y, b:tb };
+  tb.stunT = 99;
+  say(tb, '어? 어어? 이거 무슨… 보고서는?!', 3.2, '#c9463f');
+  toast('🛸 2층에 UFO 출현?!', 'warn');
+  Sound.notify();
+  FLOORS[2].npcs.slice(0, 4).forEach((n,i)=> setTimeout(()=> say(n, pick(['부장님?!','UFO다!','…저거 진짜야?','찍어! 찍어!']), 2.4), 400 + i*250));
+}
+function updateAbduction(dt){
+  const A = FUN.abduct; if(!A) return;
+  A.t += dt;
+  const b = A.b;
+  if(A.t > 1.4 && A.t < 2.8){ b.y -= dt*85; }
+  if(A.t >= 2.8 && !b.abducted){
+    b.abducted = true; b.state = 'stun'; b.stunT = 1e9; b.x = -99999; b.y = -99999;
+    toast('👽 부장님이 외계인에게 납치됐습니다… 오늘은 외근(우주)', 'good');
+    showTicker('호랑이 부장님은 금일 우주 출장으로 부재중입니다. 결재는 내일 지구에서.');
+  }
+  if(A.t > 4.4) FUN.abduct = null;
+}
+
+/* ---------------------------------------------------------------- 아재개그 */
+function updateJoke(dt){
+  const J = FUN.joke;
+  if(J){
+    J.t += dt;
+    if(J.phase === 0 && J.t > 1.6){ J.phase = 1; J.t = 0; say(J.b, J.q[1]+' 하하하하!', 3, '#c9463f'); document.getElementById('jokeBox').classList.remove('hide'); }
+    if(J.phase === 1){
+      const bar = document.getElementById('jokeBar'); if(bar) bar.style.width = clamp((1 - J.t/3)*100, 0, 100)+'%';
+      if(J.t > 3) jokeResult(false);
+    }
+    return;
+  }
+  FUN.jokeCD -= dt;
+  if(FUN.jokeCD > 0 || G.floor !== 2 || (G.em && G.em.active)) return;
+  if(G.plantT > 0 || G.chairT > 0) return;
+  const b = FLOORS[2].bosses.find(o=> !o.abducted && o.state === 'patrol' && o.stunT <= 0 && dist(o.x, o.y, player.x, player.y) < 210);
+  if(!b) return;
+  FUN.jokeCD = rand(35, 55);
+  const q = pick(DAD_JOKES);
+  FUN.joke = { b, q, t:0, phase:0 };
+  b.waitT = 6;
+  say(b, '퀴즈! '+q[0], 2.2, '#3b2c1e');
+}
+function jokeResult(laughed){
+  const J = FUN.joke; if(!J) return;
+  FUN.joke = null;
+  document.getElementById('jokeBox').classList.add('hide');
+  if(laughed){
+    say(playerRef, pick(['하하하! 부장님 최고!','푸하하 미쳤다 ㅋㅋ','와 진짜 웃겨요(영혼 0%)']), 2.4);
+    say(J.b, '역시 자네는 센스가 있어', 2.6);
+    G.dh = Math.min(G.dhMax, G.dh + 2);
+    toast('😅 영혼 없는 웃음 성공 · ⚡+2', 'good');
+  } else {
+    say(J.b, '…재미없나?', 2.6, '#c9463f');
+    G.mental = clamp(G.mental - 6, 0, 100);
+    toast('🥶 분위기 싸해짐… 멘탈 -6', 'bad');
+    FLOORS[2].npcs.slice(0,2).forEach((n,i)=> setTimeout(()=> say(n, pick(['(헛기침)','…','(갑자기 키보드 소리 커짐)']), 2), 300+i*300));
+    if(G.mental <= 0) burnout();
+  }
+  updateHUD();
+}
+
+/* ---------------------------------------------------------------- 엘리베이터 어색함 */
+function awkwardRide(dest, go){
+  const tb = tigerBoss();
+  const opts = AWK_OPTS.slice().sort(()=> Math.random() - .5);
+  const pickd = [opts.find(o=> o.ok === 1), opts.find(o=> o.ok === -1), opts.find(o=> o.ok === 0)].sort(()=> Math.random() - .5);
+  let done = false, left = 8;
+  openModal('🛗 엘리베이터', G.floor+'F → '+dest+'F', `
+    <div class="awk">
+      <div class="scene">🧍👔</div>
+      <div class="fl">…부장님이 같이 탔다. 문이 닫힌다.</div>
+      <div class="bar"><i id="awkBar"></i></div>
+      <div class="opts">${pickd.map((o,i)=> '<button data-i="'+i+'">'+o.t+'</button>').join('')}</div>
+      <div class="res" id="awkRes">어색한 침묵을 깨세요 (8초)</div>
+    </div>`, {noClose:true});
+  const finish = (o)=>{
+    if(done) return; done = true; clearInterval(iv);
+    const res = document.getElementById('awkRes');
+    const m = o ? o.m : -4;
+    if(res){ res.textContent = (o ? o.r : '…(침묵이 영원 같다)') + (m ? '  ·  멘탈 '+(m>0?'+':'')+m : ''); res.style.color = m > 0 ? '#2f6f4f' : m < 0 ? '#c9463f' : '#6d6154'; }
+    document.querySelectorAll('.awk .opts button').forEach(b=> b.disabled = true);
+    G.mental = clamp(G.mental + m, 0, 100);
+    setTimeout(()=>{ closeModal(); go(); if(G.mental <= 0) burnout(); }, 1900);
+  };
+  document.querySelectorAll('.awk .opts button').forEach(b=> b.onclick = ()=> finish(pickd[+b.dataset.i]));
+  const iv = setInterval(()=>{
+    left -= .1;
+    const bar = document.getElementById('awkBar'); if(bar) bar.style.width = clamp(left/8*100, 0, 100)+'%';
+    if(left <= 0) finish(null);
+  }, 100);
+}
+
+/* ---------------------------------------------------------------- 이모지 · 업무 토스 (멀티) */
+function emitFx(kind, val, to){
+  G.fxSeq = (G.fxSeq||0) + 1; G.fxKind = kind; G.fxVal = val; G.fxTo = to || ''; G.fxTs = Date.now();
+  try{ Net.publishNow(); }catch(e){}
+}
+function nearestRemote(maxD){
+  let best = null, bd = maxD;
+  for(const r of netRemotes){ if(r.floor !== G.floor) continue; const d = dist(r.x, r.y, player.x, player.y); if(d < bd){ bd = d; best = r; } }
+  return best;
+}
+function throwEmoji(e){
+  const tgt = nearestRemote(320);
+  if(tgt){
+    FUN.flies.push({ e, x0:player.x, y0:player.y-50, x1:tgt.x, y1:tgt.y-60, t:0, to:tgt });
+    emitFx('emoji', e, tgt.id);
+  } else {
+    floater(player.x, player.y-80, e+e+e, '#fff');
+    emitFx('emoji', e, '');
+    if(!netRemotes.some(r=> r.floor === G.floor)) toast('같은 층에 접속자가 없어서 혼자 '+e+' 했어요', 'warn');
+  }
+  Sound.click && Sound.click();
+}
+function onRemoteFx(r, m){
+  if(!G.ready) return;
+  const meId = Net.myId;
+  if(m.fxKind === 'emoji'){
+    const e = String(m.fxVal||'').slice(0, 4);
+    if(m.fxTo === meId){
+      FUN.flies.push({ e, x0:r.x, y0:r.y-50, x1:player.x, y1:player.y-60, t:0, toMe:true, from:r.nick });
+    } else if(m.fxTo){
+      const tgt = netRemotes.find(o=> o.id === m.fxTo);
+      if(tgt) FUN.flies.push({ e, x0:r.x, y0:r.y-50, x1:tgt.x, y1:tgt.y-60, t:0 });
+    } else floater(r.x, r.y-80, e+e+e, '#fff');
+  }
+  if(m.fxKind === 'toss'){
+    const def = EVENT_DEFS.find(d=> d.id === m.fxVal);
+    if(m.fxTo === meId && def){
+      if(G.dayEnded || G.over){ return; }
+      if(G.ev && G.ev.active){ toast('📥 '+r.nick+'님이 업무를 토스했지만 이미 업무 중이라 튕겨냈다!', 'warn'); return; }
+      eventStart(def);
+      toast('📥 '+r.nick+'님이 "'+def.name+'" 업무를 토스했습니다…', 'bad');
+      say(playerRef, pick(['네…? 저요?','아니 왜 나야','…감사합니다(?)']), 2.4);
+    } else if(def){ floater(r.x, r.y-80, '📤', '#fff'); }
+  }
+}
+function tossTask(r){
+  const a = G.ev && G.ev.active; if(!a || !r) return;
+  const d = a.def;
+  G.ev.active = null; G.ev.next = rand(40, 60);
+  hideEventRow(); renderTaskPanel(true);
+  emitFx('toss', d.id, r.id);
+  FUN.flies.push({ e:'📄', x0:player.x, y0:player.y-50, x1:r.x, y1:r.y-60, t:0 });
+  say(playerRef, '이거 '+r.nick+'님 업무 같은데요~', 2.4);
+  toast('📤 '+r.nick+'님에게 "'+d.name+'" 토스 완료 (보상도 같이 넘어감)', 'good');
+}
+
+/* ---------------------------------------------------------------- 그리기 */
+function funPushDraw(f, list, t){
+  if(f.id === 2){
+    for(const p of FUN.papers){
+      list.push({ y:p.y - 40, draw:()=>{
+        const c = ctx;
+        c.save(); c.globalAlpha = clamp(p.life, 0, 1);
+        const up = p.flyT > 0 ? p.flyT*60 : 0;
+        c.translate(p.x, p.y - up); c.rotate(p.rot + (p.flyT > 0 ? t*8 : 0));
+        c.fillStyle = 'rgba(60,44,30,.14)'; c.fillRect(-8, -5, 18, 13);
+        c.fillStyle = '#ffffff'; c.fillRect(-9, -7, 18, 13);
+        c.fillStyle = 'rgba(90,100,120,.4)'; for(let k=0;k<3;k++) c.fillRect(-6, -4+k*3.4, 12, 1);
+        c.restore();
+      }});
+    }
+    if(FUN.pigeon) list.push({ y:FUN.pigeon.y, draw:()=> drawPigeon(ctx, FUN.pigeon, t) });
+  }
+}
+function funDrawTop(c, t, f){
+  if(f.id === 2){
+    if(FUN.abduct) drawUfo(c, t, FUN.abduct);
+    for(const b of f.bosses){
+      if(!b.abducted && b.slip > 0){ b.slip -= 1/60; txt(c, '💫', b.x, b.y - 74, 16, '#fff', 'center', 900); }
+      if(b.hoesik && !b.abducted) txt(c, '🍻', b.x + 18, b.y - 66, 15, '#fff', 'center', 900);
+    }
+    if(FUN.pigeon && FUN.pigeon.bubble) drawBubble(c, FUN.pigeon, FUN.pigeon.bubble, t);
+  }
+  // 날아가는 이모지
+  for(const fl of FUN.flies){
+    fl.t += 1/60;
+    const k = clamp(fl.t / .7, 0, 1);
+    const x = fl.x0 + (fl.x1 - fl.x0)*k, y = fl.y0 + (fl.y1 - fl.y0)*k - Math.sin(k*Math.PI)*60;
+    txt(c, fl.e, x, y, 22, '#fff', 'center', 900);
+    if(k >= 1 && !fl.hit){
+      fl.hit = true;
+      floater(fl.x1, fl.y1 - 10, fl.e, '#fff');
+      addEffect('spark',{x:fl.x1, y:fl.y1, n:8, a0:0, life:.5, color:'#ffd166'});
+      if(fl.toMe){ toast(fl.from+'님이 '+fl.e+' 를 날렸다!', 'warn'); cam.shake = Math.max(cam.shake, 2); }
+    }
+  }
+  FUN.flies = FUN.flies.filter(fl=> fl.t < .9);
+}
+
+/* ---------------------------------------------------------------- 연결 (래핑) */
+(function funWire(){
+  // 하루 시작
+  const _sg = startGame;
+  startGame = function(p){ _sg(p); funSetupDay(); };
+  const _nd = nextDay;
+  nextDay = function(){
+    const hangover = G.fun && G.fun.hoesik && G.fun.hoesik.caught;
+    _nd();
+    funSetupDay();
+    if(hangover){
+      G.mental = clamp(G.mental - 15, 0, 100);
+      setTimeout(()=> toast('🥴 어제 노래방 2차 여파… 멘탈 -15', 'bad'), 1200);
+    }
+  };
+  // 게임 진행
+  const _up = update;
+  update = function(dt){ _up(dt); if(G.ready && !G.paused && !G.dayEnded && !G.over) funUpdate(dt); };
+  // 비둘기 버블 수명
+  const _ub = updateBubbles;
+  updateBubbles = function(dt){
+    _ub(dt);
+    const pg = FUN.pigeon;
+    if(pg && pg.bubbleLife){ pg.bubbleT += dt; if(pg.bubbleT > pg.bubbleLife){ pg.bubble = ''; pg.bubbleLife = 0; } }
+  };
+  // 회식: 잡히면 확정
+  const _cb = caughtBy;
+  caughtBy = function(b){
+    _cb(b);
+    const H = G.fun && G.fun.hoesik;
+    if(H && H.started && !H.canceled && !H.caught && b.hoesik){
+      H.caught = true;
+      say(b, '좋아! 오늘 회식 확정! 노래방까지 가는 거야!', 3.4, '#c9463f');
+      toast('🍻 회식 확정… 노래방 2차까지 끌려갑니다', 'bad');
+    }
+  };
+  // 칼퇴 정산에 회식 결과
+  const _ed = endDay;
+  endDay = function(){
+    const was = G.dayEnded;
+    _ed();
+    if(was || !G.dayEnded) return;
+    const H = G.fun && G.fun.hoesik;
+    if(FUN.joke){ FUN.joke = null; document.getElementById('jokeBox').classList.add('hide'); }
+    if(!H || !H.started) return;
+    let html;
+    if(H.canceled) html = '🛸 부장님 우주 출장으로 회식 취소. 오늘 최고의 날.';
+    else if(H.caught){ G.points = Math.max(0, G.points - 5000); html = '🍻 <b>회식 확정 · 노래방 2차</b> — 회비 -5,000P, 내일 멘탈 -15<br>18번 곡: "내 마음은 칼퇴"'; }
+    else html = '🏃 <b>회식 탈출 성공!</b> 부장님: "…다들 어디 갔지?"';
+    const body = document.getElementById('mBody');
+    const btns = body && body.querySelector('.modalBtns');
+    if(body && btns){
+      const d = document.createElement('div');
+      d.className = 'paperDoc'; d.style.marginTop = '10px'; d.innerHTML = html;
+      body.insertBefore(d, btns);
+      G.summaryHtml = body.innerHTML;
+      bindDaySummary();
+    }
+    updateHUD();
+  };
+  // 엘리베이터: 가끔 부장님과 단둘이
+  const _tt = travelTo;
+  travelTo = function(id){
+    const F = G.fun, tb = tigerBoss();
+    const can = F && G.ready && !traveling && !modalOpen && !G.dayEnded && !(G.em && G.em.active) && tb && !tb.abducted
+      && F.awkCount < 2 && (time0 - FUN.lastAwk) > 60 && id !== G.floor;
+    if(can && Math.random() < .22){
+      F.awkCount++; FUN.lastAwk = time0;
+      awkwardRide(id, ()=> _tt(id));
+      return;
+    }
+    _tt(id);
+  };
+  // 커피: 카페인 중독이면 2배
+  const _dc = drinkCoffee;
+  drinkCoffee = function(){
+    _dc();
+    if(G.fun && G.fun.health === 'caffeine' && G.coffeeT >= 7.9){ G.coffeeT = 16; toast('☕☕ 카페인 중독 보너스 · 16초 폭주!', 'good'); }
+  };
+  // 상호작용: 비둘기 · 업무 토스 · 검진 결과 효과
+  const _near = updateNear;
+  updateNear = function(){
+    _near();
+    const pg = FUN.pigeon;
+    if(G.floor === 2 && pg && !pg.leaving && dist(player.x, player.y, pg.x, pg.y) < 60){
+      G.near = { kind:'pigeon', x:pg.x, y:pg.y, label:'비둘기 쫓아내기' }; return;
+    }
+    if(G.ev && G.ev.active){
+      const r = nearestRemote(80);
+      if(r) G.near = { kind:'toss', r, x:r.x, y:r.y, label:r.nick+'님에게 업무 토스' };
+    }
+  };
+  const _di = doInteract;
+  doInteract = function(it){
+    if(it.kind === 'pigeon'){ shooPigeon(); return; }
+    if(it.kind === 'toss'){ tossTask(it.r); return; }
+    if(it.kind === 'clinic' && G.clinicDay !== G.day){
+      G.clinicDay = G.day;
+      const res = pick(HEALTH_RESULTS);
+      G.mental = Math.min(100, G.mental + 8 + (res.fx === 'healthy' ? 5 : 0));
+      G.dh = Math.min(G.dhMax, G.dh + 2);
+      if(G.fun) G.fun.health = res.fx;
+      if(res.fx === 'turtle'){ canvas.style.transition = 'transform .8s'; canvas.style.transform = 'rotate(-2.4deg) scale(1.06)'; }
+      Sound.win();
+      toast('🩺 '+res.t, res.fx === 'turtle' || res.fx === 'caffeine' ? 'warn' : 'good');
+      vSay(pick(CLINIC.staff), '임직원은 무료예요~ 결과 나왔습니다!', 2.6, '#2f6f8f');
+      updateHUD();
+      return;
+    }
+    return _di(it);
+  };
+  // UI
+  const jg = document.getElementById('jokeGo');
+  if(jg) jg.onclick = ()=> jokeResult(true);
+  window.addEventListener('keydown', e=>{
+    if(typeof isChatTyping === 'function' && isChatTyping()) return;
+    if(e.key && e.key.toLowerCase() === 'f' && FUN.joke && FUN.joke.phase === 1){ jokeResult(true); e.preventDefault(); }
+  });
+  const dock = document.getElementById('chatDock');
+  if(dock && !document.getElementById('emoPop')){
+    const pop = document.createElement('div');
+    pop.id = 'emoPop'; pop.className = 'hide';
+    pop.innerHTML = '<span class="eh">가까운 접속자에게 날리기</span>' + ['👍','😂','💩','❤️','🔥'].map(e=> '<button type="button" data-e="'+e+'">'+e+'</button>').join('');
+    dock.appendChild(pop);
+    pop.querySelectorAll('button').forEach(b=> b.onclick = (ev)=>{ ev.preventDefault(); throwEmoji(b.dataset.e); pop.classList.add('hide'); });
+    const eb = document.getElementById('emoBtn');
+    if(eb) eb.onclick = (ev)=>{ ev.preventDefault(); ev.stopPropagation(); pop.classList.toggle('hide'); };
+  }
+  if(window.__OFFICE){
+    Object.assign(window.__OFFICE, {
+      fun: FUN,
+      testPrinter: printerBurst, testPigeon: pigeonEnter, testAbduct: startAbduction,
+      testJoke: ()=>{ FUN.jokeCD = 0; }, testHoesik: ()=>{ G.fun.hoesik = { at:G.time, started:false, caught:false, canceled:false }; },
+      testAwk: ()=> awkwardRide(G.floor===2?1:2, ()=>{}), testTicker: ()=> showTicker(pick(TICKER_LINES))
+    });
+  }
 })();
 </script>
 </body>
