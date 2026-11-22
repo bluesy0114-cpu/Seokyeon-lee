@@ -3104,6 +3104,8 @@ function drawPlayer(c, t){
     badge:true, label: G.nick
   };
   if(G.char==='kong') opts.beat = Math.max(0, Math.sin(t*0.9))*0.6;
+  const others = (typeof netRemotes !== 'undefined') && netRemotes.some(r=> r.floor === G.floor);
+  if(others) drawPlayerRing(c, player.x, player.y, t, '#ff8a3d');
   drawCharacter(c, G.char, player.x, player.y, player.dir, t, opts);
   if(G.callT>0){
     c.save();
@@ -5680,7 +5682,7 @@ function updateRemotes(t){
 function remoteBubbleH(r){
   if(r.disguise === 'chair') return 46;
   if(r.disguise === 'plant') return 34;
-  return ((CHARACTERS[r.charType] || {}).height || 56) + 22;   /* 닉네임표 위로 말풍선 */
+  return ((CHARACTERS[r.charType] || {}).height || 56) + 36;   /* 닉네임표 위로 말풍선 */
 }
 function drawRemote(c, r, t){
   const ch = CHARACTERS[r.charType] || CHARACTERS.male;
@@ -5691,6 +5693,7 @@ function drawRemote(c, r, t){
     shield: r.disguise === 'shield', female: r.charType === 'female', badge: true, label: ''
   };
   if(r.charType === 'kong') opts.beat = Math.max(0, Math.sin(t*0.9 + (r.phase||0)))*0.6;
+  drawPlayerRing(c, r.x, r.y, t, '#3ddc84');
   drawCharacter(c, r.charType, r.x, r.y, r.dir, t, opts);
   if(r.disguise === 'call'){
     c.save();
@@ -5701,18 +5704,7 @@ function drawRemote(c, r, t){
     c.restore();
   }
   /* 닉네임 + 접속 표시 */
-  const ly = r.y - effH - 10;
-  c.save();
-  c.font = "900 9px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
-  const label = String(r.nick||'동료');
-  const tw = Math.min(120, c.measureText(label).width + 22);
-  c.fillStyle = 'rgba(36,26,18,.80)';
-  rr(c, r.x-tw/2, ly-13, tw, 14, 7); c.fill();
-  c.fillStyle = '#8fe3a8';
-  c.beginPath(); c.arc(r.x-tw/2+7.5, ly-6, 2.4, 0, TAU); c.fill();
-  c.fillStyle = '#ffe4bf'; c.textAlign='center'; c.textBaseline='middle';
-  c.fillText(label, r.x+2.5, ly-5.6, tw-18);
-  c.restore();
+  drawPlayerTag(c, r.x, r.y - effH - 8, String(r.nick||'동료'), t, false);
 }
 function syncPeopleBadge(){
   const el = document.getElementById('peopleTxt');
@@ -7839,6 +7831,71 @@ function clinicDrawTop(c, t){
     window.__OFFICE.ufo = ()=> startUfo('drop');
     window.__OFFICE.spawnVisitor = (ty)=> spawnVisitor(ty);
   }
+})();
+
+/* ---------------------------------------------------------------- 실제 접속자 표시 */
+function drawPlayerRing(c, x, y, t, color){
+  c.save();
+  const k = .5 + .5*Math.sin(t*4);
+  c.strokeStyle = color; c.globalAlpha = .55 + .35*k; c.lineWidth = 2.4;
+  c.beginPath(); c.ellipse(x, y+1, 17 + k*2, 6.5 + k*.8, 0, 0, TAU); c.stroke();
+  c.globalAlpha = .18; c.fillStyle = color;
+  c.beginPath(); c.ellipse(x, y+1, 17, 6.5, 0, 0, TAU); c.fill();
+  c.restore();
+}
+function drawPlayerTag(c, x, y, nick, t, me){
+  c.save();
+  c.font = "900 10.5px 'Pretendard Variable','Pretendard','Apple SD Gothic Neo',system-ui,sans-serif";
+  const label = nick.slice(0, 12);
+  const tw = Math.min(150, c.measureText(label).width + 34);
+  const th = 18, x0 = x - tw/2, y0 = y - th - 6;
+  c.fillStyle = me ? '#ff8a3d' : '#1f9d5c';
+  rr(c, x0, y0, tw, th, 9); c.fill();
+  c.beginPath(); c.moveTo(x-5, y0+th-1); c.lineTo(x, y0+th+5); c.lineTo(x+5, y0+th-1); c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,.85)'; c.lineWidth = 1.4; rr(c, x0, y0, tw, th, 9); c.stroke();
+  const pulse = .6 + .4*Math.sin(t*5);
+  c.fillStyle = 'rgba(200,255,215,'+pulse+')'; c.beginPath(); c.arc(x0+10, y0+th/2, 3.2, 0, TAU); c.fill();
+  c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText(label, x + 5, y0 + th/2 + .5, tw - 22);
+  c.restore();
+}
+/* 같은 층 접속자가 화면 밖에 있으면 가장자리에 방향 표시 */
+(function remoteEdgeMarkers(){
+  const _r = render;
+  render = function(t){
+    _r(t);
+    if(!G.ready || typeof netRemotes === 'undefined') return;
+    const list = netRemotes.filter(r=> r.floor === G.floor);
+    if(!list.length) return;
+    ctx.save();
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    const m = 26, top = 70, bottom = 90;
+    for(const r of list){
+      const sx = (r.x - cam.x)*cam.zoom + VW/2;
+      const sy = (r.y - 30 - cam.y)*cam.zoom + VH/2;
+      if(sx > m && sx < VW-m && sy > top && sy < VH-bottom) continue;
+      const cx = clamp(sx, m, VW-m), cy = clamp(sy, top, VH-bottom);
+      const a = Math.atan2(sy - VH/2, sx - VW/2);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.fillStyle = 'rgba(31,157,92,.95)';
+      ctx.beginPath(); ctx.arc(0, 0, 13, 0, TAU); ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.save(); ctx.rotate(a);
+      ctx.beginPath(); ctx.moveTo(19, 0); ctx.lineTo(12, -5); ctx.lineTo(12, 5); ctx.closePath(); ctx.fillStyle = '#1f9d5c'; ctx.fill();
+      ctx.restore();
+      ctx.font = "900 11px system-ui,sans-serif"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff'; ctx.fillText('👤', 0, 1);
+      ctx.font = "900 9.5px 'Pretendard Variable','Pretendard',system-ui,sans-serif";
+      const nm = String(r.nick||'동료').slice(0, 8);
+      const tw = ctx.measureText(nm).width + 10;
+      const ty = cy > VH/2 ? -24 : 24;
+      ctx.fillStyle = 'rgba(31,157,92,.95)'; rr(ctx, -tw/2, ty-8, tw, 16, 8); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.fillText(nm, 0, ty+.5);
+      ctx.restore();
+    }
+    ctx.restore();
+  };
 })();
 </script>
 </body>
