@@ -10,10 +10,10 @@
   ];
 
   var MSG_PATTERNS = [
-    { kind: 'pc', re: /^\[([^\[\]]{1,40})\]\s*\[(오전|오후)\s*(\d{1,2}):(\d{2})\]\s*([\s\S]*)$/ },
-    { kind: 'android', re: /^(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*(오전|오후)\s*(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ },
-    { kind: 'ios', re: /^(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.\s*(오전|오후)\s*(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ },
-    { kind: 'mobile', re: /^(오전|오후)\s*(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ }
+    { kind: 'pc', re: /^\[([^\[\]]{1,40})\]\s*\[(?:(오전|오후)\s*)?(\d{1,2}):(\d{2})\]\s*([\s\S]*)$/ },
+    { kind: 'android', re: /^(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*(?:(오전|오후)\s*)?(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ },
+    { kind: 'ios', re: /^(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.\s*(?:(오전|오후)\s*)?(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ },
+    { kind: 'mobile', re: /^(?:(오전|오후)\s*)?(\d{1,2}):(\d{2}),\s*([^:]{1,40}?)\s*:\s*([\s\S]*)$/ }
   ];
 
   var SKIP_LINE = /(님이 들어왔습니다|님이 나갔습니다|님이 초대했습니다|메시지를 가렸습니다|채팅방을 나갔습니다|카카오톡 대화|저장한 날짜)/;
@@ -71,14 +71,18 @@
         var type = 'text';
         if (!content || MEDIA_ONLY.test(content.replace(/\s+/g, ' '))) type = 'media';
 
+        var hour24 = ampm ? (ampm === '오후' ? (hh % 12) + 12 : hh % 12) : hh;
+        var ampmDisp = ampm || (hh >= 12 ? '오후' : '오전');
+        var hhDisp = ampm ? hh : (hh % 12 || 12);
+
         messages.push({
           name: name,
           date: date,
-          ampm: ampm,
-          hh: hh,
+          ampm: ampmDisp,
+          hh: hhDisp,
           mm: mm,
-          time: ampm + ' ' + hh + ':' + pad(mm),
-          hour24: (ampm === '오후' ? (hh % 12) + 12 : hh % 12),
+          time: ampmDisp + ' ' + hhDisp + ':' + pad(mm),
+          hour24: hour24,
           text: content,
           type: type
         });
