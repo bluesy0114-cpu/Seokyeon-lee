@@ -540,6 +540,19 @@
   }
 
   function prepareCallIdle() {
+    // 진행 중인 통화가 있으면 통화 화면을 그대로 복원한다 (탭을 오갔다고 통화가 사라지면 안 됨)
+    if (callState && !callState.finished) {
+      $('#callIdle').hidden = true;
+      $('#callEnded').hidden = true;
+      $('#callScreen').hidden = false;
+      return;
+    }
+    if (callState && callState.finished) {
+      $('#callIdle').hidden = true;
+      $('#callScreen').hidden = true;
+      $('#callEnded').hidden = false;
+      return;
+    }
     $('#callIdle').hidden = false;
     $('#callScreen').hidden = true;
     $('#callEnded').hidden = true;
