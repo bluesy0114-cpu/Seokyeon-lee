@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#FAF6EF">
 <title>온기 (ON:GI) · 추모·기억 기반 AI 대화 데모</title>
 <meta name="description" content="남겨진 대화와 목소리로 안부를 나누는 추모 AI 플랫폼, 온기(ON:GI) 1차 웹 데모">
-<link rel="stylesheet" href="assets/css/app.css?v=1.0.1">
+<link rel="stylesheet" href="assets/css/app.css?v=1.0.2">
 </head>
 <body>
 <div class="page">
@@ -34,13 +34,13 @@
 
       <section class="card">
         <h2 class="card-title">대화 불러오기</h2>
-        <p class="card-desc">카카오톡 <b>대화 내보내기(.txt)</b> 파일을 그대로 올리면 됩니다.</p>
+        <p class="card-desc">카카오톡 <b>대화 내보내기 파일(.txt · .zip)</b>을 그대로 올리면 됩니다. 아이폰에서 내보낸 압축 파일도 브라우저 안에서 바로 풀립니다.</p>
 
         <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="카카오톡 대화 파일 올리기">
           <span class="dz-icon" aria-hidden="true">📎</span>
           <span class="dz-main">파일 올리기</span>
-          <span class="dz-sub">.txt · 끌어다 놓아도 됩니다</span>
-          <input type="file" id="fileInput" accept=".txt,text/plain" hidden>
+          <span class="dz-sub">.txt · .zip · 끌어다 놓아도 됩니다</span>
+          <input type="file" id="fileInput" accept=".txt,.zip,text/plain,application/zip,application/x-zip-compressed" hidden>
         </div>
 
         <p class="mini-label">바로 체험하기</p>
@@ -354,9 +354,9 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="assets/js/samples.js?v=1.0.1"></script>
-<script src="assets/js/parser.js?v=1.0.1"></script>
-<script src="assets/js/persona.js?v=1.0.1"></script>
-<script src="assets/js/app.js?v=1.0.1"></script>
+<script src="assets/js/samples.js?v=1.0.2"></script>
+<script src="assets/js/parser.js?v=1.0.2"></script>
+<script src="assets/js/persona.js?v=1.0.2"></script>
+<script src="assets/js/app.js?v=1.0.2"></script>
 </body>
 </html>

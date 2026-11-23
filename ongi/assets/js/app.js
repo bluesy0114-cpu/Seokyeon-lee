@@ -70,20 +70,150 @@
     return text;
   }
 
+  /* ───────── ZIP(아이폰 카카오톡 내보내기) 자동 해제 ───────── */
+  function isZipName(name) {
+    return /\.zip$/i.test(name || '');
+  }
+
+  function isZipBytes(buf) {
+    if (!buf || buf.byteLength < 4) return false;
+    var b = new Uint8Array(buf, 0, 4);
+    return (b[0] === 0x50 && b[1] === 0x4b && b[2] === 0x03 && b[3] === 0x04) ||
+           (b[0] === 0x50 && b[1] === 0x4b && b[2] === 0x05 && b[3] === 0x06);
+  }
+
+  function decodeZipName(bytes, utf8) {
+    if (!bytes.length) return '';
+    var dec;
+    if (utf8) {
+      dec = new TextDecoder('utf-8');
+    } else {
+      dec = new TextDecoder('utf-8');
+      try {
+        var name = dec.decode(bytes);
+        if (name.indexOf('\ufffd') < 0) return name;
+      } catch (e) { /* 아래 EUC-KR 재시도 */ }
+      try { dec = new TextDecoder('euc-kr'); } catch (e2) { dec = new TextDecoder('utf-8'); }
+    }
+    return dec.decode(bytes);
+  }
+
+  // ZIP 중앙 디렉터리를 읽어 항목 목록을 만든다 (데이터 디스크립터 사용 항목도 안전)
+  function readZipEntries(buf) {
+    var dv = new DataView(buf);
+    var u8 = new Uint8Array(buf);
+    var u16 = function (o) { return dv.getUint16(o, true); };
+    var u32 = function (o) { return dv.getUint32(o, true); };
+
+    // End of Central Directory (주석 최대 64KB)
+    var eocd = -1;
+    var stop = Math.max(0, dv.byteLength - 22 - 65535);
+    for (var i = dv.byteLength - 22; i >= stop; i--) {
+      if (u32(i) === 0x06054b50) { eocd = i; break; }
+    }
+    if (eocd < 0) return null;
+
+    var total = u16(eocd + 10);
+    var cdOffset = u32(eocd + 16);
+    if (!total || cdOffset >= dv.byteLength) return null;
+
+    var entries = [];
+    var p = cdOffset;
+    for (var n = 0; n < total; n++) {
+      if (p + 46 > dv.byteLength || u32(p) !== 0x02014b50) break;
+      var flags = u16(p + 8);
+      var method = u16(p + 10);
+      var compSize = u32(p + 20);
+      var rawSize = u32(p + 24);
+      var nameLen = u16(p + 28);
+      var extraLen = u16(p + 30);
+      var cmtLen = u16(p + 32);
+      var localOffset = u32(p + 42);
+      var nameBytes = u8.subarray(p + 46, p + 46 + nameLen);
+      var name = decodeZipName(nameBytes, (flags & 0x0800) !== 0);
+
+      entries.push({
+        name: name,
+        method: method,
+        compSize: compSize,
+        rawSize: rawSize,
+        localOffset: localOffset
+      });
+      p += 46 + nameLen + extraLen + cmtLen;
+    }
+    return entries;
+  }
+
+  function inflateRaw(bytes) {
+    if (typeof DecompressionStream !== 'function') {
+      return Promise.reject(new Error('deflate-raw 미지원 브라우저'));
+    }
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return new Response(stream).arrayBuffer().then(function (ab) {
+      return new Uint8Array(ab);
+    });
+  }
+
+  function extractZipText(buf) {
+    var entries = readZipEntries(buf);
+    if (!entries || !entries.length) return Promise.reject(new Error('빈 압축 파일'));
+    var dv = new DataView(buf);
+    var u8 = new Uint8Array(buf);
+
+    // __MACOSX·._ 리소스 포크를 빼고 .txt 항목만 (여럿이면 가장 큰 것 = 대화 본문)
+    var cands = entries.filter(function (e) {
+      var low = e.name.toLowerCase();
+      if (!/\.txt$/.test(low)) return false;
+      if (low.indexOf('__macosx/') === 0 || low.indexOf('/__macosx/') > -1) return false;
+      var base = low.split('/').pop();
+      return base.indexOf('._') !== 0;
+    }).sort(function (a, b) { return b.rawSize - a.rawSize; });
+
+    if (!cands.length) return Promise.reject(new Error('.txt 항목 없음'));
+    var e = cands[0];
+
+    // 로컬 헤더로 실제 데이터 시작점 계산
+    var lp = e.localOffset;
+    if (lp + 30 > dv.byteLength || dv.getUint32(lp, true) !== 0x04034b50) {
+      return Promise.reject(new Error('로컬 헤더 손상'));
+    }
+    var lNameLen = dv.getUint16(lp + 26, true);
+    var lExtraLen = dv.getUint16(lp + 28, true);
+    var start = lp + 30 + lNameLen + lExtraLen;
+    var bytes = u8.subarray(start, start + e.compSize);
+
+    if (e.method === 0) return Promise.resolve(bytes);
+    if (e.method === 8) return inflateRaw(bytes);
+    return Promise.reject(new Error('지원하지 않는 압축 방식(' + e.method + ')'));
+  }
+
   function handleFile(file) {
     if (!file) return;
-    if (!/\.txt$/i.test(file.name) && file.type && file.type.indexOf('text') < 0) {
-      toast('카카오톡에서 내보낸 .txt 파일을 올려주세요');
+    var zipLike = isZipName(file.name);
+    if (!zipLike && !/\.txt$/i.test(file.name) && file.type &&
+        file.type.indexOf('text') < 0 && file.type.indexOf('zip') < 0) {
+      toast('카카오톡에서 내보낸 .txt 또는 .zip 파일을 올려주세요');
       return;
     }
     if (file.size > 8 * 1024 * 1024) {
       toast('8MB 이하 파일만 올릴 수 있어요');
       return;
     }
+
     var reader = new FileReader();
     reader.onload = function () {
-      var text = decodeBuffer(reader.result);
-      loadRaw(text, file.name);
+      var buf = reader.result;
+      if (!isZipBytes(buf) && !zipLike) {
+        loadRaw(decodeBuffer(buf), file.name);
+        return;
+      }
+      extractZipText(buf).then(function (bytes) {
+        var text = decodeBuffer(bytes);
+        loadRaw(text, file.name);
+      }).catch(function (err) {
+        console.warn('[온기] 압축 해제 실패:', err && err.message);
+        toast('압축을 풀지 못했어요. 카톡에서 .txt로 내보낸 파일을 올려주세요.');
+      });
     };
     reader.onerror = function () { toast('파일을 읽지 못했어요. 다시 시도해 주세요.'); };
     reader.readAsArrayBuffer(file);
@@ -1160,8 +1290,9 @@
       startCall('out');
     });
     $('#btnBackChat').addEventListener('click', function () {
-      $('#callEnded').hidden = true;
-      $('#callIdle').hidden = false;
+      // 종료 화면을 닫고 대화로 돌아갈 때는 통화 상태를 비운다.
+      // (남겨두면 다음에 통화 탭에 들어왔을 때 종료 화면이 되살아나 발신·수신 버튼이 잠긴다)
+      resetCall();
       switchTab('chat');
     });
     $('#btnMute').addEventListener('click', function () {
