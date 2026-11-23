@@ -219,13 +219,38 @@
     reader.readAsArrayBuffer(file);
   }
 
+  /* 파일명(카톡 대화방 이름)으로 처음 대화할 화자를 고른다.
+     카톡 내보내기 파일명은 'Kakaotalk_Chat_{대화방이름}.zip' 형태라, 1:1 대화에서는
+     대화방 이름이 곧 상대방(기억할 사람)의 이름이다. 못 찾으면 null을 돌려준다. */
+  function normName(s) {
+    return String(s || '').toLowerCase().replace(/[\s_\-\.\(\)\[\]\{\}]+/g, '');
+  }
+
+  function guessSpeaker(messages, label) {
+    var seen = {};
+    messages.forEach(function (m) { if (m.name) seen[m.name] = true; });
+    var names = Object.keys(seen);
+    if (names.length < 2) return names[0] || null;
+
+    var fileKey = normName(String(label || '').split(/[\\/]/).pop().replace(/\.(zip|txt)$/i, ''));
+    if (!fileKey) return null;
+
+    var best = null, bestLen = 0;
+    names.forEach(function (nm) {
+      var key = normName(nm);
+      if (key.length < 2) return;
+      if (fileKey.indexOf(key) >= 0 && key.length > bestLen) { best = nm; bestLen = key.length; }
+    });
+    return best;
+  }
+
   function loadRaw(text, label) {
     var parsed = P.parse(text);
     if (!parsed.messages.length) {
       toast('카톡 대화 형식이 아니에요. 내보내기한 .txt 파일을 확인해 주세요.');
       return;
     }
-    var profile = P.analyze(parsed.messages);
+    var profile = P.analyze(parsed.messages, guessSpeaker(parsed.messages, label) || undefined);
     if (!profile) {
       toast('분석할 대화가 부족해요');
       return;
@@ -320,7 +345,7 @@
       html += '</div>';
     }
 
-    if (p.people.length > 2) {
+    if (p.people.length >= 2) {
       html += '<div class="analysis-block"><p class="analysis-label">화자 선택</p><div class="chips">';
       p.people.forEach(function (person) {
         html += '<button type="button" class="chip ' + (person.name === p.deceased ? 'sage' : '') +
