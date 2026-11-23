@@ -115,7 +115,7 @@
 
   var LEXICON = {
     food: ['미역국', '김치찌개', '된장찌개', '찌개', '칼국수', '국수', '떡국', '떡', '반찬', '김치', '장아찌', '감자', '고추',
-      '고구마', '사과', '귤', '불고기', '갈비', '삼계탕', '라면', '삼각김밥', '만두', '커피'],
+      '고구마', '사과', '귤', '불고기', '갈비', '삼계탕', '라면', '삼각김밥', '만두', '커피', '빵', '과일', '음료', '주스'],
     place: ['시장', '텃밭', '마당', '감나무', '고향', '병원', '약국', '마트', '공원', '성당', '교회', '바다', '골목', '국수집', '칼국수집', '집 앞'],
     care: ['밥', '약', '잠', '감기', '허리', '무릎', '다리', '혈압', '조심', '따뜻', '우산', '겉옷', '야근', '퇴근', '고생', '사랑', '보고 싶', '안부']
   };
@@ -144,6 +144,20 @@
   function shortQuote(t) {
     var s = String(t).replace(/\n/g, ' ').trim();
     return s.length > 46 ? s.slice(0, 44) + '…' : s;
+  }
+
+  /* 인용으로 보여줄 때 키워드가 잘려 나가지 않도록, 앞부분에 키워드가 살아 있는 메시지를 우선 고른다. */
+  function bestQuote(hits, word) {
+    var plain = hits.map(function (m) {
+      return { m: m, flat: String(m.text).replace(/\n/g, ' ') };
+    });
+    var visible = plain.filter(function (x) {
+      var at = x.flat.indexOf(word);
+      return at >= 0 && at < 44;
+    });
+    var pool = visible.length ? visible : plain;
+    pool.sort(function (a, b) { return a.m.text.length - b.m.text.length; });
+    return pool[0].m;
   }
 
   function analyze(messages, deceasedName) {
@@ -223,7 +237,7 @@
         var hits = mine.filter(function (m) { return m.text.indexOf(word) >= 0; });
         if (!hits.length) return;
         counts[word] = hits.length;
-        var best = hits.slice().sort(function (a, b) { return a.text.length - b.text.length; })[0];
+        var best = bestQuote(hits, word);
         memories.push({
           cat: cat, key: word, count: hits.length,
           quote: shortQuote(best.text), date: best.date, time: best.time
@@ -296,7 +310,7 @@
       nicknames: nicknames,
       emojis: emojis,
       keywords: keywords,
-      memories: memories.slice(0, 12),
+      memories: memories.slice(0, 50),
       phrases: phrases,
       stats: {
         avgLen: avgLen,

@@ -337,7 +337,7 @@
       if (/(사랑해|사랑한다)/.test(t)) return 'love';
       if (/(안녕|왔어|왔니|나야|전화했어|여보세요|뭐\s*해|잘\s*지내|오랜만)/.test(t)) return 'greeting';
       if (/(보고\s*싶|그리워|그립|생각이\s*나)/.test(t)) return 'miss';
-      if (/(밥|먹|배고|요리|반찬|김치|찌개|국수|미역국|떡|식사)/.test(t)) return 'food';
+      if (/(밥|먹|배고|요리|반찬|김치|찌개|국수|미역국|떡|식사|커피|음료|과일|빵|주스)/.test(t)) return 'food';
       if (/(아파|아프|병원|약|다리|허리|무릎|감기|잠|피곤|몸이|건강)/.test(t)) return 'health';
       if (/(회사|일이|야근|퇴근|출근|힘들|스트레스|업무|프로젝트)/.test(t)) return 'work';
       if (/(날씨|비|눈|추워|더워|봄|여름|가을|겨울|바람)/.test(t)) return 'weather';
