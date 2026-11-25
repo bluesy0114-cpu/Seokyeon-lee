@@ -126,6 +126,18 @@
   .sideNote{margin-top:auto;font-size:10px;font-weight:700;color:#9c8871;line-height:1.5;border-top:1px dashed rgba(255,255,255,.14);padding-top:10px;}
   .savedChip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:12px;padding:8px 10px;font-size:11px;font-weight:800;color:#ffe6c4;}
   .savedChip button{margin-left:auto;font-size:10.5px;font-weight:900;color:#ffb27a;text-decoration:underline;}
+  /* 접속 인원 배지 — 로그인 카드 최하단 */
+  .orStats{
+    display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:nowrap;white-space:nowrap;
+    width:-moz-fit-content;width:fit-content;max-width:100%;margin:16px auto 0;padding:7px 15px;
+    border-radius:999px;border:1px solid #ecdfc8;background:linear-gradient(180deg,#fffaf1,#fdf1dd);
+    font-size:11px;font-weight:800;color:#8a7057;letter-spacing:-.2px;
+    box-shadow:inset 0 1px 0 #fff, 0 2px 8px rgba(180,140,90,.10);
+  }
+  .orStats[hidden]{display:none;}
+  .orStats .dot{width:6px;height:6px;border-radius:50%;background:#4fae74;box-shadow:0 0 0 3px rgba(79,174,116,.16);flex:none;}
+  .orStats b{font-weight:900;color:#5d4732;font-variant-numeric:tabular-nums;}
+  .orStats .sep{color:#cdb79c;font-weight:900;}
 
   /* ================= HUD ================= */
   .card{
@@ -479,6 +491,7 @@
     .fine span{display:block;}
     .fine .fine2::before{content:none;}
     .fine .fine2{white-space:normal;}
+    .orStats{font-size:10.5px;padding:6px 13px;margin-top:13px;gap:6px;}
     #hudTL{left:8px;top:8px;width:168px;padding:7px 9px;gap:5px;border-radius:14px;}
     .whoRow .nm b{font-size:12px;}
     .whoRow .nm span{font-size:9.5px;}
@@ -742,6 +755,12 @@
         </div>
         <div class="sideNote">사내 편의점 <b>OFFICE 24</b>는 화이트라벨 설정(CVS_BRAND_CONFIG)으로 브랜드가 바뀝니다. 등장 인물·상호는 모두 가상입니다.</div>
       </div>
+    </div>
+    <div id="orStats" class="orStats" hidden>
+      <span class="dot" aria-hidden="true"></span>
+      <span>오늘 <b id="orToday">0</b>명</span>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>누적 <b id="orTotal">0</b>명</span>
     </div>
   </div>
 </div>
@@ -8651,6 +8670,126 @@ function funDrawTop(c, t, f){
       testAwk: ()=> awkwardRide(G.floor===2?1:2, ()=>{}), testTicker: ()=> showTicker(pick(TICKER_LINES))
     });
   }
+})();
+</script>
+<script>
+/* ============ 접속 인원 (오늘 · 누적) — Firebase RTDB, 포트폴리오 카운터와 완전 분리 ============
+   저장: /portfolio_stats/office_run/summary                         = {today, total, todayDate, updated}
+         /portfolio_stats/office_run/daily/{KST날짜}/hits/{sid}       = {ts, ref, mobile}
+         /portfolio_stats/office_run/visitors/{vid}                   = {firstTs, lastTs}
+   스토리지 키: or_sid(세션) / or_vid(방문자) / or_vday(오늘 집계한 날짜) — 포트폴리오(pf_*)와 분리.
+   같은 탭 새로고침은 or_vday로 중복 집계하지 않고, 동시 접속 숫자 유실은 ETag 조건부 쓰기로 막습니다.
+   규칙 거부·네트워크 오류 시에는 배지를 조용히 숨깁니다(에러 표시 없음). */
+(function () {
+  var DB = 'https://office-run-live-default-rtdb.asia-southeast1.firebasedatabase.app/portfolio_stats/office_run';
+  var badge = document.getElementById('orStats');
+  var elToday = document.getElementById('orToday');
+  var elTotal = document.getElementById('orTotal');
+  if (!badge || !elToday || !elTotal || !window.fetch) return;
+
+  var ua = navigator.userAgent || '';
+  var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+  /* 검증용: ?orstats=force 는 봇 필터·중복 방지를 해제해 1건을 새로 집계합니다. */
+  var force = /[?&]orstats=force\b/.test(location.search);
+  var isBot = /bot|crawl|spider|headless|slurp|bingpreview|lighthouse|pagespeed|gtmetrix|phantomjs|^curl\/|wget|python-requests/i.test(ua);
+  if (navigator.webdriver === true && !force) isBot = true;
+  if (force) isBot = false;
+
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+  function rid(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function kstDate() { return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10); }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function refHost() {
+    try {
+      if (!document.referrer) return 'direct';
+      var h = new URL(document.referrer).hostname.replace(/^www\./, '');
+      return h === location.hostname ? 'internal' : h;
+    } catch (e) { return 'direct'; }
+  }
+
+  var date = kstDate();
+  var sid = ssGet('or_sid'), newSession = !sid;
+  if (!sid) { sid = rid('s'); ssSet('or_sid', sid); }
+  var vid = lsGet('or_vid'), firstVisit = !vid;
+  if (!vid) { vid = rid('v'); lsSet('or_vid', vid); }
+  var firstToday = lsGet('or_vday') !== date;
+  if (force) { sid = rid('s'); ssSet('or_sid', sid); newSession = true; firstToday = true; }
+
+  var addToday = !isBot && firstToday;
+  var addTotal = !isBot && firstVisit;
+
+  function show(s) {
+    if (!s) return;
+    var total = Number(s.total) || 0;
+    if (!total) return;
+    elToday.textContent = fmt(s.todayDate === kstDate() ? (Number(s.today) || 0) : 0);
+    elTotal.textContent = fmt(total);
+    badge.hidden = false;
+  }
+
+  function readSummary() {
+    return fetch(DB + '/summary.json', { cache: 'no-store' })
+      .then(function (r) {
+        if (r.status !== 200) return null;
+        return r.json().then(function (j) { return (j && typeof j === 'object') ? j : null; });
+      })
+      .catch(function () { return null; });
+  }
+
+  if (!addToday && !addTotal) { readSummary().then(show).catch(function () {}); return; }
+
+  var ts = Date.now();
+  var writes = [];
+  if (newSession) {
+    writes.push(fetch(DB + '/daily/' + date + '/hits/' + sid + '.json', {
+      method: 'PUT', cache: 'no-store', keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ts: ts, ref: refHost(), mobile: isMobile })
+    }).catch(function () {}));
+    writes.push(fetch(DB + '/visitors/' + vid + '.json', {
+      method: 'PATCH', cache: 'no-store', keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(firstVisit ? { firstTs: ts, lastTs: ts } : { lastTs: ts })
+    }).catch(function () {}));
+  }
+
+  /* ETag 조건부 쓰기로 요약 카운터를 원자적으로 증가 (412면 다시 읽고 재시도) */
+  function tx(n) {
+    return fetch(DB + '/summary.json', { cache: 'no-store', headers: { 'X-Firebase-ETag': 'true' } })
+      .then(function (r) {
+        if (r.status !== 200) throw new Error('summary read ' + r.status);
+        var etag = r.headers.get('ETag');
+        return r.json().then(function (cur) { return { cur: cur, etag: etag }; });
+      })
+      .then(function (s) {
+        var cur = (s.cur && typeof s.cur === 'object') ? s.cur : {};
+        var sameDay = cur.todayDate === date;
+        var next = {
+          today: (sameDay ? (Number(cur.today) || 0) : 0) + (addToday ? 1 : 0),
+          total: (Number(cur.total) || 0) + (addTotal ? 1 : 0),
+          todayDate: date,
+          updated: ts
+        };
+        return fetch(DB + '/summary.json', {
+          method: 'PUT', cache: 'no-store', keepalive: true,
+          headers: { 'Content-Type': 'application/json', 'X-Firebase-ETag': 'true', 'if-match': s.etag || 'null_etag' },
+          body: JSON.stringify(next)
+        }).then(function (r) {
+          if (r.status === 412 && n < 5) {
+            return new Promise(function (ok) { setTimeout(ok, 120 + Math.random() * 200); }).then(function () { return tx(n + 1); });
+          }
+          if (!r.ok) throw new Error('summary write ' + r.status);
+          return next;
+        });
+      });
+  }
+
+  Promise.all(writes).then(function () { return tx(0); }, function () { return tx(0); })
+    .then(function (s) { lsSet('or_vday', date); show(s); })
+    .catch(function () { readSummary().then(show).catch(function () {}); });
 })();
 </script>
 </body>
