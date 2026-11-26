@@ -8,7 +8,7 @@
   if (window.__slcChatbotLoaded) return;
   window.__slcChatbotLoaded = true;
 
-  var EMAIL_WORK = 'seokyeon.lee@carelabs.co.kr';
+  var EMAIL_WORK = 'seokyeon.lee@wonikhnx.com';
   var EMAIL_PERSONAL = 'bluesy0114@gmail.com';
   var BLOG = 'https://blog.naver.com/bluesy0114';
   var GITHUB = 'https://github.com/bluesy0114-cpu';
