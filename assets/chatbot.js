@@ -264,7 +264,7 @@
   function answerIntro() {
     return {
       html:
-        '<p>이석연 팀장의 디지털 명함입니다. 주식회사 <strong>케어랩스 DM사업부 기획팀 팀장</strong>으로, ' +
+        '<p>이석연 팀장의 디지털 명함입니다. <strong>WONIK H&X 그로스전략팀 팀장</strong>으로, ' +
         '월 <strong>600건이 넘는</strong> 마케팅 기획·제작을 표준화하고 요청부터 납품까지의 흐름을 데이터로 설계하는 ' +
         '<strong>AI 마케팅 워크플로우 아키텍트</strong>입니다.</p>' +
         '<ul>' +
@@ -314,7 +314,7 @@
         '<li><strong>요청을 표준화</strong> — 월 600건이 넘는 기획·제작 요청을 유형과 난이도로 분류하고, 단계별 표준 시간·담당 역할·산출물을 정의합니다.</li>' +
         '<li><strong>흐름을 데이터로</strong> — 요청부터 납품까지 구간별 소요를 기록해 SLA를 세우고, 지연이 반복되는 병목을 화면 위에 드러냅니다.</li>' +
         '<li><strong>반려를 학습</strong> — 심의에서 걸린 사유를 코드로 구조화해 지식베이스로 만들고, 기획 초안 단계에서 같은 실수를 먼저 걸러냅니다.</li>' +
-        '<li><strong>도구로 고정</strong> — 이 흐름을 기획팀 업무 포털<em>(NEXUS OS)</em>과 SLA 트래킹, 리젝트 학습형 AI 기획 어시스턴트, 의사결정 시뮬레이터로 직접 만들어 운영합니다.</li>' +
+        '<li><strong>도구로 고정</strong> — 이 흐름을 그로스전략팀 업무 포털<em>(NEXUS OS)</em>과 SLA 트래킹, 리젝트 학습형 AI 기획 어시스턴트, 의사결정 시뮬레이터로 직접 만들어 운영합니다.</li>' +
         '</ul>' +
         '<p>핵심은 개인의 감이 아니라 <strong>기준과 데이터가 남는 구조</strong>입니다. 같은 이유로 누구나 쓸 수 있는 ' +
         '<a href="./index.html#tool" style="color:#9FC3FF;text-decoration:underline;text-underline-offset:3px">광고 카피·심의 주의어 체크기</a>도 무료로 공개했습니다.</p>',
@@ -326,7 +326,7 @@
     return {
       html:
         '<p>경력은 마케팅 실행에서 출발해 운영 구조 설계로 확장되어 왔습니다.</p><ul>' +
-        '<li><strong>현직 · 주식회사 케어랩스</strong> — DM사업부 기획팀 팀장. 다수 광고주의 캠페인 기획을 운영하며 기획·제작 프로세스 표준화, SLA 설계, 심의 데이터 기반 AI 마케팅 워크플로우를 맡고 있습니다. 2026년 12월 원익 H&amp;X 통합·확장을 앞두고 있습니다.</li>' +
+        '<li><strong>현직 · 주식회사 원익에이치앤엑스 (WONIK H&amp;X)</strong> — 그로스전략팀 팀장. 다수 광고주의 캠페인 기획을 운영하며 기획·제작 프로세스 표준화, SLA 설계, 심의 데이터 기반 AI 마케팅 워크플로우를 맡고 있습니다. 2026년 11월 26일 사명을 원익에이치앤엑스(WONIK H&amp;X)로 변경했습니다.</li>' +
         '<li><strong>넷마블MNB</strong> — 사업1실 실장. 21명 규모 조직을 리드하며 193억 매출과 26건 프로젝트를 완료했고, 퇴사자 0명의 조직을 운영했습니다.</li>' +
         '<li><strong>엠포스</strong> — 영상기획팀 과장·팀장. 삼성전자 Exynos·ISOCELL 글로벌 캠페인, 우리카드, EBS 등 브랜드 영상과 디지털 캠페인 영상을 기획했습니다.</li>' +
         '<li><strong>CJ 올리브네트웍스</strong> — 마케터. 디지털 캠페인 실행을 담당했습니다.</li>' +
@@ -560,7 +560,7 @@
     if (/무료|툴|체크기|주의어|글자수|도구/.test(nq)) return answerTool();
     if (/블로그|연재|포스팅|제작기/.test(nq)) return answerBlog();
     if (/브랜드|광고주|고객사|클라이언트|거래처|어느회사|어떤회사|함께한/.test(nq)) return answerBrands();
-    if (/경력|커리어|이력|재직|회사|퇴사|팀장|실장|과장|넷마블|엠포스|cj|올리브|케어랩스|몇년|연차|전직|약력/.test(nq)) return answerCareer();
+    if (/경력|커리어|이력|재직|회사|퇴사|팀장|실장|과장|넷마블|엠포스|cj|올리브|케어랩스|원익|wonik|그로스전략|몇년|연차|전직|약력/.test(nq)) return answerCareer();
     if (/영상|필름|촬영|제작|vimeo|비메오|광고영상/.test(nq)) return answerFilm();
     if (/프로젝트|캠페인|사례|포트폴리오|아카이브|작업물|43|18편/.test(nq)) return answerProject();
 
